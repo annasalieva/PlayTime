@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerMovement : MonoBehaviour
+public class orangeMovement : MonoBehaviour
 {
     [SerializeField] private float moveSpeed;
     [SerializeField] private float walkSpeed;
