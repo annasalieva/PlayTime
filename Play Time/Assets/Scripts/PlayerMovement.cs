@@ -4,17 +4,19 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    [SerializeField] private float moveSpeed;
-    [SerializeField] private float walkSpeed;
-    [SerializeField] private float runSpeed;
+    [SerializeField] private float moveSpeed = 10;
+    [SerializeField] private float walkSpeed = 5;
+    [SerializeField] private float runSpeed = 20;
+    [SerializeField] private float airSpeed = 10;
 
     private Vector3 moveDirection;
     private Vector3 velocity;
+    private RaycastHit Hit;
 
     [SerializeField] private bool isGrounded;
-    [SerializeField] private float groundCheckDistance;
+    [SerializeField] private float groundCheckDistance = 1.25f;
     [SerializeField] private LayerMask groundMask;
-    [SerializeField] private float gravity;
+    [SerializeField] private float gravity = 9.81f;
 
     [SerializeField] private float jumpHeight;
 
@@ -34,19 +36,36 @@ public class PlayerMovement : MonoBehaviour
 
     private void Move()
     {
-        isGrounded = Physics.CheckSphere(transform.position, groundCheckDistance,groundMask);
-
-        if(isGrounded && velocity.y < 0)
+        //make sure to put any floors on the "ground" layer
+        //isGrounded = Physics.CheckSphere(transform.position, groundCheckDistance,groundMask);
+        Debug.DrawRay(transform.position, new Vector3(0, -groundCheckDistance, 0), Color.green);
+        Ray groundcast = new Ray(transform.position, -Vector3.up);
+        if (Physics.Raycast(groundcast, out Hit, groundCheckDistance))
         {
-            velocity.y += -2f;
+            if (Hit.transform.gameObject.layer == LayerMask.NameToLayer("Ground"))
+            {
+                isGrounded = true;
+            }
+            else
+            {
+                isGrounded = false;
+            }
         }
-        float moveZ = Input.GetAxis("Vertical");
-        float moveX = Input.GetAxis("Horizontal");
-
-        moveDirection = new Vector3(moveX, 0, moveZ);
-        moveDirection = transform.TransformDirection(moveDirection);
-        if(isGrounded)
+        else
         {
+            isGrounded = false;
+        }
+
+
+        if (isGrounded && velocity.y < 0)
+        {
+            velocity.y = -2f;
+        }
+        float moveZ = Input.GetAxis("Vertical") * moveSpeed;
+        float moveX = Input.GetAxis("Horizontal") * moveSpeed;
+        if (isGrounded)
+        {
+            print("grounded");
             //anim.SetBool("grounded", true);
             if (moveDirection != Vector3.zero && !Input.GetKey(KeyCode.LeftShift))
             {
@@ -70,8 +89,15 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
+            print("NOT grounded");
+            //if lemon is in the air, use this version of movement so he goes faster
+            //and has more air control
+            moveZ = Input.GetAxis("Vertical") * airSpeed;
+            moveX = Input.GetAxis("Horizontal") * airSpeed;
             //anim.SetBool("grounded", false);
         }
+        moveDirection = new Vector3(moveX, 0, moveZ);
+        moveDirection = transform.TransformDirection(moveDirection);
 
         controller.Move(moveDirection*Time.deltaTime);
 
