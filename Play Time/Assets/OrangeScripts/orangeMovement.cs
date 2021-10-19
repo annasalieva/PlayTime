@@ -17,9 +17,15 @@ public class orangeMovement : MonoBehaviour
     [SerializeField] private bool isGrounded;
     [SerializeField] private float groundCheckDistance = 1.25f;
     [SerializeField] private LayerMask groundMask;
+
+    [SerializeField] private bool canGrab;
+    [SerializeField] private bool isGrabbing;
+    [SerializeField] private float grabCheckDistance = 1.5f;
+    [SerializeField] private Transform grabbableObject;
+
     [SerializeField] private float gravity = 9.81f;
 
-    [SerializeField] private float jumpHeight;
+    //[SerializeField] private float jumpHeight;
 
     private CharacterController controller;
     //private Animator anim;
@@ -57,6 +63,28 @@ public class orangeMovement : MonoBehaviour
             isGrounded = false;
         }
 
+        //Raycast for checking if objects can be grabbed
+        Vector3 forward = transform.TransformDirection(Vector3.forward) * grabCheckDistance;
+        Debug.DrawRay(transform.position, forward, Color.green);
+        Ray interactCast = new Ray(transform.position, forward);
+        if (Physics.Raycast(interactCast, out Hit, grabCheckDistance))
+        {
+            if (Hit.transform.gameObject.CompareTag("grabbable"))
+            {
+                canGrab = true;
+                grabbableObject = Hit.transform;
+            }
+            else
+            {
+                canGrab = false;
+                grabbableObject = null;
+            }
+        }
+        else
+        {
+            canGrab = false;
+            grabbableObject = null;
+        }
 
         if (isGrounded && velocity.y < 0)
         {
@@ -83,9 +111,28 @@ public class orangeMovement : MonoBehaviour
 
             // moveDirection *= moveSpeed;
 
-            if(Input.GetKeyDown(KeyCode.Space))
+            // if(Input.GetKeyDown(KeyCode.Space))
+            // {
+                //  Jump();
+            // }
+
+            if((Input.GetKey(KeyCode.Space) && canGrab) || (Input.GetKey(KeyCode.Space) && isGrabbing))
             {
-                Jump();
+                if(grabbableObject != null)
+                {
+                    if(grabbableObject.parent != this.transform)
+                    {
+                        grabbableObject.SetParent(this.transform);
+                    }
+                }
+                
+                isGrabbing = true;
+            } else {
+                if(grabbableObject != null)
+                {
+                    grabbableObject.SetParent(null);
+                    isGrabbing = false;
+                }
             }
         }
         else
@@ -111,12 +158,17 @@ public class orangeMovement : MonoBehaviour
             controller.Move(moveDirection* airSpeed *Time.deltaTime);
         }
 
-        if(moveDirection != Vector3.zero)
+        //Controls turning/rotation
+        if(!isGrabbing)
         {
-            Quaternion rotateDirection = Quaternion.LookRotation(moveDirection, Vector3.up);
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, rotateDirection, rotationSpeed * Time.deltaTime);
+            if(moveDirection != Vector3.zero)
+            {
+                Quaternion rotateDirection = Quaternion.LookRotation(moveDirection, Vector3.up);
+                transform.rotation = Quaternion.RotateTowards(transform.rotation, rotateDirection, rotationSpeed * Time.deltaTime);
+            }
         }
 
+        //Falling aka vertical movement
         velocity.y += gravity * Time.deltaTime;
         controller.Move(velocity * Time.deltaTime);
     }
@@ -138,8 +190,8 @@ public class orangeMovement : MonoBehaviour
         //anim.SetFloat("Speed", 1, 0.1f, Time.deltaTime);
     }
 
-    private void Jump()
-    {
-        velocity.y = Mathf.Sqrt(jumpHeight * -2 * gravity);
-    }
+    // private void Jump()
+    // {
+    //     velocity.y = Mathf.Sqrt(jumpHeight * -2 * gravity);
+    // }
 }
