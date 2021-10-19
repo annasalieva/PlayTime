@@ -396,6 +396,24 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 5, y: 0, z: 0}
+--- !u!1 &659110682 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9075109056288773942, guid: fa2b50fd40b6f9e46b11e002ff049c9c, type: 3}
+  m_PrefabInstance: {fileID: 9075109055659973820}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &659110683
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 659110682}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.87, y: 2, z: 1.0000002}
+  m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
 --- !u!1 &969530977
 GameObject:
   m_ObjectHideFlags: 0
@@ -1308,5 +1326,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Lemon
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 9075109056288773943, guid: fa2b50fd40b6f9e46b11e002ff049c9c, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: fa2b50fd40b6f9e46b11e002ff049c9c, type: 3}
