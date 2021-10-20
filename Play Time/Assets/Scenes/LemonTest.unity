@@ -1277,6 +1277,10 @@ PrefabInstance:
       propertyPath: jumpHeight
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 9075109056288773933, guid: fa2b50fd40b6f9e46b11e002ff049c9c, type: 3}
+      propertyPath: acceleration
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 9075109056288773938, guid: fa2b50fd40b6f9e46b11e002ff049c9c, type: 3}
       propertyPath: m_RootOrder
       value: 5

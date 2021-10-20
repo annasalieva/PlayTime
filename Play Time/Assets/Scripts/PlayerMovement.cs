@@ -7,8 +7,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float moveSpeed = 10;
     [SerializeField] private float walkSpeed = 5;
     [SerializeField] private float runSpeed = 20;
-    [SerializeField] private float airSpeed = 10;
-
+    
     private Vector3 moveDirection;
     private Vector3 velocity;
     private RaycastHit Hit;
@@ -23,6 +22,7 @@ public class PlayerMovement : MonoBehaviour
 
     private CharacterController controller;
     public Rigidbody rb;
+    private float current_speed;
 
     public float fallMultiplier = 5.0f;
     //private Animator anim;
@@ -67,36 +67,46 @@ public class PlayerMovement : MonoBehaviour
         if (isGrounded)
         {
             print("grounded");
-            moveZ = Input.GetAxis("Vertical") * moveSpeed;
-            moveX = Input.GetAxis("Horizontal") * moveSpeed;
-            //anim.SetBool("grounded", true);
-            if (moveDirection != Vector3.zero && !Input.GetKey(KeyCode.LeftShift))
+            if(Input.GetAxis("Vertical") != 0 || Input.GetAxis("Horizontal") != 0) //getting vertical or horizontal input
             {
-                Walk();
-            }
-            else if (moveDirection != Vector3.zero && Input.GetKey(KeyCode.LeftShift))
-            {
-                Run();
-            }
-            else if (moveDirection == Vector3.zero)
-            {
-                Idle();
-            }
+                if (current_speed < moveSpeed)
+                {
+                    current_speed += acceleration;
+                }
+                moveZ = Input.GetAxis("Vertical") * current_speed;
+                moveX = Input.GetAxis("Horizontal") * current_speed;
+                //anim.SetBool("grounded", true);
+                if (moveDirection != Vector3.zero && !Input.GetKey(KeyCode.LeftShift))
+                {
+                    Walk();
+                }
+                else if (moveDirection != Vector3.zero && Input.GetKey(KeyCode.LeftShift))
+                {
+                    Run();
+                }
+                else if (moveDirection == Vector3.zero)
+                {
+                    Idle();
+                }
 
-            moveDirection *= moveSpeed;
+                moveDirection *= current_speed;
 
-            if(Input.GetKeyDown(KeyCode.Space))
-            {
-                Jump();
+                if (Input.GetKeyDown(KeyCode.Space))
+                {
+                    Jump();
+                }
             }
+            else if(current_speed > 0 && (Input.GetAxis("Vertical") == 0 || Input.GetAxis("Horizontal") == 0))//no input
+            {
+                current_speed -= acceleration;
+                moveZ = current_speed;
+                moveX = current_speed;
+            }
+            
         }
         else
         {
             print("NOT grounded");
-            //if lemon is in the air, use this version of movement so he goes faster
-            //and has more air control
-            //moveZ = Input.GetAxis("Vertical") * airSpeed;
-            //moveX = Input.GetAxis("Horizontal") * airSpeed;
             //anim.SetBool("grounded", false);
         }
 
