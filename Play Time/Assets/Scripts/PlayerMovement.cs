@@ -19,12 +19,17 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float gravity = 9.81f;
 
     [SerializeField] private float jumpHeight;
+    [SerializeField] private float acceleration;
 
     private CharacterController controller;
     public Rigidbody rb;
 
     public float fallMultiplier = 5.0f;
     //private Animator anim;
+
+    private float moveZ;
+    private float moveX;
+
 
     private void Start()
     {
@@ -59,16 +64,11 @@ public class PlayerMovement : MonoBehaviour
             isGrounded = false;
         }
 
-
-        if (isGrounded && velocity.y < 0)
-        {
-            velocity.y = -2f;
-        }
-        float moveZ = Input.GetAxis("Vertical") * moveSpeed;
-        float moveX = Input.GetAxis("Horizontal") * moveSpeed;
         if (isGrounded)
         {
             print("grounded");
+            moveZ = Input.GetAxis("Vertical") * moveSpeed;
+            moveX = Input.GetAxis("Horizontal") * moveSpeed;
             //anim.SetBool("grounded", true);
             if (moveDirection != Vector3.zero && !Input.GetKey(KeyCode.LeftShift))
             {
@@ -95,20 +95,20 @@ public class PlayerMovement : MonoBehaviour
             print("NOT grounded");
             //if lemon is in the air, use this version of movement so he goes faster
             //and has more air control
-            moveZ = Input.GetAxis("Vertical") * airSpeed;
-            moveX = Input.GetAxis("Horizontal") * airSpeed;
+            //moveZ = Input.GetAxis("Vertical") * airSpeed;
+            //moveX = Input.GetAxis("Horizontal") * airSpeed;
             //anim.SetBool("grounded", false);
         }
 
         BetterJump();
 
-        moveDirection = new Vector3(moveX, 0, moveZ);
+        moveDirection = new Vector3(moveX, velocity.y, moveZ);
         moveDirection = transform.TransformDirection(moveDirection);
 
         controller.Move(moveDirection*Time.deltaTime);
 
         //velocity.y += gravity * Time.deltaTime;
-        controller.Move(velocity * Time.deltaTime);
+        //controller.Move(velocity * Time.deltaTime);
     }
 
     private void Idle()
@@ -143,6 +143,10 @@ public class PlayerMovement : MonoBehaviour
         else if (rb.velocity.y > 0)
         {
             velocity.y += gravity * Time.deltaTime;
+            if(!Input.GetKeyDown(KeyCode.Space))
+            {
+                velocity.y += 1;
+            }
         }
     }
 }

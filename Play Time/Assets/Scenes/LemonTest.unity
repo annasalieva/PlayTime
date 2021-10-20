@@ -1269,6 +1269,14 @@ PrefabInstance:
       propertyPath: rb
       value: 
       objectReference: {fileID: 554104702}
+    - target: {fileID: 9075109056288773933, guid: fa2b50fd40b6f9e46b11e002ff049c9c, type: 3}
+      propertyPath: airSpeed
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 9075109056288773933, guid: fa2b50fd40b6f9e46b11e002ff049c9c, type: 3}
+      propertyPath: jumpHeight
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 9075109056288773938, guid: fa2b50fd40b6f9e46b11e002ff049c9c, type: 3}
       propertyPath: m_RootOrder
       value: 5
@@ -1316,6 +1324,14 @@ PrefabInstance:
     - target: {fileID: 9075109056288773942, guid: fa2b50fd40b6f9e46b11e002ff049c9c, type: 3}
       propertyPath: m_Name
       value: Lemon
+      objectReference: {fileID: 0}
+    - target: {fileID: 9075109056288773943, guid: fa2b50fd40b6f9e46b11e002ff049c9c, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9075109056288773943, guid: fa2b50fd40b6f9e46b11e002ff049c9c, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fa2b50fd40b6f9e46b11e002ff049c9c, type: 3}
