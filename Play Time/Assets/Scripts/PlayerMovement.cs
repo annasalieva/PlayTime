@@ -21,6 +21,9 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float jumpHeight;
 
     private CharacterController controller;
+    public Rigidbody rb;
+
+    public float fallMultiplier = 5.0f;
     //private Animator anim;
 
     private void Start()
@@ -96,12 +99,15 @@ public class PlayerMovement : MonoBehaviour
             moveX = Input.GetAxis("Horizontal") * airSpeed;
             //anim.SetBool("grounded", false);
         }
+
+        BetterJump();
+
         moveDirection = new Vector3(moveX, 0, moveZ);
         moveDirection = transform.TransformDirection(moveDirection);
 
         controller.Move(moveDirection*Time.deltaTime);
 
-        velocity.y += gravity * Time.deltaTime;
+        //velocity.y += gravity * Time.deltaTime;
         controller.Move(velocity * Time.deltaTime);
     }
 
@@ -125,5 +131,18 @@ public class PlayerMovement : MonoBehaviour
     private void Jump()
     {
         velocity.y = Mathf.Sqrt(jumpHeight * -2 * gravity);
+        //velocity.y = ;
+    }
+    private void BetterJump()
+    {
+        if(rb.velocity.y < 0)
+        {
+            velocity.y += gravity * (fallMultiplier - 1) * Time.deltaTime;
+             
+        }
+        else if (rb.velocity.y > 0)
+        {
+            velocity.y += gravity * Time.deltaTime;
+        }
     }
 }
