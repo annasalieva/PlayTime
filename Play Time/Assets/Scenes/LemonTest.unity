@@ -1260,6 +1260,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 9075109056288773932, guid: fa2b50fd40b6f9e46b11e002ff049c9c, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 9075109056288773938, guid: fa2b50fd40b6f9e46b11e002ff049c9c, type: 3}
       propertyPath: m_RootOrder
       value: 5
@@ -1303,6 +1307,14 @@ PrefabInstance:
     - target: {fileID: 9075109056288773938, guid: fa2b50fd40b6f9e46b11e002ff049c9c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9075109056288773939, guid: fa2b50fd40b6f9e46b11e002ff049c9c, type: 3}
+      propertyPath: m_Drag
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 9075109056288773939, guid: fa2b50fd40b6f9e46b11e002ff049c9c, type: 3}
+      propertyPath: m_CollisionDetection
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9075109056288773942, guid: fa2b50fd40b6f9e46b11e002ff049c9c, type: 3}
       propertyPath: m_Name
