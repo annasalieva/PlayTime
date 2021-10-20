@@ -100,7 +100,7 @@ public class orangeMovement : MonoBehaviour
             {
                 Walk();
             }
-            else if (moveDirection != Vector3.zero && Input.GetKey(KeyCode.LeftShift))
+            else if (moveDirection != Vector3.zero && Input.GetKey(KeyCode.LeftShift) && !isGrabbing)
             {
                 Run();
             }
@@ -122,17 +122,17 @@ public class orangeMovement : MonoBehaviour
                 {
                     if(grabbableObject.parent != this.transform)
                     {
-                        grabbableObject.SetParent(this.transform);
+                        // grabbableObject.SetParent(this.transform);
                     }
                 }
                 
                 isGrabbing = true;
             } else {
-                if(grabbableObject != null)
-                {
-                    grabbableObject.SetParent(null);
+                // if(grabbableObject != null)
+                // {
+                //     // grabbableObject.SetParent(null);
                     isGrabbing = false;
-                }
+                // }
             }
         }
         else
@@ -149,9 +149,13 @@ public class orangeMovement : MonoBehaviour
 
 
         //Movement stuff aka controller.move
-        if(isGrounded)
+        if(isGrounded && !isGrabbing)
         {
             controller.Move(moveDirection* moveSpeed *Time.deltaTime);
+        }
+        else if(isGrounded && isGrabbing) //Movement is slowed when moving objects
+        {
+                controller.Move(moveDirection* (moveSpeed/4) *Time.deltaTime);
         }
         else
         {
@@ -166,6 +170,13 @@ public class orangeMovement : MonoBehaviour
                 Quaternion rotateDirection = Quaternion.LookRotation(moveDirection, Vector3.up);
                 transform.rotation = Quaternion.RotateTowards(transform.rotation, rotateDirection, rotationSpeed * Time.deltaTime);
             }
+        } else {
+            if(grabbableObject != null)
+                {
+                    Vector3 objectDirection =  this.transform.position - grabbableObject.transform.position;
+                    objectDirection = Vector3.Normalize(objectDirection);
+                    grabbableObject.GetComponent<Rigidbody>().MovePosition(grabbableObject.position+objectDirection*moveSpeed*Time.deltaTime);
+                }
         }
 
         //Falling aka vertical movement
