@@ -25,7 +25,8 @@ public class orangeMovement : MonoBehaviour
 
     [SerializeField] private float gravity = 9.81f;
 
-    //[SerializeField] private float jumpHeight;
+
+    [SerializeField] private GameObject grabJoint;
 
     private CharacterController controller;
     //private Animator anim;
@@ -44,7 +45,6 @@ public class orangeMovement : MonoBehaviour
     private void Move()
     {
         //make sure to put any floors on the "ground" layer
-        //isGrounded = Physics.CheckSphere(transform.position, groundCheckDistance,groundMask);
         Debug.DrawRay(transform.position, new Vector3(0, -groundCheckDistance, 0), Color.green);
         Ray groundcast = new Ray(transform.position, -Vector3.up);
         if (Physics.Raycast(groundcast, out Hit, groundCheckDistance))
@@ -109,40 +109,28 @@ public class orangeMovement : MonoBehaviour
                 Idle();
             }
 
-            // moveDirection *= moveSpeed;
-
-            // if(Input.GetKeyDown(KeyCode.Space))
-            // {
-                //  Jump();
-            // }
-
             if((Input.GetKey(KeyCode.Space) && canGrab) || (Input.GetKey(KeyCode.Space) && isGrabbing))
             {
                 if(grabbableObject != null)
                 {
                     if(grabbableObject.parent != this.transform)
                     {
-                        // grabbableObject.SetParent(this.transform);
+                        grabJoint.GetComponent<FixedJoint>().connectedBody = grabbableObject.gameObject.GetComponent<Rigidbody>();
                     }
                 }
                 
                 isGrabbing = true;
             } else {
-                // if(grabbableObject != null)
-                // {
-                //     // grabbableObject.SetParent(null);
+                if(grabbableObject != null)
+                {
+                    grabJoint.GetComponent<FixedJoint>().connectedBody = null;
                     isGrabbing = false;
-                // }
+                }
             }
         }
         else
         {
-            print("NOT grounded");
-            //if lemon is in the air, use this version of movement so he goes faster
-            //and has more air control
-            // moveZ = Input.GetAxis("Vertical");
-            // moveX = Input.GetAxis("Horizontal");
-            //anim.SetBool("grounded", false);
+
         }
         moveDirection = new Vector3(moveX, 0, moveZ);
         moveDirection.Normalize();
@@ -173,9 +161,7 @@ public class orangeMovement : MonoBehaviour
         } else {
             if(grabbableObject != null)
                 {
-                    Vector3 objectDirection =  this.transform.position - grabbableObject.transform.position;
-                    objectDirection = Vector3.Normalize(objectDirection);
-                    grabbableObject.GetComponent<Rigidbody>().MovePosition(grabbableObject.position+objectDirection*moveSpeed*Time.deltaTime);
+                    
                 }
         }
 
@@ -200,9 +186,4 @@ public class orangeMovement : MonoBehaviour
         moveSpeed = runSpeed;
         //anim.SetFloat("Speed", 1, 0.1f, Time.deltaTime);
     }
-
-    // private void Jump()
-    // {
-    //     velocity.y = Mathf.Sqrt(jumpHeight * -2 * gravity);
-    // }
 }
