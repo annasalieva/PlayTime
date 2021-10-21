@@ -21,7 +21,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float acceleration;
 
     private CharacterController controller;
-    public Rigidbody rb;
+    //public Rigidbody rb;
     private float current_speed;
 
     public float fallMultiplier = 5.0f;
@@ -29,7 +29,8 @@ public class PlayerMovement : MonoBehaviour
 
     private float moveZ;
     private float moveX;
-
+    private float starting_y;
+    private float current_y;
     private bool jumpKeyHeld;
 
 
@@ -43,6 +44,8 @@ public class PlayerMovement : MonoBehaviour
     private void Update()
     {
         Move();
+        //print(controller.velocity);
+        current_y = transform.position.y;
     }
 
     private void Move()
@@ -107,7 +110,9 @@ public class PlayerMovement : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 jumpKeyHeld = true;
+                starting_y = transform.position.y;
                 Jump();
+                print("getting start pos");
             }
         }
         else
@@ -153,24 +158,30 @@ public class PlayerMovement : MonoBehaviour
 
     private void Jump()
     {
-        velocity.y = Mathf.Sqrt(jumpHeight * -2 * gravity);
+        velocity.y = Mathf.Sqrt(jumpHeight * -2 * gravity)*2;
     }
 
     private void BetterJump()
     {
-        if(rb.velocity.y < 0)
+        if(controller.velocity.y <= 0)
         {
             velocity.y += gravity * (fallMultiplier - 1) * Time.deltaTime;
-             
+            print("hey its me");
         }
-        else if (rb.velocity.y > 0)
+        else if (controller.velocity.y > 0)
         {
-            velocity.y += gravity * Time.deltaTime;
+            velocity.y += gravity * Time.deltaTime * 2;
+            print("velocity is more");
         }
         
-        if(jumpKeyHeld && velocity.y < 10)
+        if(jumpKeyHeld && (current_y - starting_y < 3))
         {
-            velocity.y += 5;
+            print("hit max height");
+            velocity.y += 0.05f;
+        }
+        else if(velocity.y > 10)
+        {
+            velocity.y += gravity * (fallMultiplier - 1) * Time.deltaTime;
         }
     }
 }
