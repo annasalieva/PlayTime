@@ -14,4 +14,17 @@ public class SceneLoader : MonoBehaviour
     {
         SceneManager.LoadScene("OrangeTest");
     }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            reloadCurrentScene();
+        }
+    }
+    public void reloadCurrentScene()
+    {
+        Scene scene = SceneManager.GetActiveScene();
+        SceneManager.LoadScene(scene.name);
+    }
 }
