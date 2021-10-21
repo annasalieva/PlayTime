@@ -114,7 +114,7 @@ public class orangeMovement : MonoBehaviour
             {
                 if(grabbableObject != null)
                 {
-                    if(grabbableObject.parent != this.transform)
+                    if(grabJoint.GetComponent<FixedJoint>().connectedBody != grabbableObject.gameObject.GetComponent<Rigidbody>())
                     {
                         grabJoint.GetComponent<FixedJoint>().connectedBody = grabbableObject.gameObject.GetComponent<Rigidbody>();
                     }
@@ -159,11 +159,6 @@ public class orangeMovement : MonoBehaviour
                 Quaternion rotateDirection = Quaternion.LookRotation(moveDirection, Vector3.up);
                 transform.rotation = Quaternion.RotateTowards(transform.rotation, rotateDirection, rotationSpeed * Time.deltaTime);
             }
-        } else {
-            if(grabbableObject != null)
-                {
-                    
-                }
         }
 
         //Falling aka vertical movement
