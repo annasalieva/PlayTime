@@ -130,7 +130,6 @@ MonoBehaviour:
   moveSpeed: 15
   walkSpeed: 5
   runSpeed: 20
-  airSpeed: 7.5
   isGrounded: 0
   groundCheckDistance: 1.25
   groundMask:
@@ -138,6 +137,9 @@ MonoBehaviour:
     m_Bits: 64
   gravity: -9.81
   jumpHeight: 4
+  acceleration: 0
+  rb: {fileID: 0}
+  fallMultiplier: 5
 --- !u!143 &9075109056288773932
 CharacterController:
   m_ObjectHideFlags: 0

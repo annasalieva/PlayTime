@@ -30,6 +30,9 @@ public class PlayerMovement : MonoBehaviour
     private float moveZ;
     private float moveX;
 
+    private bool jumpKeyHeld;
+
+
 
     private void Start()
     {
@@ -103,6 +106,7 @@ public class PlayerMovement : MonoBehaviour
             }
             if (Input.GetKeyDown(KeyCode.Space))
             {
+                jumpKeyHeld = true;
                 Jump();
             }
         }
@@ -110,9 +114,16 @@ public class PlayerMovement : MonoBehaviour
         {
             //print("NOT grounded");
             //anim.SetBool("grounded", false);
+
+            BetterJump();
+        }
+        if (Input.GetKeyUp(KeyCode.Space))
+        {
+            jumpKeyHeld = false;
+            print("button up");
         }
 
-        BetterJump();
+        
 
         moveDirection = new Vector3(moveX, velocity.y, moveZ);
         moveDirection = transform.TransformDirection(moveDirection);
@@ -155,14 +166,11 @@ public class PlayerMovement : MonoBehaviour
         else if (rb.velocity.y > 0)
         {
             velocity.y += gravity * Time.deltaTime;
-            if(!Input.GetKeyDown(KeyCode.Space))
-            {
-                velocity.y += 1;
-            }
         }
-        else
+        
+        if(jumpKeyHeld && velocity.y < 10)
         {
-            velocity.y = gravity;
+            velocity.y += 5;
         }
     }
 }
