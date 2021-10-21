@@ -50,6 +50,7 @@ public class PlayerMovement : MonoBehaviour
         Ray groundcast = new Ray(transform.position, -Vector3.up);
         if (Physics.Raycast(groundcast, out Hit, groundCheckDistance))
         {
+            print(Hit.transform.gameObject.name);
             if (Hit.transform.gameObject.layer == LayerMask.NameToLayer("Ground"))
             {
                 isGrounded = true;
@@ -61,12 +62,13 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
+            print("racyast has not hit anything");
             isGrounded = false;
         }
 
         if (isGrounded)
         {
-            print("grounded");
+            //print("grounded");
             if(Input.GetAxis("Vertical") != 0 || Input.GetAxis("Horizontal") != 0) //getting vertical or horizontal input
             {
                 if (current_speed < moveSpeed)
@@ -91,10 +93,7 @@ public class PlayerMovement : MonoBehaviour
 
                 moveDirection *= current_speed;
 
-                if (Input.GetKeyDown(KeyCode.Space))
-                {
-                    Jump();
-                }
+                
             }
             else if(current_speed > 0 && (Input.GetAxis("Vertical") == 0 || Input.GetAxis("Horizontal") == 0))//no input
             {
@@ -102,11 +101,14 @@ public class PlayerMovement : MonoBehaviour
                 moveZ = current_speed;
                 moveX = current_speed;
             }
-            
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                Jump();
+            }
         }
         else
         {
-            print("NOT grounded");
+            //print("NOT grounded");
             //anim.SetBool("grounded", false);
         }
 
@@ -141,8 +143,8 @@ public class PlayerMovement : MonoBehaviour
     private void Jump()
     {
         velocity.y = Mathf.Sqrt(jumpHeight * -2 * gravity);
-        //velocity.y = ;
     }
+
     private void BetterJump()
     {
         if(rb.velocity.y < 0)
@@ -157,6 +159,10 @@ public class PlayerMovement : MonoBehaviour
             {
                 velocity.y += 1;
             }
+        }
+        else
+        {
+            velocity.y = gravity;
         }
     }
 }

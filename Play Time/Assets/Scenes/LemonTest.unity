@@ -1274,12 +1274,20 @@ PrefabInstance:
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 9075109056288773933, guid: fa2b50fd40b6f9e46b11e002ff049c9c, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9075109056288773933, guid: fa2b50fd40b6f9e46b11e002ff049c9c, type: 3}
       propertyPath: jumpHeight
       value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 9075109056288773933, guid: fa2b50fd40b6f9e46b11e002ff049c9c, type: 3}
       propertyPath: acceleration
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 9075109056288773933, guid: fa2b50fd40b6f9e46b11e002ff049c9c, type: 3}
+      propertyPath: groundCheckDistance
+      value: 1.125
       objectReference: {fileID: 0}
     - target: {fileID: 9075109056288773938, guid: fa2b50fd40b6f9e46b11e002ff049c9c, type: 3}
       propertyPath: m_RootOrder
@@ -1331,11 +1339,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9075109056288773943, guid: fa2b50fd40b6f9e46b11e002ff049c9c, type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9075109056288773943, guid: fa2b50fd40b6f9e46b11e002ff049c9c, type: 3}
       propertyPath: m_IsTrigger
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 9075109056288773943, guid: fa2b50fd40b6f9e46b11e002ff049c9c, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: fa2b50fd40b6f9e46b11e002ff049c9c, type: 3}
