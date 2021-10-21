@@ -21,6 +21,7 @@ public class orangeMovement : MonoBehaviour
     [SerializeField] private bool canGrab;
     [SerializeField] private bool isGrabbing;
     [SerializeField] private float grabCheckDistance = 1.5f;
+    [SerializeField] private float grabSpeedReduction = .25f;
     [SerializeField] private Transform grabbableObject;
 
     [SerializeField] private float gravity = 9.81f;
@@ -143,7 +144,7 @@ public class orangeMovement : MonoBehaviour
         }
         else if(isGrounded && isGrabbing) //Movement is slowed when moving objects
         {
-                controller.Move(moveDirection* (moveSpeed/4) *Time.deltaTime);
+                controller.Move(moveDirection* (moveSpeed * grabSpeedReduction) *Time.deltaTime);
         }
         else
         {
@@ -185,5 +186,38 @@ public class orangeMovement : MonoBehaviour
     {
         moveSpeed = runSpeed;
         //anim.SetFloat("Speed", 1, 0.1f, Time.deltaTime);
+    }
+
+
+    //treat the controller like a rigidbody when running into objects and grabbed onto them.
+        private void OnControllerColliderHit(ControllerColliderHit hit)
+    {
+        if(isGrabbing == true)
+        {
+            Rigidbody body = hit.collider.attachedRigidbody;
+
+            // no rigidbody
+            if (body == null || body.isKinematic)
+            {
+                return;
+            }
+
+            // We dont want to push objects below us
+            if (hit.moveDirection.y < -0.3)
+            {
+                return;
+            }
+
+            // Calculate push direction from move direction,
+            // we only push objects to the sides never up and down
+            Vector3 pushDir = new Vector3(hit.moveDirection.x, 0, hit.moveDirection.z);
+            Vector3.Normalize(pushDir);
+
+            // If you know how fast your character is trying to move,
+            // then you can also multiply the push velocity by that.
+
+            // Apply the push
+            body.velocity = pushDir * moveSpeed;
+        }
     }
 }
