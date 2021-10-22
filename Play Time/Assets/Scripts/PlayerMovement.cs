@@ -7,8 +7,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float moveSpeed = 10;
     [SerializeField] private float walkSpeed = 5;
     [SerializeField] private float runSpeed = 20;
-    [SerializeField] private float airSpeed = 10;
-
+    
     private Vector3 moveDirection;
     private Vector3 velocity;
     private RaycastHit Hit;
@@ -19,12 +18,22 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float gravity = 9.81f;
 
     [SerializeField] private float jumpHeight;
+    [SerializeField] private float acceleration;
 
     private CharacterController controller;
-    public Rigidbody rb;
+    //public Rigidbody rb;
+    private float current_speed;
 
     public float fallMultiplier = 5.0f;
     //private Animator anim;
+
+    private float moveZ;
+    private float moveX;
+    private float starting_y;
+    private float current_y;
+    private bool jumpKeyHeld;
+
+
 
     private void Start()
     {
@@ -35,6 +44,8 @@ public class PlayerMovement : MonoBehaviour
     private void Update()
     {
         Move();
+        //print(controller.velocity);
+        current_y = transform.position.y;
     }
 
     private void Move()
@@ -45,6 +56,7 @@ public class PlayerMovement : MonoBehaviour
         Ray groundcast = new Ray(transform.position, -Vector3.up);
         if (Physics.Raycast(groundcast, out Hit, groundCheckDistance))
         {
+            print(Hit.transform.gameObject.name);
             if (Hit.transform.gameObject.layer == LayerMask.NameToLayer("Ground"))
             {
                 isGrounded = true;
@@ -56,59 +68,75 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
+            print("racyast has not hit anything");
             isGrounded = false;
         }
 
-
-        if (isGrounded && velocity.y < 0)
-        {
-            velocity.y = -2f;
-        }
-        float moveZ = Input.GetAxis("Vertical") * moveSpeed;
-        float moveX = Input.GetAxis("Horizontal") * moveSpeed;
         if (isGrounded)
         {
-            print("grounded");
-            //anim.SetBool("grounded", true);
-            if (moveDirection != Vector3.zero && !Input.GetKey(KeyCode.LeftShift))
+            //print("grounded");
+            if(Input.GetAxis("Vertical") != 0 || Input.GetAxis("Horizontal") != 0) //getting vertical or horizontal input
             {
-                Walk();
-            }
-            else if (moveDirection != Vector3.zero && Input.GetKey(KeyCode.LeftShift))
-            {
-                Run();
-            }
-            else if (moveDirection == Vector3.zero)
-            {
-                Idle();
-            }
+                if (current_speed < moveSpeed)
+                {
+                    current_speed += acceleration;
+                }
+                moveZ = Input.GetAxis("Vertical") * current_speed;
+                moveX = Input.GetAxis("Horizontal") * current_speed;
+                //anim.SetBool("grounded", true);
+                if (moveDirection != Vector3.zero && !Input.GetKey(KeyCode.LeftShift))
+                {
+                    Walk();
+                }
+                else if (moveDirection != Vector3.zero && Input.GetKey(KeyCode.LeftShift))
+                {
+                    Run();
+                }
+                else if (moveDirection == Vector3.zero)
+                {
+                    Idle();
+                }
 
-            moveDirection *= moveSpeed;
+                moveDirection *= current_speed;
 
-            if(Input.GetKeyDown(KeyCode.Space))
+                
+            }
+            else if(current_speed > 0 && (Input.GetAxis("Vertical") == 0 || Input.GetAxis("Horizontal") == 0))//no input
             {
+                current_speed -= acceleration;
+                moveZ = current_speed;
+                moveX = current_speed;
+            }
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                jumpKeyHeld = true;
+                starting_y = transform.position.y;
                 Jump();
+                print("getting start pos");
             }
         }
         else
         {
-            print("NOT grounded");
-            //if lemon is in the air, use this version of movement so he goes faster
-            //and has more air control
-            moveZ = Input.GetAxis("Vertical") * airSpeed;
-            moveX = Input.GetAxis("Horizontal") * airSpeed;
+            //print("NOT grounded");
             //anim.SetBool("grounded", false);
+
+            BetterJump();
+        }
+        if (Input.GetKeyUp(KeyCode.Space))
+        {
+            jumpKeyHeld = false;
+            print("button up");
         }
 
-        BetterJump();
+        
 
-        moveDirection = new Vector3(moveX, 0, moveZ);
+        moveDirection = new Vector3(moveX, velocity.y, moveZ);
         moveDirection = transform.TransformDirection(moveDirection);
 
         controller.Move(moveDirection*Time.deltaTime);
 
         //velocity.y += gravity * Time.deltaTime;
-        controller.Move(velocity * Time.deltaTime);
+        //controller.Move(velocity * Time.deltaTime);
     }
 
     private void Idle()
@@ -130,19 +158,30 @@ public class PlayerMovement : MonoBehaviour
 
     private void Jump()
     {
-        velocity.y = Mathf.Sqrt(jumpHeight * -2 * gravity);
-        //velocity.y = ;
+        velocity.y = Mathf.Sqrt(jumpHeight * -2 * gravity)*2;
     }
+
     private void BetterJump()
     {
-        if(rb.velocity.y < 0)
+        if(controller.velocity.y <= 0)
         {
             velocity.y += gravity * (fallMultiplier - 1) * Time.deltaTime;
-             
+            print("hey its me");
         }
-        else if (rb.velocity.y > 0)
+        else if (controller.velocity.y > 0)
         {
-            velocity.y += gravity * Time.deltaTime;
+            velocity.y += gravity * Time.deltaTime * 2;
+            print("velocity is more");
+        }
+        
+        if(jumpKeyHeld && (current_y - starting_y < 3))
+        {
+            print("hit max height");
+            velocity.y += 0.05f;
+        }
+        else if(velocity.y > 10)
+        {
+            velocity.y += gravity * (fallMultiplier - 1) * Time.deltaTime;
         }
     }
 }

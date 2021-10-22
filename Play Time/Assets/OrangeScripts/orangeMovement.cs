@@ -21,11 +21,13 @@ public class orangeMovement : MonoBehaviour
     [SerializeField] private bool canGrab;
     [SerializeField] private bool isGrabbing;
     [SerializeField] private float grabCheckDistance = 1.5f;
+    [SerializeField] private float grabSpeedReduction = .25f;
     [SerializeField] private Transform grabbableObject;
 
     [SerializeField] private float gravity = 9.81f;
 
-    //[SerializeField] private float jumpHeight;
+
+    [SerializeField] private GameObject grabJoint;
 
     private CharacterController controller;
     //private Animator anim;
@@ -44,7 +46,6 @@ public class orangeMovement : MonoBehaviour
     private void Move()
     {
         //make sure to put any floors on the "ground" layer
-        //isGrounded = Physics.CheckSphere(transform.position, groundCheckDistance,groundMask);
         Debug.DrawRay(transform.position, new Vector3(0, -groundCheckDistance, 0), Color.green);
         Ray groundcast = new Ray(transform.position, -Vector3.up);
         if (Physics.Raycast(groundcast, out Hit, groundCheckDistance))
@@ -109,40 +110,28 @@ public class orangeMovement : MonoBehaviour
                 Idle();
             }
 
-            // moveDirection *= moveSpeed;
-
-            // if(Input.GetKeyDown(KeyCode.Space))
-            // {
-                //  Jump();
-            // }
-
             if((Input.GetKey(KeyCode.Space) && canGrab) || (Input.GetKey(KeyCode.Space) && isGrabbing))
             {
                 if(grabbableObject != null)
                 {
-                    if(grabbableObject.parent != this.transform)
+                    if(grabJoint.GetComponent<FixedJoint>().connectedBody != grabbableObject.gameObject.GetComponent<Rigidbody>())
                     {
-                        // grabbableObject.SetParent(this.transform);
+                        grabJoint.GetComponent<FixedJoint>().connectedBody = grabbableObject.gameObject.GetComponent<Rigidbody>();
                     }
                 }
                 
                 isGrabbing = true;
             } else {
-                // if(grabbableObject != null)
-                // {
-                //     // grabbableObject.SetParent(null);
+                if(grabbableObject != null)
+                {
+                    grabJoint.GetComponent<FixedJoint>().connectedBody = null;
                     isGrabbing = false;
-                // }
+                }
             }
         }
         else
         {
-            print("NOT grounded");
-            //if lemon is in the air, use this version of movement so he goes faster
-            //and has more air control
-            // moveZ = Input.GetAxis("Vertical");
-            // moveX = Input.GetAxis("Horizontal");
-            //anim.SetBool("grounded", false);
+
         }
         moveDirection = new Vector3(moveX, 0, moveZ);
         moveDirection.Normalize();
@@ -155,7 +144,7 @@ public class orangeMovement : MonoBehaviour
         }
         else if(isGrounded && isGrabbing) //Movement is slowed when moving objects
         {
-                controller.Move(moveDirection* (moveSpeed/4) *Time.deltaTime);
+                controller.Move(moveDirection* (moveSpeed * grabSpeedReduction) *Time.deltaTime);
         }
         else
         {
@@ -170,13 +159,6 @@ public class orangeMovement : MonoBehaviour
                 Quaternion rotateDirection = Quaternion.LookRotation(moveDirection, Vector3.up);
                 transform.rotation = Quaternion.RotateTowards(transform.rotation, rotateDirection, rotationSpeed * Time.deltaTime);
             }
-        } else {
-            if(grabbableObject != null)
-                {
-                    Vector3 objectDirection =  this.transform.position - grabbableObject.transform.position;
-                    objectDirection = Vector3.Normalize(objectDirection);
-                    grabbableObject.GetComponent<Rigidbody>().MovePosition(grabbableObject.position+objectDirection*moveSpeed*Time.deltaTime);
-                }
         }
 
         //Falling aka vertical movement
@@ -201,8 +183,36 @@ public class orangeMovement : MonoBehaviour
         //anim.SetFloat("Speed", 1, 0.1f, Time.deltaTime);
     }
 
-    // private void Jump()
-    // {
-    //     velocity.y = Mathf.Sqrt(jumpHeight * -2 * gravity);
-    // }
+
+    //treat the controller like a rigidbody when running into objects and grabbed onto them.
+        private void OnControllerColliderHit(ControllerColliderHit hit)
+    {
+        if(isGrabbing == true)
+        {
+            Rigidbody body = hit.collider.attachedRigidbody;
+
+            // no rigidbody
+            if (body == null || body.isKinematic)
+            {
+                return;
+            }
+
+            // We dont want to push objects below us
+            if (hit.moveDirection.y < -0.3)
+            {
+                return;
+            }
+
+            // Calculate push direction from move direction,
+            // we only push objects to the sides never up and down
+            Vector3 pushDir = new Vector3(hit.moveDirection.x, 0, hit.moveDirection.z);
+            Vector3.Normalize(pushDir);
+
+            // If you know how fast your character is trying to move,
+            // then you can also multiply the push velocity by that.
+
+            // Apply the push
+            body.velocity = pushDir * moveSpeed;
+        }
+    }
 }
