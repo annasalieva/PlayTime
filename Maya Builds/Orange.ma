@@ -1,6 +1,6 @@
 //Maya ASCII 2019 scene
 //Name: Orange.ma
-//Last modified: Thu, Oct 21, 2021 05:00:35 PM
+//Last modified: Thu, Oct 21, 2021 06:54:18 PM
 //Codeset: UTF-8
 requires maya "2019";
 requires "stereoCamera" "10.0";
@@ -10839,22 +10839,22 @@ createNode joint -n "head" -p "neck";
 		 -0.22585106490163856 6.9919271812105839 -0.2584741632519782 1;
 	setAttr ".radi" 0.5;
 createNode lightLinker -s -n "lightLinker1";
-	rename -uid "C2622C19-044C-2411-6335-98BAF75AEFCB";
+	rename -uid "14904BE9-ED43-25E2-78D4-92B2EEC585C4";
 	setAttr -s 2 ".lnk";
 	setAttr -s 2 ".slnk";
 createNode displayLayerManager -n "layerManager";
-	rename -uid "A626F894-7A4A-3FE8-8C83-69AF88C69A65";
+	rename -uid "773C2662-504A-5E57-BBF8-1392F027D5FA";
 createNode displayLayer -n "defaultLayer";
 	rename -uid "69E57706-A344-D299-6E91-8E8E5FA5539A";
 createNode renderLayerManager -n "renderLayerManager";
-	rename -uid "2A79C25D-854E-2FE9-6FA2-7E91188B8E48";
+	rename -uid "7A100835-DC41-CCE9-C56E-D3B22948A6D9";
 createNode renderLayer -n "defaultRenderLayer";
 	rename -uid "43424591-A048-46A0-99D6-48B5C4BE8B35";
 	setAttr ".g" yes;
 createNode shapeEditorManager -n "shapeEditorManager";
-	rename -uid "E737FF22-A346-7B60-BD38-1FA8C7760563";
+	rename -uid "FAE8148F-0B44-B03E-3D3F-FC841C0C6903";
 createNode poseInterpolatorManager -n "poseInterpolatorManager";
-	rename -uid "1EFF1B2D-9348-CA48-4917-73923B8A9C9F";
+	rename -uid "58C60BAB-E64A-AC36-91EA-0BACE1EA7F29";
 createNode script -n "uiConfigurationScriptNode";
 	rename -uid "09E9FCE1-E444-ABE0-3F14-91B0F0D4C3A1";
 	setAttr ".b" -type "string" (
@@ -13389,8 +13389,7 @@ createNode polyTweak -n "polyTweak1";
 createNode polyTweak -n "polyTweak2";
 	rename -uid "CB179E90-7942-3C3A-0DD3-B19D54C6CB34";
 	setAttr ".uopa" yes;
-	setAttr -s 4 ".tk";
-	setAttr ".tk[1430]" -type "float3" 0 -0.00263398 0.024276599 ;
+	setAttr ".tk[1430]" -type "float3"  0 -0.00263398 0.024276599;
 createNode deleteComponent -n "deleteComponent1";
 	rename -uid "6DBBD1F9-ED45-87A0-324F-F3BB5BD46B18";
 	setAttr ".dc" -type "componentList" 3 "e[2536]" "e[3885]" "e[8332]";
@@ -14672,8 +14671,6 @@ select -ne :defaultResolution;
 select -ne :hardwareRenderGlobals;
 	setAttr ".ctrs" 256;
 	setAttr ".btrs" 512;
-select -ne :ikSystem;
-	setAttr -s 4 ".sol";
 connectAttr ":defaultColorMgtGlobals.cme" "imagePlaneShape1.cme";
 connectAttr ":defaultColorMgtGlobals.cfe" "imagePlaneShape1.cmcf";
 connectAttr ":defaultColorMgtGlobals.cfp" "imagePlaneShape1.cmcp";
