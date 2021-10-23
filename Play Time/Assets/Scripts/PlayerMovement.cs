@@ -53,10 +53,7 @@ public class PlayerMovement : MonoBehaviour
     private void Move()
     {
         //make sure to put any floors on the "ground" layer
-        //isGrounded = Physics.CheckSphere(transform.position, groundCheckDistance,groundMask);
-        Debug.DrawRay(transform.position, new Vector3(0, -groundCheckDistance, 0), Color.green);
-        Ray groundcast = new Ray(transform.position, -Vector3.up);
-        if (Physics.Raycast(groundcast, out Hit, groundCheckDistance))
+        if (Physics.BoxCast(transform.position, transform.lossyScale/2, -Vector3.up, out Hit, transform.rotation, groundCheckDistance))
         {
             print(Hit.transform.gameObject.name);
             if (Hit.transform.gameObject.layer == LayerMask.NameToLayer("Ground"))
