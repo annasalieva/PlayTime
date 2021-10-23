@@ -19,12 +19,14 @@ public class PlayerMovement : MonoBehaviour
 
     [SerializeField] private float jumpHeight;
     [SerializeField] private float acceleration;
+    [SerializeField] private float maxJumpHeight;
 
     private CharacterController controller;
     //public Rigidbody rb;
     private float current_speed;
 
     public float fallMultiplier = 5.0f;
+    
     //private Animator anim;
 
     private float moveZ;
@@ -32,7 +34,7 @@ public class PlayerMovement : MonoBehaviour
     private float starting_y;
     private float current_y;
     private bool jumpKeyHeld;
-
+    //private float jumpMultiplier = 0; 
 
 
     private void Start()
@@ -174,13 +176,14 @@ public class PlayerMovement : MonoBehaviour
             print("velocity is more");
         }
         
-        if(jumpKeyHeld && (current_y - starting_y < 3))
+        if(jumpKeyHeld && (current_y - starting_y < maxJumpHeight))
         {
             print("hit max height");
-            velocity.y += 0.05f;
+            velocity.y = Mathf.Sqrt(jumpHeight * -2 * gravity)*2 + Mathf.Sqrt((current_y-starting_y)/5 * -2 * gravity)*5;
         }
-        else if(velocity.y > 10)
+        else
         {
+            jumpKeyHeld = false;
             velocity.y += gravity * (fallMultiplier - 1) * Time.deltaTime;
         }
     }
