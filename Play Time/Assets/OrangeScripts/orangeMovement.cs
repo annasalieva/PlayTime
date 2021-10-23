@@ -191,28 +191,14 @@ public class orangeMovement : MonoBehaviour
         {
             Rigidbody body = hit.collider.attachedRigidbody;
 
-            // no rigidbody
-            if (body == null || body.isKinematic)
+            if(body != null)
             {
-                return;
+                Vector3 forceDirection = hit.gameObject.transform.position - transform.position;
+                forceDirection.y = 0;
+                forceDirection.Normalize();
+
+                body.AddForceAtPosition(forceDirection*(moveSpeed*grabSpeedReduction), transform.position, ForceMode.Impulse);
             }
-
-            // We dont want to push objects below us
-            if (hit.moveDirection.y < -0.3)
-            {
-                return;
-            }
-
-            // Calculate push direction from move direction,
-            // we only push objects to the sides never up and down
-            Vector3 pushDir = new Vector3(hit.moveDirection.x, 0, hit.moveDirection.z);
-            Vector3.Normalize(pushDir);
-
-            // If you know how fast your character is trying to move,
-            // then you can also multiply the push velocity by that.
-
-            // Apply the push
-            body.velocity = pushDir * moveSpeed;
         }
     }
 }
