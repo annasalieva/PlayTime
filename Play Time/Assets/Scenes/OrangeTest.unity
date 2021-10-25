@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657838, g: 0.49641234, b: 0.57481676, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1113,6 +1113,7 @@ GameObject:
   - component: {fileID: 2105130539}
   - component: {fileID: 2105130542}
   - component: {fileID: 2105130537}
+  - component: {fileID: 2105130538}
   m_Layer: 0
   m_Name: Orange
   m_TagString: orangePlayer
@@ -1138,6 +1139,23 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &2105130538
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2105130536}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 884b6cd55754f01478199e5e2a18a775, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  canGrab: 0
+  isGrabbing: 0
+  grabCheckDistance: 2
+  grabbableObject: {fileID: 0}
+  grabJoint: {fileID: 1196500342}
 --- !u!23 &2105130539
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -1217,8 +1235,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3cdf81128757344408672e8ee87341db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 15
-  walkSpeed: 15
+  moveSpeed: 10
+  walkSpeed: 10
   runSpeed: 20
   airSpeed: 10
   rotationSpeed: 720
@@ -1227,10 +1245,6 @@ MonoBehaviour:
   groundMask:
     serializedVersion: 2
     m_Bits: 64
-  canGrab: 0
-  isGrabbing: 0
-  grabCheckDistance: 3
-  grabSpeedReduction: 0.25
-  grabbableObject: {fileID: 0}
   gravity: -9.81
-  grabJoint: {fileID: 1196500342}
+  isGrabbing: 0
+  grabSpeedReduction: 0.25

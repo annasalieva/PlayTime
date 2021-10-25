@@ -14,21 +14,14 @@ public class orangeMovement : MonoBehaviour
     private Vector3 velocity;
     private RaycastHit Hit;
 
-    [SerializeField] private bool isGrounded;
+    [SerializeField] private bool isGrounded; //used for grab script
     [SerializeField] private float groundCheckDistance = 1.25f;
     [SerializeField] private LayerMask groundMask;
 
-    [SerializeField] private bool canGrab;
-    [SerializeField] private bool isGrabbing;
-    [SerializeField] private float grabCheckDistance = 1.5f;
-    [SerializeField] private float grabSpeedReduction = .25f;
-    [SerializeField] private Transform grabbableObject;
-
     [SerializeField] private float gravity = 9.81f;
 
-
-    [SerializeField] private GameObject grabJoint;
-
+    [SerializeField] private bool isGrabbing; //Used for grab script
+    [SerializeField] private float grabSpeedReduction;
     private CharacterController controller;
     //private Animator anim;
 
@@ -64,29 +57,6 @@ public class orangeMovement : MonoBehaviour
             isGrounded = false;
         }
 
-        //Raycast for checking if objects can be grabbed
-        Vector3 forward = transform.TransformDirection(Vector3.forward) * grabCheckDistance;
-        Debug.DrawRay(transform.position, forward, Color.green);
-        Ray interactCast = new Ray(transform.position, forward);
-        if (Physics.Raycast(interactCast, out Hit, grabCheckDistance))
-        {
-            if (Hit.transform.gameObject.CompareTag("grabbable"))
-            {
-                canGrab = true;
-                grabbableObject = Hit.transform;
-            }
-            else
-            {
-                canGrab = false;
-                grabbableObject = null;
-            }
-        }
-        else
-        {
-            canGrab = false;
-            grabbableObject = null;
-        }
-
         if (isGrounded && velocity.y < 0)
         {
             velocity.y = 0f;
@@ -110,24 +80,6 @@ public class orangeMovement : MonoBehaviour
                 Idle();
             }
 
-            if((Input.GetKey(KeyCode.Space) && canGrab) || (Input.GetKey(KeyCode.Space) && isGrabbing))
-            {
-                if(grabbableObject != null)
-                {
-                    if(grabJoint.GetComponent<FixedJoint>().connectedBody != grabbableObject.gameObject.GetComponent<Rigidbody>())
-                    {
-                        grabJoint.GetComponent<FixedJoint>().connectedBody = grabbableObject.gameObject.GetComponent<Rigidbody>();
-                    }
-                }
-                
-                isGrabbing = true;
-            } else {
-                if(grabbableObject != null)
-                {
-                    grabJoint.GetComponent<FixedJoint>().connectedBody = null;
-                    isGrabbing = false;
-                }
-            }
         }
         else
         {
@@ -183,36 +135,28 @@ public class orangeMovement : MonoBehaviour
         //anim.SetFloat("Speed", 1, 0.1f, Time.deltaTime);
     }
 
-
-    //treat the controller like a rigidbody when running into objects and grabbed onto them.
-        private void OnControllerColliderHit(ControllerColliderHit hit)
+    public float fetchMoveSpeed()
     {
-        if(isGrabbing == true)
-        {
-            Rigidbody body = hit.collider.attachedRigidbody;
+        return moveSpeed;
+    }
 
-            // no rigidbody
-            if (body == null || body.isKinematic)
-            {
-                return;
-            }
+    public float fetchGrabSpeed()
+    {
+        return grabSpeedReduction;
+    }
 
-            // We dont want to push objects below us
-            if (hit.moveDirection.y < -0.3)
-            {
-                return;
-            }
+    public bool fetchGrab()
+    {
+        return isGrabbing;
+    }
 
-            // Calculate push direction from move direction,
-            // we only push objects to the sides never up and down
-            Vector3 pushDir = new Vector3(hit.moveDirection.x, 0, hit.moveDirection.z);
-            Vector3.Normalize(pushDir);
+    public void setGrab(bool grabState)
+    {
+        isGrabbing = grabState;
+    }
 
-            // If you know how fast your character is trying to move,
-            // then you can also multiply the push velocity by that.
-
-            // Apply the push
-            body.velocity = pushDir*(moveSpeed*(grabSpeedReduction*2)); //Testing temporary variable
-        }
+    public bool fetchGround()
+    {
+        return isGrounded;
     }
 }
