@@ -348,7 +348,7 @@ MonoBehaviour:
   runSpeed: 13
   rotationSpeed: 700
   isGrounded: 0
-  groundCheckDistance: 500
+  groundCheckDistance: 2
   groundMask:
     serializedVersion: 2
     m_Bits: 64
@@ -570,8 +570,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 497456766}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 11.7, y: -5.4403, z: 6.28}
-  m_LocalScale: {x: 1.1875, y: 7.406913, z: 0.65}
+  m_LocalPosition: {x: 11.7, y: -7.52, z: 6.28}
+  m_LocalScale: {x: 1.1875, y: 16.451628, z: 0.65}
   m_Children:
   - {fileID: 1360495827}
   - {fileID: 157429751}
@@ -844,11 +844,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 534796331}
   m_LocalRotation: {x: 0.043619394, y: 0.000000014901161, z: -0.000000007450581, w: 0.9990483}
-  m_LocalPosition: {x: 0, y: 7.08, z: -20.07}
+  m_LocalPosition: {x: 0, y: 1.6834002, z: -12.326599}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 5, y: 0, z: 0}
 --- !u!1 &752202089
 GameObject:
@@ -2249,7 +2249,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
 --- !u!1 &2006606748
 GameObject:

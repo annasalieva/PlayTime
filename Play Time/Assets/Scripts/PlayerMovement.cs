@@ -55,12 +55,13 @@ public class PlayerMovement : MonoBehaviour
     {
         //make sure to put any floors on the "ground" layer
         Debug.DrawRay(transform.position, -Vector3.up, Color.red);
-        if (Physics.BoxCast(transform.position + new Vector3(0,-transform.position.y,0), transform.lossyScale/2, -Vector3.up, out Hit, transform.rotation, groundCheckDistance))
+        if (Physics.BoxCast(transform.position + new Vector3(0,2,0), transform.lossyScale/2, -Vector3.up, out Hit, transform.rotation, groundCheckDistance))
         {
-            print(Hit.transform.gameObject.name);
+            
             if (Hit.transform.gameObject.layer == LayerMask.NameToLayer("Ground"))
             {
                 isGrounded = true;
+                print("grounded");
             }
             else
             {
@@ -123,6 +124,7 @@ public class PlayerMovement : MonoBehaviour
 
             BetterJump();
         }
+
         if (Input.GetKeyUp(KeyCode.Space))
         {
             jumpKeyHeld = false;
