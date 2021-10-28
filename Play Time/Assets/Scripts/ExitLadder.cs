@@ -33,7 +33,7 @@ public class ExitLadder : MonoBehaviour
             ladder.OnLadder = false;
             Debug.Log("Reach End State!");
             doneClimb = true;
-            ladder.player.transform.position = new Vector3(ladder.endPosition.position.x, ladder.endPosition.position.y, ladder.endPosition.position.z);
+            ladder.player.transform.position = ladder.endPosition.transform.position;
             Debug.Log("Set End State");
 
         }
