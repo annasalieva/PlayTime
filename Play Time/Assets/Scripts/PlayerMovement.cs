@@ -54,7 +54,8 @@ public class PlayerMovement : MonoBehaviour
     private void Move()
     {
         //make sure to put any floors on the "ground" layer
-        if (Physics.BoxCast(transform.position, transform.lossyScale/2, -Vector3.up, out Hit, transform.rotation, groundCheckDistance))
+        Debug.DrawRay(transform.position, -Vector3.up, Color.red);
+        if (Physics.BoxCast(transform.position + new Vector3(0,-transform.position.y,0), transform.lossyScale/2, -Vector3.up, out Hit, transform.rotation, groundCheckDistance))
         {
             print(Hit.transform.gameObject.name);
             if (Hit.transform.gameObject.layer == LayerMask.NameToLayer("Ground"))
@@ -166,7 +167,7 @@ public class PlayerMovement : MonoBehaviour
         if(controller.velocity.y <= 0)
         {
             velocity.y += gravity * (fallMultiplier - 1) * Time.deltaTime;
-            print("hey its me");
+            print("velocity.y <= 0");
         }
         else if (controller.velocity.y > 0)
         {
