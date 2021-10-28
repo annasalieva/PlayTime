@@ -5,7 +5,7 @@ ModelImporter:
   internalIDToNameTable: []
   externalObjects: {}
   materials:
-    materialImportMode: 2
+    materialImportMode: 1
     materialName: 0
     materialSearch: 1
     materialLocation: 1
@@ -23,7 +23,7 @@ ModelImporter:
     animationDoRetargetingWarnings: 0
     importAnimatedCustomProperties: 0
     importConstraints: 0
-    animationCompression: 1
+    animationCompression: 3
     animationRotationError: 0.5
     animationPositionError: 0.5
     animationScaleError: 0.5
@@ -76,8 +76,251 @@ ModelImporter:
   importAnimation: 1
   humanDescription:
     serializedVersion: 3
-    human: []
-    skeleton: []
+    human:
+    - boneName: Orange_pelvis
+      humanName: Hips
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Orange_left_hip
+      humanName: LeftUpperLeg
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Orange_right_hip
+      humanName: RightUpperLeg
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Orange_left_knee
+      humanName: LeftLowerLeg
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Orange_right_knee
+      humanName: RightLowerLeg
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Orange_left_ankle
+      humanName: LeftFoot
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Orange_right_ankle
+      humanName: RightFoot
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Orange_spine_1
+      humanName: Spine
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Orange_neck
+      humanName: Neck
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Orange_head
+      humanName: Head
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Orange_left_shoulder
+      humanName: LeftUpperArm
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Orange_right_shoulder
+      humanName: RightUpperArm
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Orange_left_knee 1
+      humanName: LeftLowerArm
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Orange_right_knee 1
+      humanName: RightLowerArm
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Orange_left_hand
+      humanName: LeftHand
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Orange_right_hand
+      humanName: RightHand
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    skeleton:
+    - name: OrangeModel(Clone)
+      parentName: 
+      position: {x: 0, y: 0, z: 0}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: OrangModel
+      parentName: OrangeModel(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 0.115280144, y: 0.115280144, z: 0.115280144}
+    - name: Orange
+      parentName: OrangModel
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: OrangeSkeleton
+      parentName: OrangeModel(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 0.115280144, y: 0.115280144, z: 0.115280144}
+    - name: Orange_pelvis
+      parentName: OrangeSkeleton
+      position: {x: 0.015032408, y: 1.7241251, z: -0.21119373}
+      rotation: {x: -0.00592257, y: -0.023462892, z: 0.2446743, w: 0.9693033}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Orange_left_hip
+      parentName: Orange_pelvis
+      position: {x: -0.72336584, y: -1.3762253e-16, z: -2.2551405e-17}
+      rotation: {x: 0.019758819, y: 0.01397044, z: 0.4445706, w: 0.8954169}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Orange_left_knee
+      parentName: Orange_left_hip
+      position: {x: -0.69126505, y: 4.440892e-16, z: 1.823936e-17}
+      rotation: {x: 9.630751e-35, y: 5.6836354e-17, z: 0.015122199, w: 0.9998857}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Orange_left_ankle
+      parentName: Orange_left_knee
+      position: {x: -0.53290576, y: 0.004902192, z: 4.9265392e-17}
+      rotation: {x: 0.5738674, y: 0.07626362, z: -0.0063313297, w: 0.81536496}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Orange_left_foot
+      parentName: Orange_left_ankle
+      position: {x: -0.29268682, y: -0.0066127493, z: -2.581178e-17}
+      rotation: {x: 0, y: -0, z: -0.6559614, w: 0.7547944}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Orange_right_hip
+      parentName: Orange_pelvis
+      position: {x: 0.36553556, y: -0.5972158, z: -0.029315343}
+      rotation: {x: 0.78896624, y: 0.6139606, z: -0.009796808, w: -0.022108177}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Orange_right_knee
+      parentName: Orange_right_hip
+      position: {x: -0.62270296, y: 0.03153941, z: 9.280216e-18}
+      rotation: {x: 4.6512056e-33, y: -2.242655e-16, z: 0.11144418, w: 0.9937707}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Orange_right_ankle
+      parentName: Orange_right_knee
+      position: {x: -0.62886477, y: 0.0024677492, z: -2.5525415e-16}
+      rotation: {x: 0.6208413, y: 0.007166869, z: 0.008965499, w: 0.7838522}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Orange_right_foot
+      parentName: Orange_right_ankle
+      position: {x: -0.26396587, y: -0.00406521, z: -3.0295526e-17}
+      rotation: {x: 0.8632095, y: 0.5048459, z: -1.430112e-16, w: -2.4452735e-16}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Orange_spine_1
+      parentName: Orange_pelvis
+      position: {x: 0.47406757, y: 0.859759, z: -0.00044699133}
+      rotation: {x: -0.5078171, y: 0.86112505, z: 0.020712398, w: -0.012513226}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Orange_spine_2
+      parentName: Orange_spine_1
+      position: {x: -0.88727826, y: -5.009014e-17, z: -1.2007539e-15}
+      rotation: {x: -1.9259571e-33, y: -7.250453e-16, z: -0.0053189234, w: 0.9999859}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Orange_neck
+      parentName: Orange_spine_2
+      position: {x: -0.35866666, y: 2.2331594e-15, z: -4.7519914e-16}
+      rotation: {x: 0, y: 0, z: 0.0075751054, w: 0.99997133}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Orange_head
+      parentName: Orange_neck
+      position: {x: -0.62301886, y: -5.6162113e-15, z: -7.979728e-16}
+      rotation: {x: -0.49838832, y: 0.866498, z: 0.024153959, w: 0.014384085}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Orange_left_shoulder
+      parentName: Orange_spine_2
+      position: {x: 0.16045614, y: 0.8211579, z: 5.551115e-17}
+      rotation: {x: -0.69081825, y: 0.72301316, z: 0.0027640266, w: 0.0038216745}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Orange_left_knee 1
+      parentName: Orange_left_shoulder
+      position: {x: -0.93366086, y: -0.025209239, z: -2.1333267e-16}
+      rotation: {x: 0.0000060163425, y: -0.00042562434, z: 0.037191413, w: 0.9993081}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Orange_left_hand
+      parentName: Orange_left_knee 1
+      position: {x: -0.90320146, y: 0.034599047, z: -2.5841818e-16}
+      rotation: {x: -0.5652459, y: 0.82492244, z: 5.0511933e-17, w: -3.461133e-17}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Orange_right_shoulder
+      parentName: Orange_spine_2
+      position: {x: 0.103824556, y: -0.70789474, z: 2.4980018e-16}
+      rotation: {x: 0.0049330224, y: -0.0028452629, z: 0.72818094, w: 0.6853614}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Orange_right_knee 1
+      parentName: Orange_right_shoulder
+      position: {x: -0.9110085, y: -6.1062266e-16, z: 7.771561e-16}
+      rotation: {x: -0.000005712265, y: -0.00007480939, z: -0.071543, w: 0.99743754}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Orange_right_hand
+      parentName: Orange_right_knee 1
+      position: {x: -0.9409979, y: 1.6653345e-16, z: 5.828671e-16}
+      rotation: {x: 0, y: 0, z: -0.8256944, w: 0.56411767}
+      scale: {x: 1, y: 1, z: 1}
     armTwist: 0.5
     foreArmTwist: 0.5
     upperLegTwist: 0.5
@@ -88,13 +331,13 @@ ModelImporter:
     globalScale: 1
     rootMotionBoneName: 
     hasTranslationDoF: 0
-    hasExtraRoot: 0
+    hasExtraRoot: 1
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
   autoGenerateAvatarMappingIfUnspecified: 1
-  animationType: 2
+  animationType: 3
   humanoidOversampling: 1
-  avatarSetup: 0
+  avatarSetup: 1
   addHumanoidExtraRootOnlyWhenUsingAvatar: 1
   additionalBone: 0
   userData: 
