@@ -7,7 +7,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float moveSpeed = 10;
     [SerializeField] private float walkSpeed = 5;
     [SerializeField] private float runSpeed = 20;
-    
+    [SerializeField] private float rotationSpeed = 5;
+
     private Vector3 moveDirection;
     private Vector3 velocity;
     private RaycastHit Hit;
@@ -80,8 +81,8 @@ public class PlayerMovement : MonoBehaviour
                 {
                     current_speed += acceleration;
                 }
-                moveZ = Input.GetAxis("Vertical") * current_speed;
-                moveX = Input.GetAxis("Horizontal") * current_speed;
+                moveZ = Input.GetAxisRaw("Vertical") * current_speed;
+                moveX = Input.GetAxisRaw("Horizontal") * current_speed;
                 //anim.SetBool("grounded", true);
                 if (moveDirection != Vector3.zero && !Input.GetKey(KeyCode.LeftShift))
                 {
@@ -130,10 +131,10 @@ public class PlayerMovement : MonoBehaviour
         
 
         moveDirection = new Vector3(moveX, velocity.y, moveZ);
-        moveDirection = transform.TransformDirection(moveDirection);
+        
 
         controller.Move(moveDirection*Time.deltaTime);
-
+        Rotate();
         //velocity.y += gravity * Time.deltaTime;
         //controller.Move(velocity * Time.deltaTime);
     }
@@ -182,6 +183,19 @@ public class PlayerMovement : MonoBehaviour
         {
             jumpKeyHeld = false;
             velocity.y += gravity * (fallMultiplier - 1) * Time.deltaTime;
+        }
+    }
+
+    private void Rotate()
+    {
+        float inputZ = Input.GetAxis("Vertical");
+        float inputX = Input.GetAxis("Horizontal");
+        Vector3 inputDirection = new Vector3(inputX, 0, inputZ);
+        inputDirection.Normalize();
+        if (inputDirection != Vector3.zero)
+        {
+            Quaternion rotateDirection = Quaternion.LookRotation(inputDirection, Vector3.up);
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, rotateDirection, rotationSpeed * Time.deltaTime);
         }
     }
 }
