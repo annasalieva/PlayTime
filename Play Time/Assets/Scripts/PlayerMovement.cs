@@ -171,6 +171,7 @@ public class PlayerMovement : MonoBehaviour
             Quaternion rotateDirection = Quaternion.LookRotation(inputDirection, Vector3.up);
             transform.rotation = Quaternion.RotateTowards(transform.rotation, rotateDirection, rotationSpeed * Time.deltaTime);
         }
+
         anim.SetFloat("Turn", Input.GetAxis("Horizontal") , rotationSpeed * 0.1f, Time.deltaTime);
     }
 
