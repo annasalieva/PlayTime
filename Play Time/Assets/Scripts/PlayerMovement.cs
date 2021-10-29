@@ -47,7 +47,7 @@ public class PlayerMovement : MonoBehaviour
     private void Update()
     {
         checkGrounded();
-        BetterJump();
+        
         Move();
         Rotate();
         current_y = transform.position.y;
@@ -99,6 +99,7 @@ public class PlayerMovement : MonoBehaviour
         else
         {
             print("NOT grounded");
+            BetterJump();
             anim.SetBool("OnGround", false); 
         }
 
@@ -107,8 +108,7 @@ public class PlayerMovement : MonoBehaviour
             jumpKeyHeld = false;
         }
         moveDirection = new Vector3(moveX, 0, moveZ).normalized;
-        moveDirection.y = velocity.y / current_speed;
-
+        controller.Move(velocity * Time.deltaTime);
         controller.Move(moveDirection * current_speed * Time.deltaTime);
     }
 
