@@ -133,10 +133,10 @@ public class PlayerMovement : MonoBehaviour
 
         
 
-        moveDirection = new Vector3(moveX, velocity.y, moveZ);
-        
+        moveDirection = new Vector3(moveX, 0, moveZ).normalized;
+        moveDirection.y = velocity.y / current_speed;
 
-        controller.Move(moveDirection*Time.deltaTime);
+        controller.Move(moveDirection * current_speed * Time.deltaTime);
         Rotate();
         //velocity.y += gravity * Time.deltaTime;
         //controller.Move(velocity * Time.deltaTime);
