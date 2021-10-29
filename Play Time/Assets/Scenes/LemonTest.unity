@@ -348,7 +348,7 @@ MonoBehaviour:
   runSpeed: 13
   rotationSpeed: 200
   isGrounded: 0
-  groundCheckDistance: 2
+  groundCheckDistance: 1.89
   groundMask:
     serializedVersion: 2
     m_Bits: 64
@@ -3036,7 +3036,7 @@ GameObject:
   m_Layer: 0
   m_Name: LemonRigged
   m_TagString: Player
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1

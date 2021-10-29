@@ -14,7 +14,7 @@ public class PlayerMovement : MonoBehaviour
     private RaycastHit Hit;
 
     [SerializeField] private bool isGrounded;
-    [SerializeField] private float groundCheckDistance = 1.25f;
+    [SerializeField] private float groundCheckDistance = 1f;
     [SerializeField] private LayerMask groundMask;
     [SerializeField] private float gravity = 9.81f;
 
@@ -52,30 +52,9 @@ public class PlayerMovement : MonoBehaviour
 
     private void Move()
     {
-        //make sure to put any floors on the "ground" layer
-        Debug.DrawRay(transform.position, -Vector3.up, Color.red);
-        if (Physics.BoxCast(transform.position + new Vector3(0,2,0), transform.lossyScale/2, -Vector3.up, out Hit, transform.rotation, groundCheckDistance))
-        {
-            
-            if (Hit.transform.gameObject.layer == LayerMask.NameToLayer("Ground"))
-            {
-                isGrounded = true;
-                print("grounded");
-            }
-            else
-            {
-                isGrounded = false;
-            }
-        }
-        else
-        {
-            print("racyast has not hit anything");
-            isGrounded = false;
-        }
-
+        checkGrounded();
         if (isGrounded)
         {
-            //print("grounded");
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 jumpKeyHeld = true;
@@ -92,7 +71,7 @@ public class PlayerMovement : MonoBehaviour
                 moveZ = Input.GetAxisRaw("Vertical") * current_speed;
                 moveX = Input.GetAxisRaw("Horizontal") * current_speed;
                 
-                anim.SetBool("OnGround", true);
+                
                 
                 moveDirection *= current_speed;
             }
@@ -121,14 +100,15 @@ public class PlayerMovement : MonoBehaviour
         else
         {
             print("NOT grounded");
-            anim.SetBool("OnGround", false);
-            
+            anim.SetBool("OnGround", false); 
         }
+
+
         BetterJump();
+
         if (Input.GetKeyUp(KeyCode.Space))
         {
             jumpKeyHeld = false;
-            print("button up");
         }
 
         
@@ -138,8 +118,6 @@ public class PlayerMovement : MonoBehaviour
 
         controller.Move(moveDirection * current_speed * Time.deltaTime);
         Rotate();
-        //velocity.y += gravity * Time.deltaTime;
-        //controller.Move(velocity * Time.deltaTime);
     }
 
     private void Idle()
@@ -161,6 +139,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Jump()
     {
+        print("jump");
         velocity.y = Mathf.Sqrt(jumpHeight * -2 * gravity)*2;
     }
 
@@ -169,17 +148,17 @@ public class PlayerMovement : MonoBehaviour
         if(controller.velocity.y <= 0)
         {
             velocity.y += gravity * (fallMultiplier - 1) * Time.deltaTime;
-            print("velocity.y <= 0");
+            //print("velocity.y <= 0");
         }
         else if (controller.velocity.y > 0)
         {
             velocity.y += gravity * Time.deltaTime * 2;
-            print("velocity is more");
+            //print("velocity > 0");
         }
         
         if(jumpKeyHeld && (current_y - starting_y < maxJumpHeight))
         {
-            print("hit max height");
+            //print("hit max height");
             velocity.y = Mathf.Sqrt(jumpHeight * -2 * gravity)*2 + Mathf.Sqrt((current_y-starting_y)/5 * -2 * gravity)*5;
         }
         else
@@ -201,5 +180,30 @@ public class PlayerMovement : MonoBehaviour
             transform.rotation = Quaternion.RotateTowards(transform.rotation, rotateDirection, rotationSpeed * Time.deltaTime);
         }
         anim.SetFloat("Turn", Input.GetAxis("Horizontal") , rotationSpeed * 0.1f, Time.deltaTime);
+    }
+
+    private void checkGrounded()
+    {
+        //make sure to put any floors on the "ground" layer
+        Debug.DrawRay(transform.position + new Vector3(0, 2, 0), -Vector3.up * groundCheckDistance, Color.red);
+        if (Physics.BoxCast(transform.position + new Vector3(0, 2, 0), transform.lossyScale / 2, -Vector3.up, out Hit, transform.rotation, groundCheckDistance))
+        {
+
+            if (Hit.transform.gameObject.layer == LayerMask.NameToLayer("Ground"))
+            {
+                isGrounded = true;
+                print("grounded");
+                anim.SetBool("OnGround", true);
+            }
+            else
+            {
+                isGrounded = false;
+            }
+        }
+        else
+        {
+            print("racyast has not hit anything");
+            isGrounded = false;
+        }
     }
 }
