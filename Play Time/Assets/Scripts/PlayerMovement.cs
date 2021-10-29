@@ -91,6 +91,7 @@ public class PlayerMovement : MonoBehaviour
                 }
                 moveZ = Input.GetAxisRaw("Vertical") * current_speed;
                 moveX = Input.GetAxisRaw("Horizontal") * current_speed;
+                
                 anim.SetBool("OnGround", true);
                 
                 moveDirection *= current_speed;
@@ -199,6 +200,6 @@ public class PlayerMovement : MonoBehaviour
             Quaternion rotateDirection = Quaternion.LookRotation(inputDirection, Vector3.up);
             transform.rotation = Quaternion.RotateTowards(transform.rotation, rotateDirection, rotationSpeed * Time.deltaTime);
         }
-        //anim.SetFloat("Turn", 1, 0.1f, Time.deltaTime);
+        anim.SetFloat("Turn", Input.GetAxis("Horizontal") , rotationSpeed * 0.1f, Time.deltaTime);
     }
 }

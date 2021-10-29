@@ -346,7 +346,7 @@ MonoBehaviour:
   moveSpeed: 15
   walkSpeed: 6
   runSpeed: 13
-  rotationSpeed: 1
+  rotationSpeed: 200
   isGrounded: 0
   groundCheckDistance: 2
   groundMask:
