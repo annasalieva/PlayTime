@@ -28,7 +28,7 @@ public class PlayerMovement : MonoBehaviour
 
     public float fallMultiplier = 5.0f;
     
-    //private Animator anim;
+    private Animator anim;
 
     private float moveZ;
     private float moveX;
@@ -41,13 +41,12 @@ public class PlayerMovement : MonoBehaviour
     private void Start()
     {
         controller = GetComponent<CharacterController>();
-        //anim = GetComponentInChildren<Animator>();
+        anim = GetComponentInChildren<Animator>();
     }
 
     private void Update()
     {
         Move();
-        //print(controller.velocity);
         current_y = transform.position.y;
     }
 
@@ -77,7 +76,14 @@ public class PlayerMovement : MonoBehaviour
         if (isGrounded)
         {
             //print("grounded");
-            if(Input.GetAxis("Vertical") != 0 || Input.GetAxis("Horizontal") != 0) //getting vertical or horizontal input
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                jumpKeyHeld = true;
+                starting_y = transform.position.y;
+                Jump();
+            }
+
+            if (Input.GetAxis("Vertical") != 0 || Input.GetAxis("Horizontal") != 0) //getting vertical or horizontal input
             {
                 if (current_speed < moveSpeed)
                 {
@@ -85,23 +91,9 @@ public class PlayerMovement : MonoBehaviour
                 }
                 moveZ = Input.GetAxisRaw("Vertical") * current_speed;
                 moveX = Input.GetAxisRaw("Horizontal") * current_speed;
-                //anim.SetBool("grounded", true);
-                if (moveDirection != Vector3.zero && !Input.GetKey(KeyCode.LeftShift))
-                {
-                    Walk();
-                }
-                else if (moveDirection != Vector3.zero && Input.GetKey(KeyCode.LeftShift))
-                {
-                    Run();
-                }
-                else if (moveDirection == Vector3.zero)
-                {
-                    Idle();
-                }
-
-                moveDirection *= current_speed;
-
+                anim.SetBool("OnGround", true);
                 
+                moveDirection *= current_speed;
             }
             else if(current_speed > 0 && (Input.GetAxis("Vertical") == 0 || Input.GetAxis("Horizontal") == 0))//no input
             {
@@ -109,22 +101,29 @@ public class PlayerMovement : MonoBehaviour
                 moveZ = current_speed;
                 moveX = current_speed;
             }
-            if (Input.GetKeyDown(KeyCode.Space))
+
+
+            if ((Input.GetAxis("Vertical") != 0 || Input.GetAxis("Horizontal") != 0) && !Input.GetKey(KeyCode.LeftShift))
             {
-                jumpKeyHeld = true;
-                starting_y = transform.position.y;
-                Jump();
-                print("getting start pos");
+                Walk();
             }
+            else if ((Input.GetAxis("Vertical") != 0 || Input.GetAxis("Horizontal") != 0) && Input.GetKey(KeyCode.LeftShift))
+            {
+                Run();
+            }
+            else if (Input.GetAxis("Vertical") == 0 && Input.GetAxis("Horizontal") == 0)
+            {
+                Idle();
+            }
+
         }
         else
         {
-            //print("NOT grounded");
-            //anim.SetBool("grounded", false);
-
-            BetterJump();
+            print("NOT grounded");
+            anim.SetBool("OnGround", false);
+            
         }
-
+        BetterJump();
         if (Input.GetKeyUp(KeyCode.Space))
         {
             jumpKeyHeld = false;
@@ -144,19 +143,19 @@ public class PlayerMovement : MonoBehaviour
 
     private void Idle()
     {
-        //anim.SetFloat("Speed", 0, 0.1f, Time.deltaTime);
+        anim.SetFloat("Forward", 0, 0.1f, Time.deltaTime);
     }
 
     private void Walk()
     {
         moveSpeed = walkSpeed;
-        //anim.SetFloat("Speed", 0.5f, 0.1f, Time.deltaTime);
+        anim.SetFloat("Forward", 0.5f, 0.1f, Time.deltaTime);
     }
 
     private void Run()
     {
         moveSpeed = runSpeed;
-        //anim.SetFloat("Speed", 1, 0.1f, Time.deltaTime);
+        anim.SetFloat("Forward", 1, 0.1f, Time.deltaTime);
     }
 
     private void Jump()
@@ -200,5 +199,6 @@ public class PlayerMovement : MonoBehaviour
             Quaternion rotateDirection = Quaternion.LookRotation(inputDirection, Vector3.up);
             transform.rotation = Quaternion.RotateTowards(transform.rotation, rotateDirection, rotationSpeed * Time.deltaTime);
         }
+        //anim.SetFloat("Turn", 1, 0.1f, Time.deltaTime);
     }
 }
