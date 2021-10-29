@@ -46,13 +46,15 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
+        checkGrounded();
+        BetterJump();
         Move();
+        Rotate();
         current_y = transform.position.y;
     }
 
     private void Move()
     {
-        checkGrounded();
         if (isGrounded)
         {
             if (Input.GetKeyDown(KeyCode.Space))
@@ -70,9 +72,6 @@ public class PlayerMovement : MonoBehaviour
                 }
                 moveZ = Input.GetAxisRaw("Vertical") * current_speed;
                 moveX = Input.GetAxisRaw("Horizontal") * current_speed;
-                
-                
-                
                 moveDirection *= current_speed;
             }
             else if(current_speed > 0 && (Input.GetAxis("Vertical") == 0 || Input.GetAxis("Horizontal") == 0))//no input
@@ -103,21 +102,14 @@ public class PlayerMovement : MonoBehaviour
             anim.SetBool("OnGround", false); 
         }
 
-
-        BetterJump();
-
         if (Input.GetKeyUp(KeyCode.Space))
         {
             jumpKeyHeld = false;
         }
-
-        
-
         moveDirection = new Vector3(moveX, 0, moveZ).normalized;
         moveDirection.y = velocity.y / current_speed;
 
         controller.Move(moveDirection * current_speed * Time.deltaTime);
-        Rotate();
     }
 
     private void Idle()
