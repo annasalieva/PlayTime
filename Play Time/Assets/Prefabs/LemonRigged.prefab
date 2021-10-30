@@ -2968,7 +2968,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 15
-  walkSpeed: 6
+  walkSpeed: 5
   runSpeed: 13
   rotationSpeed: 200
   isGrounded: 0
@@ -2976,10 +2976,10 @@ MonoBehaviour:
   groundMask:
     serializedVersion: 2
     m_Bits: 64
-  gravity: -18
+  gravity: -9.81
   jumpHeight: 1
-  acceleration: 4
-  maxJumpHeight: 2.5
+  acceleration: 2
+  maxJumpHeight: 1.5
   fallMultiplier: 5
 --- !u!143 &3598400719207944068
 CharacterController:
