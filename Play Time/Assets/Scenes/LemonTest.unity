@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657815, g: 0.49641192, b: 0.57481617, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -324,7 +324,7 @@ GameObject:
   - component: {fileID: 157429751}
   - component: {fileID: 157429753}
   - component: {fileID: 157429752}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Bottom
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -476,7 +476,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 192086811}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: EndPos
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -491,7 +491,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 192086810}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.507, z: 2}
+  m_LocalPosition: {x: 0, y: 0.507, z: 1.34}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 497456767}
@@ -511,7 +511,7 @@ GameObject:
   - component: {fileID: 497456770}
   - component: {fileID: 497456769}
   - component: {fileID: 497456768}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Ladder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -526,8 +526,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 497456766}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 11.7, y: -7.52, z: 6.28}
-  m_LocalScale: {x: 1.1875, y: 16.451628, z: 0.65}
+  m_LocalPosition: {x: 11.7, y: -5.1277, z: 6.28}
+  m_LocalScale: {x: 1.1875, y: 11.66724, z: 0.65}
   m_Children:
   - {fileID: 1360495827}
   - {fileID: 157429751}
@@ -550,7 +550,7 @@ MonoBehaviour:
   OnLadder: 0
   PlayerPresent: 0
   ClimbingSpeed: 5
-  player: {fileID: 0}
+  player: {fileID: 1570116705}
   endPosition: {fileID: 192086811}
   isClimbingDown: 0
 --- !u!65 &497456769
@@ -1387,7 +1387,7 @@ GameObject:
   - component: {fileID: 1360495827}
   - component: {fileID: 1360495829}
   - component: {fileID: 1360495828}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Top
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1433,8 +1433,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 0.121795595, z: 4.9469686}
-  m_Center: {x: 0, y: 0.4391022, z: -1.9734845}
+  m_Size: {x: 1.7018403, y: 0.12179557, z: 4.9469686}
+  m_Center: {x: -0.02064183, y: 0.43910223, z: -1.9734845}
 --- !u!1 &1541329780
 GameObject:
   m_ObjectHideFlags: 0
@@ -1573,6 +1573,17 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1570116705 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3598400719207944067, guid: 7de2f9e0c3d10834193a8cd6d243892f, type: 3}
+  m_PrefabInstance: {fileID: 3598400719229354223}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f543befb792174d45a17a6c728b9b863, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1640351840
 GameObject:
   m_ObjectHideFlags: 0
