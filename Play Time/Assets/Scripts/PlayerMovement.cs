@@ -37,6 +37,7 @@ public class PlayerMovement : MonoBehaviour
     private bool jumpKeyHeld;
     //private float jumpMultiplier = 0; 
 
+    public bool allowLemonMovement;
 
     private void Start()
     {
@@ -48,8 +49,12 @@ public class PlayerMovement : MonoBehaviour
     {
         checkGrounded();
         
-        Move();
-        Rotate();
+        if(allowLemonMovement)
+        {
+            Move();
+            Rotate();
+        }
+
         current_y = transform.position.y;
     }
 

@@ -37,6 +37,8 @@ public class orangeMovement : MonoBehaviour
     private bool jumpKeyHeld;
     //private Animator anim;
 
+    public bool allowOrangeMovement;
+
     private void Start()
     {
         controller = GetComponent<CharacterController>();
@@ -45,7 +47,10 @@ public class orangeMovement : MonoBehaviour
 
     private void Update()
     {
-        Move();
+        if(allowOrangeMovement)
+        {
+            Move();
+        }
         current_y = transform.position.y;
     }
 
