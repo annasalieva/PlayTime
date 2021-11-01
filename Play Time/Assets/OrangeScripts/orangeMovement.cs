@@ -30,6 +30,8 @@ public class orangeMovement : MonoBehaviour
     private float current_speed;
     public float fallMultiplier = 5.0f;
 
+    private Animator anim;
+
     private float moveZ;
     private float moveX;
     private float starting_y;
@@ -42,67 +44,30 @@ public class orangeMovement : MonoBehaviour
     private void Start()
     {
         controller = GetComponent<CharacterController>();
-        //anim = GetComponentInChildren<Animator>();
+        anim = GetComponentInChildren<Animator>();
     }
 
     private void Update()
     {
-        if(allowOrangeMovement)
-        {
-            Move();
-        }
+        checkGrounded();
+        Move();
+        Rotate();
         current_y = transform.position.y;
     }
 
     private void Move()
     {
-        //make sure to put any floors on the "ground" layer
-        if (Physics.BoxCast(transform.position, transform.lossyScale/2, -Vector3.up, out Hit, transform.rotation, groundCheckDistance))
-        {
-            print(Hit.transform.gameObject.name);
-            if (Hit.transform.gameObject.layer == LayerMask.NameToLayer("Ground"))
-            {
-                isGrounded = true;
-            }
-            else
-            {
-                isGrounded = false;
-            }
-        }
-        else
-        {
-            print("racyast has not hit anything");
-            isGrounded = false;
-        }
-
         if (isGrounded)
         {
-            //print("grounded");
-            if(Input.GetAxis("Vertical") != 0 || Input.GetAxis("Horizontal") != 0) //getting vertical or horizontal input
+            if (Input.GetAxis("Vertical") != 0 || Input.GetAxis("Horizontal") != 0) //getting vertical or horizontal input
             {
                 if (current_speed < moveSpeed)
                 {
                     current_speed += acceleration;
                 }
-                moveZ = Input.GetAxis("Vertical") * current_speed;
-                moveX = Input.GetAxis("Horizontal") * current_speed;
-                //anim.SetBool("grounded", true);
-                if (moveDirection != Vector3.zero && !Input.GetKey(KeyCode.LeftShift))
-                {
-                    Walk();
-                }
-                else if (moveDirection != Vector3.zero && Input.GetKey(KeyCode.LeftShift) && !isGrabbing)
-                {
-                    Run();
-                }
-                else if (moveDirection == Vector3.zero)
-                {
-                    Idle();
-                }
-
+                moveZ = Input.GetAxisRaw("Vertical") * current_speed;
+                moveX = Input.GetAxisRaw("Horizontal") * current_speed;
                 moveDirection *= current_speed;
-
-                
             }
             else if(current_speed > 0 && (Input.GetAxis("Vertical") == 0 || Input.GetAxis("Horizontal") == 0))//no input
             {
@@ -110,44 +75,60 @@ public class orangeMovement : MonoBehaviour
                 moveZ = current_speed;
                 moveX = current_speed;
             }
+
+            if ((Input.GetAxis("Vertical") != 0 || Input.GetAxis("Horizontal") != 0) && !Input.GetKey(KeyCode.LeftShift))
+            {
+                Walk();
+            }
+            else if ((Input.GetAxis("Vertical") != 0 || Input.GetAxis("Horizontal") != 0) && Input.GetKey(KeyCode.LeftShift) && !isGrabbing)
+            {
+                Run();
+            }
+            else if (Input.GetAxis("Vertical") == 0 && Input.GetAxis("Horizontal") == 0)
+            {
+                Idle();
+            }
         }
         else
         {
-            //print("NOT grounded");
-            //anim.SetBool("grounded", false);
-
+            print("NOT grounded");
             BetterJump();
+            anim.SetBool("OnGround", false); 
         }
         
-        moveDirection = new Vector3(moveX, velocity.y, moveZ);
+        moveDirection = new Vector3(moveX, 0, moveZ).normalized;
 
         if(isGrabbing) //movement is slowed when moving objects
         {
-            controller.Move(moveDirection*grabSpeedReduction*Time.deltaTime);
+            controller.Move(velocity * Time.deltaTime);
+            controller.Move(moveDirection * current_speed * grabSpeedReduction *Time.deltaTime);
         } 
         else 
         {
-            controller.Move(moveDirection*Time.deltaTime);
+            controller.Move(velocity * Time.deltaTime);
+            controller.Move(moveDirection * current_speed * Time.deltaTime);
         }
-
-        Rotate();
     }
 
     private void Idle()
     {
-        //anim.SetFloat("Speed", 0, 0.1f, Time.deltaTime);
+        anim.SetFloat("Forward", 0, 0.1f, Time.deltaTime);
     }
 
     private void Walk()
     {
         moveSpeed = walkSpeed;
-        //anim.SetFloat("Speed", 0.5f, 0.1f, Time.deltaTime);
+
+        if(!isGrabbing)
+        {
+            anim.SetFloat("Forward", 0.5f, 0.1f, Time.deltaTime);
+        }
     }
 
     private void Run()
     {
         moveSpeed = runSpeed;
-        //anim.SetFloat("Speed", 1, 0.1f, Time.deltaTime);
+        anim.SetFloat("Forward", 1, 0.1f, Time.deltaTime);
     }
 
     private void BetterJump()
@@ -155,17 +136,17 @@ public class orangeMovement : MonoBehaviour
         if(controller.velocity.y <= 0)
         {
             velocity.y += gravity * (fallMultiplier - 1) * Time.deltaTime;
-            print("hey its me");
+            //print("velocity.y <= 0");
         }
         else if (controller.velocity.y > 0)
         {
             velocity.y += gravity * Time.deltaTime * 2;
-            print("velocity is more");
+            //print("velocity > 0");
         }
         
         if(jumpKeyHeld && (current_y - starting_y < maxJumpHeight))
         {
-            print("hit max height");
+            //print("hit max height");
             velocity.y = Mathf.Sqrt(jumpHeight * -2 * gravity)*2 + Mathf.Sqrt((current_y-starting_y)/5 * -2 * gravity)*5;
         }
         else
@@ -174,6 +155,7 @@ public class orangeMovement : MonoBehaviour
             velocity.y += gravity * (fallMultiplier - 1) * Time.deltaTime;
         }
     }
+
     private void Rotate()
     {
         float inputZ = Input.GetAxis("Vertical");
@@ -187,6 +169,7 @@ public class orangeMovement : MonoBehaviour
             {
                 Quaternion rotateDirection = Quaternion.LookRotation(inputDirection, Vector3.up);
                 transform.rotation = Quaternion.RotateTowards(transform.rotation, rotateDirection, rotationSpeed * Time.deltaTime);
+                anim.SetFloat("Turn", Input.GetAxis("Horizontal") , rotationSpeed * 0.1f, Time.deltaTime);
             }
         }
     }
@@ -214,5 +197,30 @@ public class orangeMovement : MonoBehaviour
     public bool fetchGround()
     {
         return isGrounded;
+    }
+
+        private void checkGrounded()
+    {
+        //make sure to put any floors on the "ground" layer
+        Debug.DrawRay(transform.position + new Vector3(0, 2, 0), -Vector3.up * groundCheckDistance, Color.red);
+        if (Physics.BoxCast(transform.position + new Vector3(0, 2, 0), transform.lossyScale / 2, -Vector3.up, out Hit, transform.rotation, groundCheckDistance))
+        {
+
+            if (Hit.transform.gameObject.layer == LayerMask.NameToLayer("Ground"))
+            {
+                isGrounded = true;
+                print("grounded");
+                anim.SetBool("OnGround", true);
+            }
+            else
+            {
+                isGrounded = false;
+            }
+        }
+        else
+        {
+            print("racyast has not hit anything");
+            isGrounded = false;
+        }
     }
 }

@@ -267,6 +267,7 @@ MonoBehaviour:
   isGrabbing: 0
   grabSpeedReduction: 0.25
   fallMultiplier: 5
+  allowOrangeMovement: 0
 --- !u!143 &4944333191457820048
 CharacterController:
   m_ObjectHideFlags: 0

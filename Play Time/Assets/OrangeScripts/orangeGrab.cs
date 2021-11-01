@@ -23,8 +23,8 @@ public class orangeGrab : MonoBehaviour
     void Update()
     {
         Vector3 forward = transform.TransformDirection(Vector3.forward) * grabCheckDistance;
-        Debug.DrawRay(transform.position, forward, Color.green);
-        Ray interactCast = new Ray(transform.position, forward);
+        Debug.DrawRay(transform.position + new Vector3(0, 2, 0), forward, Color.green);
+        Ray interactCast = new Ray(transform.position + new Vector3(0, 2, 0), forward);
         if (Physics.Raycast(interactCast, out Hit, grabCheckDistance))
         {
             if (Hit.transform.gameObject.CompareTag("grabbable"))
