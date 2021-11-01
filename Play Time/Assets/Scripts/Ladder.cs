@@ -10,7 +10,7 @@ public class Ladder : MonoBehaviour
     public PlayerMovement player;
     public Transform endPosition;
     public bool isClimbingDown;
-
+    public Vector3 current_velocity;
 
     // Start is called before the first frame update
     void Start()
@@ -28,20 +28,26 @@ public class Ladder : MonoBehaviour
             OnLadder = true;
             PlayerPresent = false;
             Debug.Log("Set Start Point");
+            current_velocity = player.velocity;
+            player.velocity = new Vector3(0, 0, 0);
+
         }
         //only allow straight up and down movement currently
         if (OnLadder && Input.GetKey(KeyCode.W))
         {
             player.GetComponent<PlayerMovement>().enabled = false;
+
             Debug.Log("Block usual Movement");
             Debug.Log("Climb Up");
             isClimbingDown = false;
+            
             Vector3 movement = new Vector3(0, Input.GetAxis("Vertical"), 0);
             player.transform.position += movement * Time.deltaTime * ClimbingSpeed;
         }
         if (OnLadder && Input.GetKey(KeyCode.S))
         {
             player.GetComponent<PlayerMovement>().enabled = false;
+            
             Debug.Log("Block usual Movement");
             Debug.Log("Climb Down");
             isClimbingDown = true;
@@ -51,9 +57,6 @@ public class Ladder : MonoBehaviour
         }
 
     }
-
-
-
 
     private void OnTriggerEnter(Collider other)
     {

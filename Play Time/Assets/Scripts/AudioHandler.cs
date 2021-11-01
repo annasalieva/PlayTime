@@ -6,7 +6,7 @@ public class AudioHandler : MonoBehaviour
 {
     public static AudioHandler StaticAudioHandler;
     public AudioSource Background;
-    //public AudioSource clickUI;
+    public AudioSource clickUI;
     public AudioLibrary[] Tracks;
 
 
@@ -19,7 +19,7 @@ public class AudioHandler : MonoBehaviour
     private bool mute = false;
 
     private AudioLibrary backgroundTrack = null;
-    //private AudioLibrary clicksound = null;
+    private AudioLibrary clicksound = null;
 
     void Start()
     {
@@ -52,10 +52,10 @@ public class AudioHandler : MonoBehaviour
         {
             Background.volume = masterVolume * backgroundTrack.volume;
         }
-        //if(clicksound != null)
-        //{
-        //    clickUI.volume = masterVolume * clicksound.volume;
-        //}
+        if (clicksound != null)
+        {
+            clickUI.volume = masterVolume * clicksound.volume;
+        }
     }
 
     //SET VOLUME
@@ -66,20 +66,20 @@ public class AudioHandler : MonoBehaviour
         if (backgroundTrack != null) Background.volume = backgroundTrack.volume * masterVolume;
     }
 
-    ////PLAY CLICK SOUND
-    //private void StartClickSound(string clipname)
-    //{
-    //    AudioLibrary track = getTrack(clipname);
-    //    clicksound = track;
-    //    clickUI.clip = track.Track;
-    //    clickUI.Play();
-    //    clickUI.volume = masterVolume * track.volume;
-    //}
+    //PLAY CLICK SOUND
+    private void StartClickSound(string clipname)
+    {
+        AudioLibrary track = getTrack(clipname);
+        clicksound = track;
+        clickUI.clip = track.Track;
+        clickUI.Play();
+        clickUI.volume = masterVolume * track.volume;
+    }
 
-    //public static void startClickSound(string clipname)
-    //{
-    //    StaticAudioHandler.StartClickSound(clipname);
-    //}
+    public static void startClickSound(string clipname)
+    {
+        StaticAudioHandler.StartClickSound(clipname);
+    }
 
 
     //PLAY BACKGROUND MUSIC
