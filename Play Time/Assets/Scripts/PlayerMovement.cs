@@ -10,9 +10,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float rotationSpeed = 5;
 
     private Vector3 moveDirection;
-    public Vector3 velocity;
+    private Vector3 velocity;
     private RaycastHit Hit;
-    //public Ladder ladder;
 
     [SerializeField] private bool isGrounded;
     [SerializeField] private float groundCheckDistance = 1f;
@@ -197,14 +196,12 @@ public class PlayerMovement : MonoBehaviour
             else
             {
                 isGrounded = false;
-
             }
         }
         else
         {
             print("racyast has not hit anything");
             isGrounded = false;
-
         }
     }
 }
