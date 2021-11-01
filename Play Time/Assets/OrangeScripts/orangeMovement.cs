@@ -50,8 +50,12 @@ public class orangeMovement : MonoBehaviour
     private void Update()
     {
         checkGrounded();
-        Move();
-        Rotate();
+        
+        if(allowOrangeMovement)
+        {
+            Move();
+            Rotate();
+        }
         current_y = transform.position.y;
     }
 
