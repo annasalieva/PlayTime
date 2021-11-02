@@ -48,7 +48,7 @@ public class orangeGrab : MonoBehaviour
         isGrabbing = orangeMove.fetchGrab();
 
         
-        if((Input.GetKey(KeyCode.Space) && canGrab) || (Input.GetKey(KeyCode.Space) && isGrabbing))
+        if((Input.GetKey(KeyCode.Space) && canGrab) || (Input.GetKey(KeyCode.Space) && isGrabbing && canGrab))
             {
                 if(grabbableObject != null)
                 {
@@ -61,11 +61,8 @@ public class orangeGrab : MonoBehaviour
                 orangeMove.setGrab(true);
 
             } else {
-                if(grabbableObject != null)
-                {
                     grabJoint.GetComponent<FixedJoint>().connectedBody = null;
                     orangeMove.setGrab(false);
-                }
             }
     }
 

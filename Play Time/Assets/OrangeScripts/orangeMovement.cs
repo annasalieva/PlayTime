@@ -95,7 +95,7 @@ public class orangeMovement : MonoBehaviour
         }
         else
         {
-            print("NOT grounded");
+            // print("NOT grounded");
             BetterJump();
             anim.SetBool("OnGround", false); 
         }
@@ -132,7 +132,10 @@ public class orangeMovement : MonoBehaviour
     private void Run()
     {
         moveSpeed = runSpeed;
+        if(!isGrabbing)
+        {
         anim.SetFloat("Forward", 1, 0.1f, Time.deltaTime);
+        }
     }
 
     private void BetterJump()
@@ -213,7 +216,7 @@ public class orangeMovement : MonoBehaviour
             if (Hit.transform.gameObject.layer == LayerMask.NameToLayer("Ground"))
             {
                 isGrounded = true;
-                print("grounded");
+                // print("grounded");
                 anim.SetBool("OnGround", true);
             }
             else
