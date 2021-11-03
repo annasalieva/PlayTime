@@ -28,7 +28,8 @@ public class Ladder : MonoBehaviour
             Debug.Log("E pressed");
             OnLadder = true;
             PlayerPresent = false;
-            Debug.Log("Set Start Point");
+            player.GetComponent<PlayerMovement>().enabled = false;
+            Physics.gravity = new Vector3(0, 0, 0);
             current_velocity = player.velocity;
             player.velocity = new Vector3(0, 0, 0);
 
@@ -40,18 +41,17 @@ public class Ladder : MonoBehaviour
         //only allow straight up and down movement currently
         if (OnLadder && Input.GetKey(KeyCode.W))
         {
-            player.GetComponent<PlayerMovement>().enabled = false;
+            //player.GetComponent<PlayerMovement>().enabled = false;
 
             Debug.Log("Block usual Movement");
             Debug.Log("Climb Up");
             isClimbingDown = false;
-            
             Vector3 movement = new Vector3(0, Input.GetAxis("Vertical"), 0);
             player.transform.position += movement * Time.deltaTime * ClimbingSpeed;
         }
-        if (OnLadder && Input.GetKey(KeyCode.S))
+        else if (OnLadder && Input.GetKey(KeyCode.S))
         {
-            player.GetComponent<PlayerMovement>().enabled = false;
+            //player.GetComponent<PlayerMovement>().enabled = false;
             
             Debug.Log("Block usual Movement");
             Debug.Log("Climb Down");
