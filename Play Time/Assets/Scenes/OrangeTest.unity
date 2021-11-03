@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.43943748, g: 0.48777938, b: 0.5680171, a: 1}
+  m_IndirectSpecularColor: {r: 0.43943718, g: 0.48777854, b: 0.5680161, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -503,8 +503,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 534796331}
-  m_LocalRotation: {x: 0.25175986, y: 0.005170006, z: -0.0013449405, w: 0.96777505}
-  m_LocalPosition: {x: 270.44376, y: 60.3, z: -23.693068}
+  m_LocalRotation: {x: 0.21445417, y: 0.15307716, z: -0.034051754, w: 0.9640629}
+  m_LocalPosition: {x: 265.04425, y: 60.3, z: -25.499998}
   m_LocalScale: {x: 0.20052387, y: 0.20052387, z: 0.20052387}
   m_Children: []
   m_Father: {fileID: 0}
@@ -603,8 +603,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 608732910}
-  m_LocalRotation: {x: 0.25175986, y: 0.005170006, z: -0.0013449405, w: 0.96777505}
-  m_LocalPosition: {x: 270.44376, y: 60.3, z: -23.693068}
+  m_LocalRotation: {x: 0.21445417, y: 0.15307716, z: -0.034051754, w: 0.9640629}
+  m_LocalPosition: {x: 265.04425, y: 60.3, z: -25.499998}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1008194865}
@@ -1278,9 +1278,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Path: {fileID: 1998388601}
-  m_PathPosition: 0.6276399
+  m_PathPosition: 0
   m_PositionUnits: 2
-  m_PathOffset: {x: 8.4031315, y: 20.726925, z: 0.5062322}
+  m_PathOffset: {x: 6.2213693, y: 20.726925, z: 0.5190943}
   m_XDamping: 0
   m_YDamping: 0
   m_ZDamping: 1
@@ -1731,11 +1731,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8942527117899020121, guid: d0eb48488c3194725a2578044de0f821, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 270.77
+      value: 275.58
       objectReference: {fileID: 0}
     - target: {fileID: 8942527117899020121, guid: d0eb48488c3194725a2578044de0f821, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 43.26
+      value: 44.38
       objectReference: {fileID: 0}
     - target: {fileID: 8942527117899020121, guid: d0eb48488c3194725a2578044de0f821, type: 3}
       propertyPath: m_LocalPosition.z
@@ -2010,6 +2010,50 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c523d371fdb984412b9d3292d70a02ca, type: 3}
+--- !u!1 &1632095499
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1632095501}
+  - component: {fileID: 1632095500}
+  m_Layer: 0
+  m_Name: Invisible wall
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!65 &1632095500
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1632095499}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 46.102173, y: 24.101318, z: 1}
+  m_Center: {x: -5.971863, y: -1.1558342, z: 0}
+--- !u!4 &1632095501
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1632095499}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 261.82806, y: 41.3, z: 2.8}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 21
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1638437589
 GameObject:
   m_ObjectHideFlags: 0
@@ -2603,8 +2647,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1998388600}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 371.6, y: 39.573074, z: -26.5}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 265.6, y: 39.573074, z: -29.9}
+  m_LocalScale: {x: 0.36364, y: 0.36364, z: 0.36364}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 20
