@@ -13,6 +13,10 @@ public class Ladder : MonoBehaviour
     public Vector3 current_velocity;
     public Transform lockpoint;
 
+    //current bug: Lemon will keep walking in the air when entering the ladder while walking, I think this will be fixed after we add animation for climbing
+    //Otherwise just add a condition that limits Lemon to climb when Idle
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -73,6 +77,11 @@ public class Ladder : MonoBehaviour
             }
 
         }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        PlayerPresent = false;
     }
 
 
