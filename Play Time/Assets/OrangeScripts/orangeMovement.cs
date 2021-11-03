@@ -126,15 +126,18 @@ public class orangeMovement : MonoBehaviour
         if(!isGrabbing)
         {
             anim.SetFloat("Forward", 0.5f, 0.1f, Time.deltaTime);
+        } else {
+            anim.SetFloat("Forward", 0, 0.1f, Time.deltaTime);
         }
     }
 
     private void Run()
     {
         moveSpeed = runSpeed;
+
         if(!isGrabbing)
         {
-        anim.SetFloat("Forward", 1, 0.1f, Time.deltaTime);
+            anim.SetFloat("Forward", 1, 0.1f, Time.deltaTime);
         }
     }
 
