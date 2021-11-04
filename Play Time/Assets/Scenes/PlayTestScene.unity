@@ -253,7 +253,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 136313015}
   m_LocalRotation: {x: 0.21537851, y: 0.004135738, z: -0.00091216527, w: 0.9765215}
-  m_LocalPosition: {x: 266.3, y: 89.2, z: -71.8}
+  m_LocalPosition: {x: 266.6, y: 55.32, z: -60.9}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1134427538}
@@ -5112,7 +5112,7 @@ MonoBehaviour:
   m_Path: {fileID: 2094245720}
   m_PathPosition: 0.6343297
   m_PositionUnits: 2
-  m_PathOffset: {x: -40.08143, y: 49.826927, z: 3.3635662}
+  m_PathOffset: {x: -28.895103, y: 15.806938, z: 3.3372602}
   m_XDamping: 0
   m_YDamping: 0
   m_ZDamping: 1
@@ -5322,7 +5322,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1879218005}
   m_LocalRotation: {x: 0.21537854, y: 0.0041357386, z: -0.00091216556, w: 0.9765215}
-  m_LocalPosition: {x: 266.80002, y: 89.4, z: -72.19994}
+  m_LocalPosition: {x: 230.73418, y: 55.380013, z: -61.042713}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -5364,7 +5364,7 @@ MonoBehaviour:
     width: 0.2
   m_Looped: 0
   m_Waypoints:
-  - position: {x: 0, y: 0, z: -5}
+  - position: {x: -99.27994, y: 0, z: -5}
     roll: 0
   - position: {x: -160.28378, y: 0, z: -5.944915}
     roll: 0
@@ -18366,7 +18366,7 @@ GameObject:
   - component: {fileID: 4736031277045156316}
   - component: {fileID: 7376109022849170710}
   - component: {fileID: 5783785631510237382}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Chair Variant
   m_TagString: Untagged
   m_Icon: {fileID: 0}
