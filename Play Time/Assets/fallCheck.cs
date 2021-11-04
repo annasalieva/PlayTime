@@ -17,7 +17,7 @@ public class fallCheck : MonoBehaviour
     {
         if(other.gameObject.layer == LayerMask.NameToLayer("Ground"))
         {
-            Debug.Log(other.gameObject.layer);
+            // Debug.Log(other.gameObject.layer);
             gameObject.tag = "grabbable";
         }
     }

@@ -15,6 +15,16 @@ public class SceneLoader : MonoBehaviour
         SceneManager.LoadScene("OrangeTest");
     }
 
+    public void loadPauseMenuTest()
+    {
+        SceneManager.LoadScene("PauseMenuTest");
+    }
+
+    public void loadPlayTestScene()
+    {
+        SceneManager.LoadScene("PlayTestScene");
+    }
+
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.R))

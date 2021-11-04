@@ -1514,6 +1514,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -7707019001616725132, guid: d0eb48488c3194725a2578044de0f821, type: 3}
+      propertyPath: pushForce
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: -6396498994268179940, guid: d0eb48488c3194725a2578044de0f821, type: 3}
       propertyPath: allowOrangeMovement
       value: 1
