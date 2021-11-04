@@ -41,6 +41,10 @@ public class orangeMovement : MonoBehaviour
 
     public bool allowOrangeMovement;
 
+    // private bool delayed = false;
+    // [SerializeField] private float delayTime;
+    // private float delayTimer;
+
     private void Start()
     {
         controller = GetComponent<CharacterController>();
@@ -50,8 +54,8 @@ public class orangeMovement : MonoBehaviour
     private void Update()
     {
         checkGrounded();
-        
-        if(allowOrangeMovement)
+        // calcDelay();
+        if(allowOrangeMovement) //&& !delayed)
         {
             Move();
             Rotate();
@@ -138,6 +142,8 @@ public class orangeMovement : MonoBehaviour
         if(!isGrabbing)
         {
             anim.SetFloat("Forward", 1, 0.1f, Time.deltaTime);
+        } else {
+            anim.SetFloat("Forward", 0, 0.1f, Time.deltaTime);
         }
     }
 
@@ -233,4 +239,24 @@ public class orangeMovement : MonoBehaviour
             isGrounded = false;
         }
     }
+
+    // public void calcDelay()
+    // {
+    //     if(delayTimer > 0)
+    //     {
+    //         delayTimer -= Time.deltaTime;
+    //         if(delayTimer <= 0)
+    //         {
+    //             delayed = false;
+    //         }
+    //     }
+    // }
+
+    // public void delayMovement()
+    // {
+    //     delayTimer = delayTime;
+    //     delayed = true;
+
+    //     Debug.Log(delayTimer);
+    // }
 }

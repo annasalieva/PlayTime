@@ -8,11 +8,15 @@ public class orangeGrab : MonoBehaviour
     [SerializeField] private bool isGrabbing;
     [SerializeField] private float grabCheckDistance = 1.5f;
     [SerializeField] private Transform grabbableObject;
+    private Transform grabbedObject;
+
 
     [SerializeField] private GameObject grabJoint;
 
     private RaycastHit Hit;
     private orangeMovement orangeMove;
+
+    [SerializeField] private float pushForce = 1f;
     // Start is called before the first frame update
     void Start()
     {
@@ -49,21 +53,31 @@ public class orangeGrab : MonoBehaviour
 
         
         if((Input.GetKey(KeyCode.Space) && canGrab) || (Input.GetKey(KeyCode.Space) && isGrabbing && canGrab))
+        {
+            if(grabbableObject != null)
             {
-                if(grabbableObject != null)
-                {
-                    if(grabJoint.GetComponent<FixedJoint>().connectedBody != grabbableObject.gameObject.GetComponent<Rigidbody>())
-                    {
-                        grabJoint.GetComponent<FixedJoint>().connectedBody = grabbableObject.gameObject.GetComponent<Rigidbody>();
-                    }
-                }
-                
-                orangeMove.setGrab(true);
+                grabbedObject = grabbableObject;
 
-            } else {
-                    grabJoint.GetComponent<FixedJoint>().connectedBody = null;
-                    orangeMove.setGrab(false);
+                if(grabJoint.GetComponent<FixedJoint>().connectedBody != grabbedObject.gameObject.GetComponent<Rigidbody>())
+                {
+                    grabJoint.GetComponent<FixedJoint>().connectedBody = grabbedObject.gameObject.GetComponent<Rigidbody>();
+                }
             }
+            
+            orangeMove.setGrab(true);
+
+        } 
+        else 
+        {
+                grabJoint.GetComponent<FixedJoint>().connectedBody = null;
+                if(grabbedObject != null)
+                {
+                    Debug.Log("GRABBED OBJECT IS: " + grabbedObject);
+                    grabbedObject.GetComponent<Rigidbody>().velocity = new Vector3(0, 0, 0);
+                    grabbedObject = null;
+                }
+                orangeMove.setGrab(false);
+        }
     }
 
     private void OnControllerColliderHit(ControllerColliderHit hit)
@@ -95,7 +109,8 @@ public class orangeGrab : MonoBehaviour
             float grabSpeedReduction = orangeMove.fetchGrabSpeed();
             
             // Apply the push
-            body.velocity = pushDir*(moveSpeed*(grabSpeedReduction*2)); //Testing temporary variable
+            // body.velocity = pushDir*(moveSpeed*(grabSpeedReduction*2)); //Testing temporary variable
+            body.velocity = pushDir * pushForce; //Testing temporary variable
         }
     }
 }
