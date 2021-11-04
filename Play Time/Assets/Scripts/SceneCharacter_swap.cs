@@ -2,9 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI; 
-using TMPro; 
+using TMPro;
+using UnityEngine.SceneManagement;
 
-public class Test : MonoBehaviour
+public class SceneCharacter_swap : MonoBehaviour
 {
     
     
@@ -30,20 +31,25 @@ public class Test : MonoBehaviour
     void Update()
     {
         
-
+        if(inrange && Input.GetKeyDown("q"))
+        {
+            SceneManager.LoadScene("OrangeTest");
+        }
 
     }
 
 
     public void OnTriggerEnter(Collider other)
     {
-        if(other.tag == "Player" && other.gameObject.GetComponent<PlayerMovement>())
+        print("on button");
+        if (other.tag == "Player" && other.gameObject.GetComponent<PlayerMovement>())
         {
             other.gameObject.GetComponent<PlayerMovement>().allowLemonMovement = false; //player object is other
             
             other.gameObject.GetComponent<CharacterController>().SimpleMove(Vector3.zero);
 
-           helpText.gameObject.SetActive(true); 
+            helpText.gameObject.SetActive(true);
+            
         }
         inrange = true;
     }

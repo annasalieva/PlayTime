@@ -55,6 +55,11 @@ public class PlayerMovement : MonoBehaviour
             Move();
             Rotate();
         }
+        else
+        {
+            Idle();
+            controller.Move(Vector3.zero);
+        }
 
         current_y = transform.position.y;
     }
