@@ -1,35 +1,51 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
-using UnityEngine.UI;
+using UnityEngine.UI; 
+using TMPro; 
 
-public class SceneCharacter_swap : MonoBehaviour
+public class Test : MonoBehaviour
 {
-    private bool inrange = false;
-    public GameObject SwapTutorial;
-    void start()
-    {
-        //SwapTutorial.gameObject.text.enabled = false;
-    }
+    
+    
 
-    void update()
+    [SerializeField]
+    private Canvas canvas; 
+    
+    //[SerializeField]
+    private TMP_Text helpText; 
+    private bool inrange = false; 
+
+    
+    
+    
+    // Start is called before the first frame update
+    void Start()
     {
-        if(inrange && Input.GetKeyDown("Q"))
-        {
-            SceneManager.LoadScene("OrangeTest");
-        }
+       helpText = canvas.GetComponentInChildren<TMP_Text>(); //gets the text from the canvas
+       helpText.gameObject.SetActive(false); //turns off text
     }
 
     // Update is called once per frame
+    void Update()
+    {
+        
+
+
+    }
+
+
     public void OnTriggerEnter(Collider other)
     {
         if(other.tag == "Player" && other.gameObject.GetComponent<PlayerMovement>())
         {
-            other.gameObject.GetComponent<PlayerMovement>().allowLemonMovement = false;
-            //other.gameObject.velocity = Vector3.zero;
-            //SwapTutorial.gameObject.text.enabled = true;
+            other.gameObject.GetComponent<PlayerMovement>().allowLemonMovement = false; //player object is other
+            
+            other.gameObject.GetComponent<CharacterController>().SimpleMove(Vector3.zero);
+
+           helpText.gameObject.SetActive(true); 
         }
         inrange = true;
     }
+
 }
