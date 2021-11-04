@@ -10,7 +10,7 @@ public class SceneCharacter_swap : MonoBehaviour
     public GameObject SwapTutorial;
     void start()
     {
-        SwapTutorial.gameObject.text.enabled = false;
+        //SwapTutorial.gameObject.text.enabled = false;
     }
 
     void update()
@@ -27,8 +27,8 @@ public class SceneCharacter_swap : MonoBehaviour
         if(other.tag == "Player" && other.gameObject.GetComponent<PlayerMovement>())
         {
             other.gameObject.GetComponent<PlayerMovement>().allowLemonMovement = false;
-            other.gameObject.velocity = Vector3.zero;
-            SwapTutorial.gameObject.text.enabled = true;
+            //other.gameObject.velocity = Vector3.zero;
+            //SwapTutorial.gameObject.text.enabled = true;
         }
         inrange = true;
     }
