@@ -22,7 +22,7 @@ public class FollowCharacter : MonoBehaviour
         followingOrange = true;
         followingLemon = false;
 
-        allowFollow = true;
+        allowFollow = false;
     }
 
     // Update is called once per frame
