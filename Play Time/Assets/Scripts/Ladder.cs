@@ -26,6 +26,7 @@ public class Ladder : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        lockpoint.position = new Vector3(lockpoint.position.x, player.gameObject.transform.position.y, lockpoint.position.z);
         //when the character is near the ladder/any wall that is able to climb, press E to climb
         if (PlayerPresent && Input.GetKeyDown(KeyCode.E))
         {
@@ -34,7 +35,8 @@ public class Ladder : MonoBehaviour
             PlayerPresent = false;
             player.GetComponent<PlayerMovement>().allowLemonMovement = false;
             player.GetComponent<CharacterController>().SimpleMove(Vector3.zero);
-            player.GetComponent<PlayerMovement>().anim.SetFloat("Forward", 0, 0.1f, Time.deltaTime); ;
+            player.GetComponent<PlayerMovement>().anim.SetFloat("Forward", 0, 0.1f, Time.deltaTime);
+            player.GetComponent<PlayerMovement>().anim.SetBool("OnGround", true);
             Physics.gravity = new Vector3(0, 0, 0);
             //current_velocity = player.velocity;
             //player.velocity = new Vector3(0, 0, 0);
