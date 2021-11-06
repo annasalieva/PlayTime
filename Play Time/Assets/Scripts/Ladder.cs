@@ -68,6 +68,14 @@ public class Ladder : MonoBehaviour
             player.transform.position += movement * Time.deltaTime * ClimbingSpeed;
 
         }
+        else if (OnLadder && Input.GetKey(KeyCode.Space))
+        {
+            Physics.gravity = new Vector3(0, -9.81f, 0);
+            OnLadder = false;
+            player.GetComponent<PlayerMovement>().allowLemonMovement = true;
+            player.GetComponent<PlayerMovement>().anim.SetBool("OnGround", false);
+            player.GetComponent<PlayerMovement>().Jump();
+        }
 
     }
 

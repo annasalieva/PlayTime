@@ -70,8 +70,7 @@ public class PlayerMovement : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.Space))
             {
-                jumpKeyHeld = true;
-                starting_y = transform.position.y;
+                
                 Jump();
             }
 
@@ -140,9 +139,11 @@ public class PlayerMovement : MonoBehaviour
         anim.SetFloat("Forward", 1, 0.1f, Time.deltaTime);
     }
 
-    private void Jump()
+    public void Jump()
     {
         print("jump");
+        jumpKeyHeld = true;
+        starting_y = transform.position.y;
         velocity.y = Mathf.Sqrt(jumpHeight * -2 * gravity)*2;
     }
 
