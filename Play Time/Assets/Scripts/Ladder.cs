@@ -32,10 +32,11 @@ public class Ladder : MonoBehaviour
             Debug.Log("E pressed");
             OnLadder = true;
             PlayerPresent = false;
-            player.GetComponent<PlayerMovement>().enabled = false;
+            player.GetComponent<PlayerMovement>().allowLemonMovement = false;
+            player.GetComponent<CharacterController>().SimpleMove(Vector3.zero);
             Physics.gravity = new Vector3(0, 0, 0);
-            current_velocity = player.velocity;
-            player.velocity = new Vector3(0, 0, 0);
+            //current_velocity = player.velocity;
+            //player.velocity = new Vector3(0, 0, 0);
 
             //there was a bug where the player could have a bad trajectory and miss the top, so this lockpoint
             //snaps lemon to a starting position/rotation such that holding w brings them straight up

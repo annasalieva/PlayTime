@@ -33,7 +33,7 @@ public class ExitLadder : MonoBehaviour
             Debug.Log("Reach End State!");
             doneClimb = true;
             ladder.player.transform.position = ladder.endPosition.transform.position;
-            ladder.player.GetComponent<PlayerMovement>().enabled = true;
+            ladder.player.GetComponent<PlayerMovement>().allowLemonMovement = true;
             Physics.gravity = new Vector3(0, -9.81f, 0);
             ladder.player.velocity = ladder.current_velocity;
             Debug.Log("Set End State");
@@ -47,7 +47,7 @@ public class ExitLadder : MonoBehaviour
             ladder.OnLadder = false;
             ladder.isClimbingDown = false;
             ladder.player.transform.position = ladder.lockpoint.transform.position;
-            ladder.player.GetComponent<PlayerMovement>().enabled = true;
+            ladder.player.GetComponent<PlayerMovement>().allowLemonMovement = true;
             Physics.gravity = new Vector3(0, -9.81f, 0);
             ladder.player.velocity = ladder.current_velocity;
 
