@@ -11,8 +11,6 @@ public class orangeGrab : MonoBehaviour
     private Transform grabbedObject;
 
 
-    [SerializeField] private GameObject grabJoint;
-
     private RaycastHit Hit;
     private orangeMovement orangeMove;
 
@@ -57,23 +55,19 @@ public class orangeGrab : MonoBehaviour
             if(grabbableObject != null)
             {
                 grabbedObject = grabbableObject;
-
-                if(grabJoint.GetComponent<FixedJoint>().connectedBody != grabbedObject.gameObject.GetComponent<Rigidbody>())
-                {
-                    grabJoint.GetComponent<FixedJoint>().connectedBody = grabbedObject.gameObject.GetComponent<Rigidbody>();
-                }
+                grabbedObject.GetComponent<Rigidbody>().useGravity = false;
             }
             
             orangeMove.setGrab(true);
-
+            grabbedObject.GetComponent<Rigidbody>().velocity = gameObject.GetComponent<CharacterController>().velocity;
         } 
         else 
         {
-                grabJoint.GetComponent<FixedJoint>().connectedBody = null;
                 if(grabbedObject != null)
                 {
                     Debug.Log("GRABBED OBJECT IS: " + grabbedObject);
                     grabbedObject.GetComponent<Rigidbody>().velocity = new Vector3(0, 0, 0);
+                    grabbedObject.GetComponent<Rigidbody>().useGravity = true;
                     grabbedObject = null;
                 }
                 orangeMove.setGrab(false);
@@ -105,12 +99,12 @@ public class orangeGrab : MonoBehaviour
 
             // If you know how fast your character is trying to move,
             // then you can also multiply the push velocity by that.
-            float moveSpeed = orangeMove.fetchMoveSpeed();
+            // float moveSpeed = orangeMove.fetchMoveSpeed();
             float grabSpeedReduction = orangeMove.fetchGrabSpeed();
             
             // Apply the push
             // body.velocity = pushDir*(moveSpeed*(grabSpeedReduction*2)); //Testing temporary variable
-            body.velocity = pushDir * pushForce; //Testing temporary variable
+            body.AddForce(pushDir * pushForce * grabSpeedReduction, ForceMode.VelocityChange);
         }
     }
 }

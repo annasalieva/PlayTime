@@ -88,10 +88,10 @@ public class orangeMovement : MonoBehaviour
             {
                 Walk();
             }
-            else if ((Input.GetAxis("Vertical") != 0 || Input.GetAxis("Horizontal") != 0) && Input.GetKey(KeyCode.LeftShift) && !isGrabbing)
-            {
-                Run();
-            }
+            // else if ((Input.GetAxis("Vertical") != 0 || Input.GetAxis("Horizontal") != 0) && Input.GetKey(KeyCode.LeftShift) && !isGrabbing)
+            // {
+            //     Run();
+            // }
             else if (Input.GetAxis("Vertical") == 0 && Input.GetAxis("Horizontal") == 0)
             {
                 Idle();
