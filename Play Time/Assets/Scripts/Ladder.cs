@@ -34,6 +34,7 @@ public class Ladder : MonoBehaviour
             PlayerPresent = false;
             player.GetComponent<PlayerMovement>().allowLemonMovement = false;
             player.GetComponent<CharacterController>().SimpleMove(Vector3.zero);
+            player.GetComponent<PlayerMovement>().anim.SetFloat("Forward", 0, 0.1f, Time.deltaTime); ;
             Physics.gravity = new Vector3(0, 0, 0);
             //current_velocity = player.velocity;
             //player.velocity = new Vector3(0, 0, 0);

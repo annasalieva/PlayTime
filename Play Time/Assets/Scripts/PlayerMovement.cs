@@ -29,7 +29,7 @@ public class PlayerMovement : MonoBehaviour
 
     public float fallMultiplier = 5.0f;
     
-    private Animator anim;
+    public Animator anim;
 
     private float moveZ;
     private float moveX;
