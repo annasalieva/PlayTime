@@ -30,7 +30,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 8dffd22ff80e840779716e0d45c1be17, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.098465
+      value: 0.09846502
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 8dffd22ff80e840779716e0d45c1be17, type: 3}
       propertyPath: m_LocalScale.z
@@ -38,15 +38,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 8dffd22ff80e840779716e0d45c1be17, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -2.41
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 8dffd22ff80e840779716e0d45c1be17, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 27.25
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 8dffd22ff80e840779716e0d45c1be17, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 17.54
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 8dffd22ff80e840779716e0d45c1be17, type: 3}
       propertyPath: m_LocalRotation.w
@@ -79,6 +79,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 8dffd22ff80e840779716e0d45c1be17, type: 3}
       propertyPath: m_Name
       value: WackAMole Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 8dffd22ff80e840779716e0d45c1be17, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8dffd22ff80e840779716e0d45c1be17, type: 3}
