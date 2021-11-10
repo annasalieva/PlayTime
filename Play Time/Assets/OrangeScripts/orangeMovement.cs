@@ -41,16 +41,13 @@ public class orangeMovement : MonoBehaviour
 
     public bool allowOrangeMovement;
     [SerializeField] private Transform mainCamera;
-    // private bool delayed = false;
-    // [SerializeField] private float delayTime;
-    // private float delayTimer;
 
     private void Start()
     {
         controller = GetComponent<CharacterController>();
         anim = GetComponentInChildren<Animator>();
+        mainCamera = GameObject.FindGameObjectsWithTag("MainCamera")[0].transform;
     }
-
     private void Update()
     {
         checkGrounded();

@@ -48,6 +48,7 @@ public class PlayerMovement : MonoBehaviour
     {
         controller = GetComponent<CharacterController>();
         anim = GetComponentInChildren<Animator>();
+        mainCamera = GameObject.FindGameObjectsWithTag("MainCamera")[0].transform;
     }
 
     private void Update()
