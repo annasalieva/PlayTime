@@ -19,7 +19,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private bool isGrounded;
     [SerializeField] private float groundCheckDistance = 1f;
     [SerializeField] private LayerMask groundMask;
-    [SerializeField] private float gravity = 9.81f;
+    public float gravity = 9.81f;
 
     [SerializeField] private float jumpHeight;
     [SerializeField] private float acceleration;

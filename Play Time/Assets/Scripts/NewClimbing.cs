@@ -10,9 +10,6 @@ public class NewClimbing : MonoBehaviour
     private Collider LADDER_COLLIDER; //main collider for the ladder
     
     [SerializeField]
-    private Collider ENTRANCE_COLLIDER;
-    
-    [SerializeField]
     private Collider EXIT_COLLIDER;
 
     [Header("Movement")]
@@ -20,16 +17,28 @@ public class NewClimbing : MonoBehaviour
     private float ClimbingSpeed = 1f; //how fast the character moves while climbing
     
     [Header("Climbing Bounds")]
-    
-    [SerializeField]
-    private GameObject Lemon; //Lemon's transform
     private float X_MIN; 
     private float X_MAX; 
     private float Y_MIN; 
     private float Y_MAX; 
+    [SerializeField]
+    private Transform startpoint;  //transform in the middle of the ladder 
 
     [Header("Bools")]
     private bool isClimbing = false; 
+    private bool inRange = false;
+
+    [Header("Character Elements")]
+    
+    [SerializeField]
+    private CharacterController LemonCharacterController;
+    
+    [SerializeField]
+    private PlayerMovement LemonMovement; 
+
+    [SerializeField]
+    private GameObject Lemon; 
+
 
     void Start()
     {
@@ -40,49 +49,95 @@ public class NewClimbing : MonoBehaviour
         //gets y min/max of collider
         Y_MIN = LADDER_COLLIDER.bounds.min.y; 
         Y_MAX = LADDER_COLLIDER.bounds.max.y; 
+
+    }
+
+    void Update()
+    {
+        if (inRange) //player is in range of colliders and able to climb 
+        {
+            if (Input.GetKeyDown(KeyCode.E) && !isClimbing) //player presses e and not currently climbing
+            {
+                StartClimb(); 
+            }   
+            else if (Input.GetKeyDown(KeyCode.E) && isClimbing) //stop climbing once the player hits E again
+            {
+                //player is no longer climbing
+                //makes the player drop to the floor again
+                Fall(); 
+            }
+            else if (Input.GetKeyDown(KeyCode.Space) && isClimbing)
+            {
+                //code for when the player wishes to jump off the ladder
+                LadderJump(); 
+            }
+            else if(isClimbing) //player is currently in climbing state and hasn't input any other commands
+            {
+                Climb(); 
+            }
+
+        } 
     }
     
-    void Climb()
+    void StartClimb()
     {
         //climbing scripts go here
         //restrict lemon on the x min/max and y min/max
+        isClimbing = true; 
 
-        if (Input.GetKeyDown(KeyCode.E)) //stop climbing once the player hits E again
-        {
-            isClimbing = false; //player is no longer climbing
-        }
-        else 
-        {
-            //allow player to move around at specified climbing speed
-            //restrict them if their x and y are lower/higher than min/max
-            
-        }
-    
-    
-    
+        Physics.gravity = new Vector3(0, 0, 0); //turns off physics for character
+        LemonMovement.allowLemonMovement = false; 
+        LemonCharacterController.SimpleMove(Vector3.zero); //turning velocity to 0
+
+        //animator components
+        LemonMovement.anim.SetFloat("Forward", 0, 0.1f, Time.deltaTime); 
+        LemonMovement.anim.SetBool("OnGround", true); 
+
+        //locks the player's rotation and distance from the ladder
+        Lemon.transform.position = startpoint.position; 
+        Lemon.transform.rotation = startpoint.rotation; 
+        
     }
-    void OnTriggerStay(Collider box) //is called as long as the player is in the collider
+
+    void Climb()
     {
-        if (box == ENTRANCE_COLLIDER)
+        //handles player input for climbing
+        //WATCH OUT -> Needs to be changed since horizontal axis will change based on camera rotation so 
+        //MUST BE CHANGED (Ask Teal)
+        Vector3 movement = new Vector3 ( Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"), 0); 
+        Lemon.transform.position += movement * Time.deltaTime * ClimbingSpeed;
+    }
+
+    void LadderJump()
+    {
+        
+    }
+
+    void Fall() //undoes everything that happens in the climb function
+    {
+        isClimbing = false;
+        Physics.gravity = new Vector3 (0, LemonMovement.gravity, 0);  
+        LemonMovement.allowLemonMovement = true; 
+        LemonMovement.anim.SetBool("OnGround", false); 
+    }
+
+    void OnTriggerEnter(Collider other) //is called as long as the player is in the collider
+    {
+        
+        if (other.tag == "Player")
         {
             //if the player has entered the entrance collider -> we want to do climbing stuff once player hits e
-            if (Input.GetKeyDown(KeyCode.E))
-            {
-                //player hits E and now we want to start climbing
-                Climb();
-                //player is now in climbing state
-                isClimbing = true; 
-            }
-            
+            inRange = true; 
         }
+
     }
 
-    void OnTriggerEnter(Collider box)
+    void OnTriggerExit(Collider other)
     {
-        if (box == EXIT_COLLIDER)
+        if (other.tag == "Player")
         {
             //player has made it to the end and is no longer climbing
-            isClimbing = false; 
+            inRange = false; 
 
             //call climbing exit animation here
         }
