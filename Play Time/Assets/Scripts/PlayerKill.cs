@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerKill : MonoBehaviour
 {
+    public Transform respawnPosition;
     // Start is called before the first frame update
     void Start()
     {
@@ -18,6 +19,7 @@ public class PlayerKill : MonoBehaviour
 
     public void Kill()
     {
-        Destroy(gameObject);
+        //Destroy(gameObject);
+        gameObject.transform.position = respawnPosition.position;
     }
 }
