@@ -4287,6 +4287,10 @@ PrefabInstance:
       value: -9.81
       objectReference: {fileID: 0}
     - target: {fileID: 3598400719207944067, guid: 7de2f9e0c3d10834193a8cd6d243892f, type: 3}
+      propertyPath: mainCamera
+      value: 
+      objectReference: {fileID: 1485630035}
+    - target: {fileID: 3598400719207944067, guid: 7de2f9e0c3d10834193a8cd6d243892f, type: 3}
       propertyPath: acceleration
       value: 15
       objectReference: {fileID: 0}

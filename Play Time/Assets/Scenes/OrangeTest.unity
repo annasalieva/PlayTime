@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.1024934, g: 0.117723934, b: 0.15372446, a: 1}
+  m_IndirectSpecularColor: {r: 0.1024935, g: 0.11772401, b: 0.15372461, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2146,6 +2146,10 @@ PrefabInstance:
       propertyPath: pushForce
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: -6396498994268179940, guid: d0eb48488c3194725a2578044de0f821, type: 3}
+      propertyPath: mainCamera
+      value: 
+      objectReference: {fileID: 534796334}
     - target: {fileID: -6396498994268179940, guid: d0eb48488c3194725a2578044de0f821, type: 3}
       propertyPath: allowOrangeMovement
       value: 1

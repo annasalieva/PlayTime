@@ -7,7 +7,8 @@ public class orangeMovement : MonoBehaviour
     [SerializeField] private float moveSpeed = 10;
     [SerializeField] private float walkSpeed = 5;
     [SerializeField] private float runSpeed = 20;
-    [SerializeField] private float rotationSpeed = 720;
+    [SerializeField] private float turnSmoothTime = 0.1f;
+    float turnSmoothVelocity;
 
     private Vector3 moveDirection;
     private Vector3 inputDirection;
@@ -37,10 +38,9 @@ public class orangeMovement : MonoBehaviour
     private float starting_y;
     private float current_y;
     private bool jumpKeyHeld;
-    //private Animator anim;
 
     public bool allowOrangeMovement;
-
+    [SerializeField] private Transform mainCamera;
     // private bool delayed = false;
     // [SerializeField] private float delayTime;
     // private float delayTimer;
@@ -105,17 +105,30 @@ public class orangeMovement : MonoBehaviour
         }
         
         moveDirection = new Vector3(moveX, 0, moveZ).normalized;
-
-        if(isGrabbing) //movement is slowed when moving objects
+        Vector3 moveDir = Vector3.zero;
+        if(moveDirection.magnitude >= 0.1f)
         {
-            controller.Move(velocity * Time.deltaTime);
-            controller.Move(moveDirection * current_speed * grabSpeedReduction *Time.deltaTime);
-        } 
-        else 
-        {
-            controller.Move(velocity * Time.deltaTime);
-            controller.Move(moveDirection * current_speed * Time.deltaTime);
+            float targetAngle = Mathf.Atan2(moveDirection.x, moveDirection.z) * Mathf.Rad2Deg + mainCamera.eulerAngles.y;
+            moveDir = Quaternion.Euler(0f, targetAngle, 0f) *  Vector3.forward;
         }
+
+
+            if(isGrabbing) //movement is slowed when moving objects
+            {
+                controller.Move(velocity * Time.deltaTime);
+                if(moveDirection.magnitude >= 0.1f)
+                {
+                    controller.Move(moveDir * current_speed * grabSpeedReduction * Time.deltaTime);
+                }
+            } 
+            else 
+            {
+                controller.Move(velocity * Time.deltaTime);
+                if(moveDirection.magnitude >= 0.1f)
+                {
+                controller.Move(moveDir * current_speed * Time.deltaTime);
+                }
+            }
     }
 
     private void Idle()
@@ -176,16 +189,16 @@ public class orangeMovement : MonoBehaviour
     {
         float inputZ = Input.GetAxis("Vertical");
         float inputX = Input.GetAxis("Horizontal");
-        Vector3 inputDirection = new Vector3(inputX, 0, inputZ);
-        inputDirection.Normalize();
+        Vector3 inputDirection = new Vector3(inputX, 0, inputZ).normalized;
 
         if(!isGrabbing)
         {
-            if(inputDirection != Vector3.zero)
+            if(inputDirection.magnitude >=  0.1f)
             {
-                Quaternion rotateDirection = Quaternion.LookRotation(inputDirection, Vector3.up);
-                transform.rotation = Quaternion.RotateTowards(transform.rotation, rotateDirection, rotationSpeed * Time.deltaTime);
-                anim.SetFloat("Turn", Input.GetAxis("Horizontal") , rotationSpeed * 0.1f, Time.deltaTime);
+                float targetAngle = Mathf.Atan2(inputDirection.x, inputDirection.z) * Mathf.Rad2Deg + mainCamera.eulerAngles.y;
+                float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
+                transform.rotation = Quaternion.Euler(0f, angle, 0f);
+                // anim.SetFloat("Turn", Input.GetAxis("Horizontal") , turnSmoothVelocity * 0.1f, Time.deltaTime);
             }
         }
     }

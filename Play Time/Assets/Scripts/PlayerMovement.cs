@@ -7,7 +7,9 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float moveSpeed = 10;
     [SerializeField] private float walkSpeed = 5;
     [SerializeField] private float runSpeed = 20;
-    [SerializeField] private float rotationSpeed = 5;
+    [SerializeField] private float turnSmoothTime = 0.1f;
+    float turnSmoothVelocity;
+
 
     private Vector3 moveDirection;
     public Vector3 velocity;
@@ -39,6 +41,8 @@ public class PlayerMovement : MonoBehaviour
     //private float jumpMultiplier = 0; 
 
     public bool allowLemonMovement;
+
+    [SerializeField] private Transform mainCamera;
 
     private void Start()
     {
@@ -118,8 +122,16 @@ public class PlayerMovement : MonoBehaviour
             jumpKeyHeld = false;
         }
         moveDirection = new Vector3(moveX, 0, moveZ).normalized;
+        Vector3 moveDir = Vector3.zero;
+        
+
         controller.Move(velocity * Time.deltaTime);
-        controller.Move(moveDirection * current_speed * Time.deltaTime);
+        if(moveDirection.magnitude >= 0.1f)
+        {
+            float targetAngle = Mathf.Atan2(moveDirection.x, moveDirection.z) * Mathf.Rad2Deg + mainCamera.eulerAngles.y;
+            moveDir = Quaternion.Euler(0f, targetAngle, 0f) *  Vector3.forward;
+            controller.Move(moveDir * current_speed * Time.deltaTime);
+        }
     }
 
     private void Idle()
@@ -176,15 +188,16 @@ public class PlayerMovement : MonoBehaviour
     {
         float inputZ = Input.GetAxis("Vertical");
         float inputX = Input.GetAxis("Horizontal");
-        Vector3 inputDirection = new Vector3(inputX, 0, inputZ);
-        inputDirection.Normalize();
-        if (inputDirection != Vector3.zero)
-        {
-            Quaternion rotateDirection = Quaternion.LookRotation(inputDirection, Vector3.up);
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, rotateDirection, rotationSpeed * Time.deltaTime);
-        }
+        Vector3 inputDirection = new Vector3(inputX, 0, inputZ).normalized;
 
-        anim.SetFloat("Turn", Input.GetAxis("Horizontal") , rotationSpeed * 0.1f, Time.deltaTime);
+
+        if(inputDirection.magnitude >=  0.1f)
+        {
+            float targetAngle = Mathf.Atan2(inputDirection.x, inputDirection.z) * Mathf.Rad2Deg + mainCamera.eulerAngles.y;
+            float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
+            transform.rotation = Quaternion.Euler(0f, angle, 0f);
+            // anim.SetFloat("Turn", Input.GetAxis("Horizontal") , turnSmoothVelocity * 0.1f, Time.deltaTime);
+        }
     }
 
     private void checkGrounded()
