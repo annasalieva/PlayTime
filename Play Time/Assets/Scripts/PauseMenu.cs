@@ -11,6 +11,9 @@ public class PauseMenu : MonoBehaviour
     public UnityEngine.UI.Toggle toggle;
     public UnityEngine.UI.Slider slider;
 
+    public GameObject currentBackgroundMusic;
+    public GameObject pauseMenuMusic;
+
     private void Start()
     {
         float volume = PlayerPrefs.GetFloat("volume", 1);
@@ -22,7 +25,7 @@ public class PauseMenu : MonoBehaviour
     }
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Escape))
+        if(Input.GetKeyDown(KeyCode.Escape) && !VolumePanel.active)
         {
             if(gameIsPaused)
             {
@@ -40,6 +43,8 @@ public class PauseMenu : MonoBehaviour
         pauseMenuUI.SetActive(false);
         Time.timeScale = 1f;
         gameIsPaused = false;
+        pauseMenuMusic.GetComponent<AudioSource>().Stop();
+        currentBackgroundMusic.GetComponent<AudioSource>().Play();
     }
 
     public void PauseGame()
@@ -47,11 +52,22 @@ public class PauseMenu : MonoBehaviour
         pauseMenuUI.SetActive(true);
         Time.timeScale = 0f;
         gameIsPaused = true;
+        currentBackgroundMusic.GetComponent<AudioSource>().Stop();
+        pauseMenuMusic.GetComponent<AudioSource>().Play();
+    }
+
+    public void RestartGame()
+    {
+        Time.timeScale = 1f;
+        gameIsPaused = false;
+        Scene scene = SceneManager.GetActiveScene();
+        SceneManager.LoadScene(scene.name);
     }
 
     public void LoadMainMenu()
     {
         Time.timeScale = 1f;
+        gameIsPaused = false;
         Debug.Log("Loading Main Menu...");
         SceneManager.LoadScene("MainMenu");
     }
