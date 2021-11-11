@@ -1096,10 +1096,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aeb76b70f82f71e4aacc9149f952ea26, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  LADDER_COLLIDER: {fileID: 497456769}
+  LADDER_COLLIDER: {fileID: 497456770}
   EXIT_COLLIDER: {fileID: 497456768}
   ClimbingSpeed: 3
+  Y_MIN: 0
+  Y_MAX: 0
   startpoint: {fileID: 1781926478}
+  isClimbing: 0
+  inRange: 0
   LemonCharacterController: {fileID: 1633939107}
   LemonMovement: {fileID: 1570116705}
   Lemon: {fileID: 1633939106}
@@ -2717,7 +2721,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1485630032}
-  m_LocalRotation: {x: 0.047084, y: 0.0481628, z: -0.0022728648, w: 0.99772656}
+  m_LocalRotation: {x: 0.04708402, y: 0.048162766, z: -0.0022728643, w: 0.99772656}
   m_LocalPosition: {x: -12.587296, y: 25.497797, z: -0.7958096}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -3273,7 +3277,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1870469451}
-  m_LocalRotation: {x: 0.047084, y: 0.0481628, z: -0.0022728648, w: 0.99772656}
+  m_LocalRotation: {x: 0.04708402, y: 0.048162766, z: -0.0022728643, w: 0.99772656}
   m_LocalPosition: {x: -12.587296, y: 25.497797, z: -0.7958096}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
