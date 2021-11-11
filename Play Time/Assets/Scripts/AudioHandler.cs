@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
 public class AudioHandler : MonoBehaviour
 {
     public static AudioHandler StaticAudioHandler;
@@ -21,6 +21,8 @@ public class AudioHandler : MonoBehaviour
     private AudioLibrary backgroundTrack = null;
     private AudioLibrary clicksound = null;
 
+    public bool EnterLemonTest = false;
+
     void Start()
     {
         SetVolume(MasterVolume);
@@ -34,7 +36,12 @@ public class AudioHandler : MonoBehaviour
         StartBackground(DefaultBackgroundClip);
 
     }
-
+    private void Update()
+    {
+        Debug.Log(SceneManager.GetActiveScene().name);
+        CheckSceneMusic();
+        
+    }
     //MUTE
     public static void Mute()
     {
@@ -56,6 +63,33 @@ public class AudioHandler : MonoBehaviour
         {
             clickUI.volume = masterVolume * clicksound.volume;
         }
+    }
+
+    //PLAY PAUSE MENU MUSIC WHEN PAUSE MENU ON
+    public void PlayPauseMenuMusic()
+    {
+        StartBackground("pause");
+    }
+
+    //CHECK SCENE
+    public void CheckSceneMusic()
+    {
+        if (SceneManager.GetActiveScene().name == "LemonTest")
+        {
+            PlayChestMusic();
+        }
+        
+    }
+
+    // CHANGE THE BACKGROUNDMUSIC OF LEMON TEST
+    public void PlayChestMusic()
+    {
+        if (!EnterLemonTest)
+        {
+            StartBackground("chest");
+            EnterLemonTest = true;
+        }
+
     }
 
     //SET VOLUME
@@ -98,7 +132,7 @@ public class AudioHandler : MonoBehaviour
     }
 
     //GET TRACK FROM AUDIO LIBRARY
-    private AudioLibrary getTrack(string name)
+    public AudioLibrary getTrack(string name)
     {
         AudioClip clip = null;
 

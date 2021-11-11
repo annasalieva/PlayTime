@@ -11,8 +11,8 @@ public class PauseMenu : MonoBehaviour
     public UnityEngine.UI.Toggle toggle;
     public UnityEngine.UI.Slider slider;
 
-    public GameObject currentBackgroundMusic;
-    public GameObject pauseMenuMusic;
+    //public GameObject currentBackgroundMusic;
+    //public GameObject pauseMenuMusic;
 
     private void Start()
     {
@@ -43,8 +43,8 @@ public class PauseMenu : MonoBehaviour
         pauseMenuUI.SetActive(false);
         Time.timeScale = 1f;
         gameIsPaused = false;
-        pauseMenuMusic.GetComponent<AudioSource>().Stop();
-        currentBackgroundMusic.GetComponent<AudioSource>().Play();
+        //pauseMenuMusic.GetComponent<AudioSource>().Stop();
+        //currentBackgroundMusic.GetComponent<AudioSource>().Play();
     }
 
     public void PauseGame()
@@ -52,8 +52,8 @@ public class PauseMenu : MonoBehaviour
         pauseMenuUI.SetActive(true);
         Time.timeScale = 0f;
         gameIsPaused = true;
-        currentBackgroundMusic.GetComponent<AudioSource>().Stop();
-        pauseMenuMusic.GetComponent<AudioSource>().Play();
+        //currentBackgroundMusic.GetComponent<AudioSource>().Stop();
+        //pauseMenuMusic.GetComponent<AudioSource>().Play();
     }
 
     public void RestartGame()

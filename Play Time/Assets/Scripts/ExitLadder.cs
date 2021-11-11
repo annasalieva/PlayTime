@@ -7,11 +7,6 @@ public class ExitLadder : MonoBehaviour
     public Ladder ladder;
     public bool doneClimb;
 
-
-    //current bug: lemon still falls when climbing even if I disabled gravity and make velocity 0, I'll try to see what's wrong after the climbing animation is done. Also the bottom clider is affected by this falling action, can't exit ladder with touching the bottom collider.
-
-
-
     // Start is called before the first frame update
     void Start()
     {
