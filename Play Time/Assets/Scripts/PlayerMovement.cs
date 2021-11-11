@@ -21,7 +21,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private LayerMask groundMask;
     public float gravity = 9.81f;
 
-    [SerializeField] private float jumpHeight;
+    public float jumpHeight;
     [SerializeField] private float acceleration;
     [SerializeField] private float maxJumpHeight;
 

@@ -25,6 +25,8 @@ public class NewClimbing : MonoBehaviour
     private float Y_MAX; 
     [SerializeField]
     private Transform startpoint;  //transform in the middle of the ladder 
+    [SerializeField]
+    private Transform endpoint; 
 
     [Header("Bools")]
     [SerializeField]
@@ -78,14 +80,26 @@ public class NewClimbing : MonoBehaviour
             }
             else if(isClimbing) //player is currently in climbing state and hasn't input any other commands
             {
-                Climb(); 
+                if (Input.GetKeyDown(KeyCode.Space))
+                {
+                    LadderJump();
+                }
+                else
+                {
+                    
+                    Climb(); 
+                }
             }
-            else if (!isClimbing && !inRange)
+        
+        } else {
+            
+            if (isClimbing)
             {
-
+                //player is at the top of the ladder and out of range of the colliders -> play the exit climbing animation
+                //for now we just teleport them to the endpoint and turn movement back on
+                ExitClimb();
             }
-
-        } 
+        }
     }
     
     void StartClimb()
@@ -103,7 +117,8 @@ public class NewClimbing : MonoBehaviour
         LemonMovement.anim.SetBool("OnGround", true); 
 
         //locks the player's rotation and distance from the ladder
-        Lemon.transform.position = startpoint.position; //might need to change -> snapping all of the units to the ladder but we only care about how close he is to it (not his x or y)
+        //might need to change -> snapping all of the units to the ladder but we only care about how close he is to it (not his x or y)
+        Vector3 position = new Vector3 ( Lemon.transform.position.x, Lemon.transform.position.y, startpoint.position.z);
         Lemon.transform.rotation = startpoint.rotation; 
         
     }
@@ -116,7 +131,6 @@ public class NewClimbing : MonoBehaviour
          
          //move if within the bounds
         Vector3 movement = new Vector3 ( Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"), 0).normalized; 
-            
 
         //check lemon's bounds here
         if (Lemon.transform.position.x < X_MIN)
@@ -149,7 +163,6 @@ public class NewClimbing : MonoBehaviour
             }
 
         } 
-        /*
         if ( Lemon.transform.position.y > Y_MAX )
         {
             //stop character from moving pos y
@@ -157,14 +170,26 @@ public class NewClimbing : MonoBehaviour
             {
                 movement.y = 0; 
             }
-        }*/
-
+        }
+        
         Lemon.transform.position += movement * Time.deltaTime * ClimbingSpeed;
     }
 
     void LadderJump()
     {
-        
+        //problems here -> there is no directional movement so he just jumps in place 
+        //falls way too fast
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            Vector3 movement = new Vector3 ( Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"), 0).normalized; 
+
+            //player wants to jump off the ladder
+            //Debug.Log("WE WANT TO JUMP OFF");
+            movement.y = Mathf.Sqrt(LemonMovement.jumpHeight * -2 * LemonMovement.gravity)*2;
+            Lemon.transform.position += movement * Time.deltaTime;
+            Fall();
+            
+        }
     }
 
     void Fall() //undoes everything that happens in the climb function
@@ -173,6 +198,13 @@ public class NewClimbing : MonoBehaviour
         Physics.gravity = new Vector3 (0, LemonMovement.gravity, 0);  
         LemonMovement.allowLemonMovement = true; 
         LemonMovement.anim.SetBool("OnGround", false); 
+    }
+
+    void ExitClimb()
+    {
+        Vector3 position  = new Vector3 (Lemon.transform.position.x, endpoint.position.y, endpoint.position.z);
+        Lemon.transform.position = position; 
+        Fall();
     }
 
     void OnTriggerEnter(Collider other) //is called as long as the player is in the collider
@@ -192,7 +224,7 @@ public class NewClimbing : MonoBehaviour
         {
             //player has made it to the end and is no longer climbing
             inRange = false; 
-            isClimbing = false; 
+            //isClimbing = false; 
 
             //call climbing exit animation here
         }
