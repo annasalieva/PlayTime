@@ -651,7 +651,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &442320784
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -866,10 +866,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 497456766}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 11.7, y: -5.1277, z: 1.282}
-  m_LocalScale: {x: 1.1875, y: 11.66724, z: 1.0547744}
+  m_LocalPosition: {x: 15.89, y: -5.1277, z: 1.282}
+  m_LocalScale: {x: 9.696294, y: 11.66724, z: 1.0547744}
   m_Children:
   - {fileID: 1781926478}
+  - {fileID: 784784701}
   m_Father: {fileID: 1640351841}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -973,10 +974,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aeb76b70f82f71e4aacc9149f952ea26, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  LADDER_COLLIDER: {fileID: 497456769}
+  LADDER_COLLIDER: {fileID: 497456770}
   EXIT_COLLIDER: {fileID: 497456768}
   ClimbingSpeed: 3
+  Y_MIN: 0
+  Y_MAX: 0
   startpoint: {fileID: 1781926478}
+  endpoint: {fileID: 784784701}
+  isClimbing: 0
+  inRange: 0
   LemonCharacterController: {fileID: 1633939107}
   LemonMovement: {fileID: 1570116705}
   Lemon: {fileID: 1633939106}
@@ -1295,6 +1301,36 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 752202089}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &784784700
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 784784701}
+  m_Layer: 6
+  m_Name: Endpoint
+  m_TagString: Untagged
+  m_Icon: {fileID: -1412012063857583412, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &784784701
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 784784700}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.525, z: 0.68}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 497456767}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &810913202
 GameObject:
   m_ObjectHideFlags: 0
@@ -2963,7 +2999,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1781926478}
   m_Layer: 6
-  m_Name: Lockpoint
+  m_Name: Startpoint
   m_TagString: Untagged
   m_Icon: {fileID: 3936346786652291628, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
