@@ -42,4 +42,9 @@ public class SceneLoader : MonoBehaviour
     {
         Application.Quit();
     }
+
+    public void loadLevelOne()
+    {
+        SceneManager.LoadScene("LevelOne");
+    }
 }
