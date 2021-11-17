@@ -11,8 +11,8 @@ public class PauseMenu : MonoBehaviour
     public UnityEngine.UI.Toggle toggle;
     public UnityEngine.UI.Slider slider;
 
-    //public GameObject currentBackgroundMusic;
-    //public GameObject pauseMenuMusic;
+    //after complete Lemon's tasks, InChest turns to false
+    public bool InChest = true;
 
     private void Start()
     {
@@ -45,7 +45,14 @@ public class PauseMenu : MonoBehaviour
         pauseMenuUI.SetActive(false);
         Time.timeScale = 1f;
         gameIsPaused = false;
-        AudioHandler.StaticAudioHandler.StartBackground("background");
+        if (InChest)
+        {
+            AudioHandler.StaticAudioHandler.StartBackground("chest");
+        }
+        else
+        {
+            AudioHandler.StaticAudioHandler.StartBackground("background");
+        }
     }
 
     public void PauseGame()
