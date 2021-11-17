@@ -38,8 +38,8 @@ public class AudioHandler : MonoBehaviour
     }
     private void Update()
     {
-        Debug.Log(SceneManager.GetActiveScene().name);
-        CheckSceneMusic();
+        //Debug.Log(SceneManager.GetActiveScene().name);
+        //CheckSceneMusic();
         
     }
     //MUTE
@@ -77,26 +77,26 @@ public class AudioHandler : MonoBehaviour
     //}
 
     //CHECK SCENE
-    public void CheckSceneMusic()
-    {
-        if (SceneManager.GetActiveScene().name == "LevelOne" && EnterLemonTest == false)
-        {
-            PlayChestMusic();
-            EnterLemonTest = true;
-        }
+    //public void CheckSceneMusic()
+    //{
+    //    if (SceneManager.GetActiveScene().name == "LevelOne" && EnterLemonTest == false)
+    //    {
+    //        PlayChestMusic();
+    //        EnterLemonTest = true;
+    //    }
         
-    }
+    //}
 
-    // CHANGE THE BACKGROUNDMUSIC OF LEMON TEST
-    public void PlayChestMusic()
-    {
-        if (!EnterLemonTest)
-        {
-            StartBackground("chest");
-            EnterLemonTest = true;
-        }
+    //// CHANGE THE BACKGROUNDMUSIC OF LEMON TEST
+    //public void PlayChestMusic()
+    //{
+    //    if (!EnterLemonTest)
+    //    {
+    //        StartBackground("chest");
+    //        EnterLemonTest = true;
+    //    }
 
-    }
+    //}
 
     //public void playNormalBackgroundMusic()
     //{

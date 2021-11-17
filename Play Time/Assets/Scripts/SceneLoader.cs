@@ -46,5 +46,6 @@ public class SceneLoader : MonoBehaviour
     public void loadLevelOne()
     {
         SceneManager.LoadScene("LevelOne");
+        AudioHandler.StaticAudioHandler.StartBackground("chest");
     }
 }

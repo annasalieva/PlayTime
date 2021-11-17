@@ -69,6 +69,14 @@ public class PauseMenu : MonoBehaviour
         gameIsPaused = false;
         Scene scene = SceneManager.GetActiveScene();
         SceneManager.LoadScene(scene.name);
+        if (InChest)
+        {
+            AudioHandler.StaticAudioHandler.StartBackground("chest");
+        }
+        else
+        {
+            AudioHandler.StaticAudioHandler.StartBackground("background");
+        }
     }
 
     public void LoadMainMenu()
@@ -77,6 +85,7 @@ public class PauseMenu : MonoBehaviour
         gameIsPaused = false;
         Debug.Log("Loading Main Menu...");
         SceneManager.LoadScene("MainMenu");
+        AudioHandler.StaticAudioHandler.StartBackground("background");
     }
 
     public void QuitGame()
