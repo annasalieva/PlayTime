@@ -22,6 +22,8 @@ public class PauseMenu : MonoBehaviour
         slider.value = volume;
         MuteToggle(mute);
         toggle.isOn = mute;
+
+        
     }
     void Update()
     {
@@ -43,8 +45,7 @@ public class PauseMenu : MonoBehaviour
         pauseMenuUI.SetActive(false);
         Time.timeScale = 1f;
         gameIsPaused = false;
-        //pauseMenuMusic.GetComponent<AudioSource>().Stop();
-        //currentBackgroundMusic.GetComponent<AudioSource>().Play();
+        AudioHandler.StaticAudioHandler.StartBackground("background");
     }
 
     public void PauseGame()
@@ -52,8 +53,7 @@ public class PauseMenu : MonoBehaviour
         pauseMenuUI.SetActive(true);
         Time.timeScale = 0f;
         gameIsPaused = true;
-        //currentBackgroundMusic.GetComponent<AudioSource>().Stop();
-        //pauseMenuMusic.GetComponent<AudioSource>().Play();
+        AudioHandler.StaticAudioHandler.StartBackground("pause");
     }
 
     public void RestartGame()

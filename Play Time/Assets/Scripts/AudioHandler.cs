@@ -66,17 +66,23 @@ public class AudioHandler : MonoBehaviour
     }
 
     //PLAY PAUSE MENU MUSIC WHEN PAUSE MENU ON
-    public void PlayPauseMenuMusic()
-    {
-        StartBackground("pause");
-    }
+    //public void playPauseMenuMusic()
+    //{
+    //    StartBackground("pause");
+    //}
+
+    //public static void PlayPauseMenuMusic()
+    //{
+    //    StaticAudioHandler.playPauseMenuMusic();
+    //}
 
     //CHECK SCENE
     public void CheckSceneMusic()
     {
-        if (SceneManager.GetActiveScene().name == "LemonTest")
+        if (SceneManager.GetActiveScene().name == "LevelOne" && EnterLemonTest == false)
         {
             PlayChestMusic();
+            EnterLemonTest = true;
         }
         
     }
@@ -91,6 +97,16 @@ public class AudioHandler : MonoBehaviour
         }
 
     }
+
+    //public void playNormalBackgroundMusic()
+    //{
+    //    StartBackground(DefaultBackgroundClip);
+    //}
+
+    //public static void PlayNormalBackgroundMusic()
+    //{
+    //    StaticAudioHandler.playNormalBackgroundMusic();
+    //}
 
     //SET VOLUME
     public void SetVolume(float volume)
@@ -117,7 +133,7 @@ public class AudioHandler : MonoBehaviour
 
 
     //PLAY BACKGROUND MUSIC
-    private void StartBackground(string clipname)
+    public void StartBackground(string clipname)
     {
         AudioLibrary track = getTrack(clipname);
         backgroundTrack = track;
