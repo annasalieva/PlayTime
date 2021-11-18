@@ -3219,8 +3219,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 15
-  walkSpeed: 5
-  runSpeed: 13
+  walkSpeed: 2
+  runSpeed: 4
   turnSmoothTime: 0.1
   velocity: {x: 0, y: 0, z: 0}
   isGrounded: 0
@@ -3230,7 +3230,7 @@ MonoBehaviour:
     m_Bits: 64
   gravity: -9.81
   jumpHeight: 1
-  acceleration: 15
+  acceleration: 8
   maxJumpHeight: 1.5
   fallMultiplier: 8
   anim: {fileID: 0}
