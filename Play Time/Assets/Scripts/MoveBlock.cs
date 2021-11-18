@@ -8,6 +8,7 @@ public class MoveBlock : MonoBehaviour
     public Transform position2;
     private float time;
     private Transform targetPosition;
+    public bool buttonon = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -18,13 +19,19 @@ public class MoveBlock : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.position = Vector3.MoveTowards(transform.position, targetPosition.position, Time.deltaTime);
-        if (Vector3.Distance(transform.position, targetPosition.position) < 0.001f){
-            if (targetPosition == position2){
-                targetPosition = position1;
-            }
-            else{
-                targetPosition = position2;
+        if (buttonon)
+        {
+            transform.position = Vector3.MoveTowards(transform.position, targetPosition.position, Time.deltaTime);
+            if (Vector3.Distance(transform.position, targetPosition.position) < 0.001f)
+            {
+                if (targetPosition == position2)
+                {
+                    targetPosition = position1;
+                }
+                else
+                {
+                    targetPosition = position2;
+                }
             }
         }
     }
