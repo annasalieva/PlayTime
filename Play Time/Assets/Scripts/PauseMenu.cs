@@ -13,7 +13,8 @@ public class PauseMenu : MonoBehaviour
 
     //after complete Lemon's tasks, InChest turns to false
     public bool InChest = true;
-
+    public bool IsMute = false;
+    public bool VolumeControl = false;
     private void Start()
     {
         float volume = PlayerPrefs.GetFloat("volume", 1);
@@ -37,6 +38,26 @@ public class PauseMenu : MonoBehaviour
             {
                 PauseGame();
             }
+        }
+
+        if (IsMute && slider.value != 0)
+        {
+            slider.value = 0f;
+            VolumeControl = true;
+        }
+        else if (slider.value == 0 && !IsMute)
+        {
+            toggle.isOn = true;
+            VolumeControl = true;
+        }
+        if (VolumeControl)
+        {
+            float volume = PlayerPrefs.GetFloat("volume", 1);
+            bool mute = PlayerPrefs.GetString("mute", "no") == "no" ? false : true;
+            VolumeSlider(volume);
+            slider.value = volume;
+            MuteToggle(mute);
+            toggle.isOn = mute;
         }
     }
 
@@ -111,6 +132,7 @@ public class PauseMenu : MonoBehaviour
     //VOLUME SLIDER
     public void VolumeSlider(float volume)
     {
+        
         AudioHandler.StaticAudioHandler.SetVolume(volume);
         PlayerPrefs.SetFloat("volume", volume);
     }
@@ -122,10 +144,12 @@ public class PauseMenu : MonoBehaviour
         if (state)
         {
             PlayerPrefs.GetString("mute", "yes");
+            IsMute = true;
         }
         else
         {
             PlayerPrefs.GetString("mute", "no");
+            IsMute = false;
         }
     }
 
