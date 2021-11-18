@@ -8,6 +8,8 @@ public class LevelLoader : MonoBehaviour
     public string NameOfSceneToLoad;
     public Animator transition;
 
+
+    public bool InChest = true;
     public float TransitionTime = 1f;
     // Start is called before the first frame update
     void Start()
@@ -38,5 +40,13 @@ public class LevelLoader : MonoBehaviour
         yield return new WaitForSeconds(TransitionTime);
         //load Scene
         SceneManager.LoadScene(NameOfSceneToLoad);
+
+        //if enter chest
+        if (InChest)
+        {
+            AudioHandler.StaticAudioHandler.StartBackground("chest");
+            InChest = false;
+        }
+        
     }
 }
