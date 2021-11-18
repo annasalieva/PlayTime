@@ -14,6 +14,7 @@ public class CameraPriority : MonoBehaviour
     {
         if(other.gameObject.CompareTag("Player")){
             priority.Priority = 1;
+            other.gameObject.GetComponent<PlayerMovement>().setCamera(priority);
             foreach(CinemachineVirtualCamera cam in nonPriority){
                 cam.Priority = 0;
             }

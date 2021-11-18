@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Cinemachine;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -48,7 +49,7 @@ public class PlayerMovement : MonoBehaviour
     {
         controller = GetComponent<CharacterController>();
         anim = GetComponentInChildren<Animator>();
-        mainCamera = GameObject.FindGameObjectsWithTag("MainCamera")[0].transform;
+        //mainCamera = GameObject.FindGameObjectsWithTag("MainCamera")[0].transform;
     }
 
     private void Update()
@@ -226,5 +227,9 @@ public class PlayerMovement : MonoBehaviour
             isGrounded = false;
 
         }
+    }
+
+    public void setCamera(CinemachineVirtualCamera Cam){
+        mainCamera = Cam.transform;
     }
 }
