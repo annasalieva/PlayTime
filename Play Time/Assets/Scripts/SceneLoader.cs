@@ -48,4 +48,9 @@ public class SceneLoader : MonoBehaviour
         SceneManager.LoadScene("LevelOne");
         AudioHandler.StaticAudioHandler.StartBackground("chest");
     }
+
+    public void PlayClickSound()
+    {
+        AudioHandler.StaticAudioHandler.StartClickSound("click");
+    }
 }

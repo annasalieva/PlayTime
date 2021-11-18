@@ -38,9 +38,7 @@ public class AudioHandler : MonoBehaviour
     }
     private void Update()
     {
-        //Debug.Log(SceneManager.GetActiveScene().name);
-        //CheckSceneMusic();
-        
+
     }
     //MUTE
     public static void Mute()
@@ -65,48 +63,6 @@ public class AudioHandler : MonoBehaviour
         }
     }
 
-    //PLAY PAUSE MENU MUSIC WHEN PAUSE MENU ON
-    //public void playPauseMenuMusic()
-    //{
-    //    StartBackground("pause");
-    //}
-
-    //public static void PlayPauseMenuMusic()
-    //{
-    //    StaticAudioHandler.playPauseMenuMusic();
-    //}
-
-    //CHECK SCENE
-    //public void CheckSceneMusic()
-    //{
-    //    if (SceneManager.GetActiveScene().name == "LevelOne" && EnterLemonTest == false)
-    //    {
-    //        PlayChestMusic();
-    //        EnterLemonTest = true;
-    //    }
-        
-    //}
-
-    //// CHANGE THE BACKGROUNDMUSIC OF LEMON TEST
-    //public void PlayChestMusic()
-    //{
-    //    if (!EnterLemonTest)
-    //    {
-    //        StartBackground("chest");
-    //        EnterLemonTest = true;
-    //    }
-
-    //}
-
-    //public void playNormalBackgroundMusic()
-    //{
-    //    StartBackground(DefaultBackgroundClip);
-    //}
-
-    //public static void PlayNormalBackgroundMusic()
-    //{
-    //    StaticAudioHandler.playNormalBackgroundMusic();
-    //}
 
     //SET VOLUME
     public void SetVolume(float volume)
@@ -117,12 +73,13 @@ public class AudioHandler : MonoBehaviour
     }
 
     //PLAY CLICK SOUND
-    private void StartClickSound(string clipname)
+    public void StartClickSound(string clipname)
     {
         AudioLibrary track = getTrack(clipname);
         clicksound = track;
         clickUI.clip = track.Track;
         clickUI.Play();
+        clickUI.loop = false;
         clickUI.volume = masterVolume * track.volume;
     }
 

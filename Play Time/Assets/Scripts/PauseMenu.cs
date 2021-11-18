@@ -128,4 +128,9 @@ public class PauseMenu : MonoBehaviour
             PlayerPrefs.GetString("mute", "no");
         }
     }
+
+    public void PlayClickSound()
+    {
+        AudioHandler.StaticAudioHandler.StartClickSound("click");
+    }
 }
