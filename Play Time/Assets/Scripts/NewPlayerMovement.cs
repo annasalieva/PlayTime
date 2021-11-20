@@ -41,6 +41,7 @@ public class NewPlayerMovement : MonoBehaviour
         }
         else if(allowMovement) //if lemon is allowed to move but he's not grounded, perform airmovement functions
         {
+
             Rotate(); //he should still rotate when he's in the air
         }
         else
