@@ -163,27 +163,31 @@ public class PlayerMovement : MonoBehaviour
 
     private void BetterJump()
     {
-        if(controller.velocity.y <= 0)
+        if(controller.velocity.y <= 0) //if velocity < 0 aka player is falling apply fall multiplier to gravity
         {
             velocity.y += gravity * (fallMultiplier - 1) * Time.deltaTime;
             //print("velocity.y <= 0");
         }
-        else if (controller.velocity.y > 0)
+        else if (controller.velocity.y > 0) //else if jumping apply normal gravity
         {
             velocity.y += gravity * Time.deltaTime * 2;
             //print("velocity > 0");
         }
         
-        if(jumpKeyHeld && (current_y - starting_y < maxJumpHeight))
+        if(jumpKeyHeld && (current_y - starting_y < maxJumpHeight)) //if jump key held and max height not reached increase vertical velocity
         {
             //print("hit max height");
             velocity.y = Mathf.Sqrt(jumpHeight * -2 * gravity)*2 + Mathf.Sqrt((current_y-starting_y)/5 * -2 * gravity)*5;
         }
-        else
+        else //else if max reached apply the multiplied gravity so character starts falling
         {
             jumpKeyHeld = false;
             velocity.y += gravity * (fallMultiplier - 1) * Time.deltaTime;
         }
+        //tbh idk why i did the conditions like this they look kinda wack especially that last if/else statement
+        //basically we need to make sure he's falling if he reaches max height and/or you let go of the jump key
+        //if we're doing forces apply constant gravity to char and then multiply it when he's falling
+        //and add a force upward when he jumps that continues to work if you hold the key down unless you've reached max height
     }
 
     private void Rotate()
