@@ -14,7 +14,8 @@ public class NewPlayerMovement : MonoBehaviour
     //controls the max height of Lemon's jump
     [SerializeField] private float jumpHeight;
     //controls lemon's rotation
-    [SerializeField] private float rotationSpeed;
+    private float turnSmoothTime = 0.1f;
+    float turnSmoothVelocity;
 
     //needs the main camera to make the movement camera based
     [SerializeField] private Transform mainCamera;
@@ -69,23 +70,32 @@ public class NewPlayerMovement : MonoBehaviour
             }
 
             //pressing W sets this to 1, pressing S sets this to -1
-            float moveZ = Input.GetAxisRaw("Vertical");
+            float moveZ = Input.GetAxis("Vertical");
 
             //pressing A sets this to 1, pressing D sets this to -1 (I think)
-            float moveX = -1 * Input.GetAxisRaw("Horizontal");
+            float moveX = Input.GetAxis("Horizontal");
 
-            //move x and z are relative to lemon, 
-            //so moveZ moves lemon forward and back, and moveX moves Lemon 
-            //left and right relative to HIM, not the world
-            moveDirection = new Vector3(moveX, 0, moveZ);
+            float targetAngle;
+            //if the player is providing any input, this will be true and we need to update
+            //lemon's move direction
+            if(moveX != 0 || moveZ != 0)
+            {
+                //not quite sure how this works, but its part of the rotation calculations that Teal made
+                targetAngle = Mathf.Atan2(moveX, moveZ) * Mathf.Rad2Deg + mainCamera.eulerAngles.y;
+                moveDirection = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
+            }
+            //if no input, then the move direction will be zero
+            else
+            {
+                moveDirection = Vector3.zero;
+            }
 
-            //uses lemon's forward as the one in the movement vector
-            moveDirection = transform.TransformDirection(moveDirection);
+            //normalize lemon's direction vector
             moveDirection.Normalize();
 
-            if (isGrounded) //if lemon is on the ground, he
+            if (isGrounded) //if lemon is on the ground
             {
-                //function just calculates how Lemon Should move
+                //function just calculates how Lemon Should move based on current inputs
                 Move();
 
                 if(Input.GetKeyDown(KeyCode.Space))
@@ -99,11 +109,11 @@ public class NewPlayerMovement : MonoBehaviour
                 Fall();
             }
             //the following lines apply the movement we calculated
-
+            
             //applies speed to our direction vector
             moveDirection *= moveSpeed;
 
-            //applies the calculated move Direction vector to the vector 3
+            //applies the calculated move Direction vector to the character controller
             controller.Move(moveDirection * Time.deltaTime);
 
             //calculates the gravity acting on Lemon
@@ -111,8 +121,9 @@ public class NewPlayerMovement : MonoBehaviour
 
             //actually applies the gravity to lemon
             controller.Move(velocity * Time.deltaTime);
-
             
+            //rotate lemon appropriately for the current direction he is facing
+            Rotate();
         }
 
     }
@@ -127,16 +138,12 @@ public class NewPlayerMovement : MonoBehaviour
         {
             //walk
             Walk();
-            //rotate lemon appropriately for the current direction he is facing
-            Rotate();
         }
         //if player is moving and pressing shift
         else if(moveDirection != Vector3.zero && Input.GetKey(KeyCode.LeftShift))
         {
             //run
             Run();
-            //rotate lemon appropriately for the current direction he is facing
-            Rotate();
         }
         //if the player is not moving
         else if(moveDirection == Vector3.zero)
@@ -144,8 +151,6 @@ public class NewPlayerMovement : MonoBehaviour
             //Idle
             Idle();
         }
-
-        
     }
 
     //set the player's animation to the idle anim
@@ -175,12 +180,22 @@ public class NewPlayerMovement : MonoBehaviour
         velocity.y = Mathf.Sqrt(jumpHeight * -2 * gravity);
     }
 
+    //rotates lemon based on his movement
+    //Not entirely sure how it works, teal made it and told me to use it
+    //at the beginning of Q1
     private void Rotate()
     {
-        float step = rotationSpeed * Time.deltaTime;
-        Vector3 newDirection = Vector3.RotateTowards(transform.forward, moveDirection, step, 90.0f);
-        this.transform.rotation = Quaternion.LookRotation(newDirection);
-        
+        float inputZ = Input.GetAxis("Vertical");
+        float inputX = Input.GetAxis("Horizontal");
+        Vector3 inputDirection = new Vector3(inputX, 0, inputZ).normalized;
+
+        if (inputDirection.magnitude >= 0.1f)
+        {
+            float targetAngle = Mathf.Atan2(inputDirection.x, inputDirection.z) * Mathf.Rad2Deg + mainCamera.eulerAngles.y;
+            float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
+            transform.rotation = Quaternion.Euler(0f, angle, 0f);
+            anim.SetFloat("Turn", Input.GetAxis("Horizontal") , turnSmoothVelocity * 0.1f, Time.deltaTime);
+        }
     }
 
     private void Fall()
