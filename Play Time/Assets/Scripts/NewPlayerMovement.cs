@@ -1,103 +1,199 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Cinemachine;
 
 public class NewPlayerMovement : MonoBehaviour
 {
-    private float moveSpeed;//variable for current movement speed
-    [SerializeField] private float walkSpeed = 5f; //variable for max speed when walking
-    [SerializeField] private float runSpeed = 20f; //max speed when running
-    [SerializeField] private float turnSmoothTime = 0.1f; //used for rotating lemon?
-    float turnSmoothVelocity; //also used for rotating lemon, not sure how it works
+    //Container for the current movement speed
+    private float moveSpeed = 0f;
+    //the maximum speed of a walk
+    [SerializeField] private float walkSpeed;
+    //the maximum speed of a run
+    [SerializeField] private float runSpeed;
+    //controls the max height of Lemon's jump
+    [SerializeField] private float jumpHeight;
+    //controls lemon's rotation
+    [SerializeField] private float rotationSpeed;
 
-    public Animator anim; //lemon's animator controller
+    //needs the main camera to make the movement camera based
+    [SerializeField] private Transform mainCamera;
 
-    [SerializeField] private bool isGrounded; //if true, lemon is on the ground
-    [SerializeField] private float groundCheckDistance = 1f; //size of the box checking the ground
-    [SerializeField] private LayerMask groundMask; //layermask representing the ground layer
-    [SerializeField] private float maxJumpHeight; //the maximum Y distance between lemon when he starts his jump vs when he reaches the apex of the jump
-    public float gravity = 9.81f; //downward acceleration on lemon
-    private float current_y; //lemon's current y position
-    public bool allowMovement; //if false, lemon should be unable to move
-    // Start is called before the first frame update
-    void Start()
+
+    //the direction we are currently moving in
+    //does not use the Y movement
+    private Vector3 moveDirection;
+
+    //velocity is SPECIFICALLY for any Y movement
+    //all gravity and jumping is done with velocity
+    private Vector3 velocity;
+
+    //raycasthit for the ground check
+    private RaycastHit Hit;
+
+    //bool to enable/disable lemon's movement
+    public bool allowLemonMovement;
+
+    //lemon's character controller
+    private CharacterController controller;
+
+    //lemon's animation controller
+    public Animator anim;
+
+    //if true, player is on the ground
+    private bool isGrounded;
+    //Layer of items that can be considered ground
+    [SerializeField] private LayerMask groundMask;
+    //the value of our gravity, MUST be negative for physics calculations to work
+    public float gravity = -9.81f;
+
+
+    private void Start()
     {
-        //get the character controller
         controller = GetComponent<CharacterController>();
-        //get the animator
         anim = GetComponentInChildren<Animator>();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        //check if lemon is on the ground every frame
+        //function checks if lemon is on the ground
         checkGrounded();
 
-        if(allowMovement && isGrounded) //if lemon is allowed to move and is on the ground
+        if(allowLemonMovement)//if lemon is allowed to move
         {
-            move(); //move lemon
-            Rotate(); //rotate lemon so he is facing the direction he moved in the previous line
-        }
-        else if(allowMovement) //if lemon is allowed to move but he's not grounded, perform airmovement functions
-        {
+            //if we're grounded, we want to stop applying gravity
+            if (isGrounded && velocity.y < 0)
+            {
+                //set y velocity to -2, because 0 might not ground us fully
+                velocity.y = 0f;
+            }
 
-            Rotate(); //he should still rotate when he's in the air
-        }
-        else
-        {
-            Idle(); //set lemon to his idle animation
-            controller.Move(Vector3.zero); //zero lemon's movement so he cant move without input
+            //pressing W sets this to 1, pressing S sets this to -1
+            float moveZ = Input.GetAxisRaw("Vertical");
+
+            //pressing A sets this to 1, pressing D sets this to -1 (I think)
+            float moveX = -1 * Input.GetAxisRaw("Horizontal");
+
+            //move x and z are relative to lemon, 
+            //so moveZ moves lemon forward and back, and moveX moves Lemon 
+            //left and right relative to HIM, not the world
+            moveDirection = new Vector3(moveX, 0, moveZ);
+
+            //uses lemon's forward as the one in the movement vector
+            moveDirection = transform.TransformDirection(moveDirection);
+            moveDirection.Normalize();
+
+            if (isGrounded) //if lemon is on the ground, he
+            {
+                //function just calculates how Lemon Should move
+                Move();
+
+                if(Input.GetKeyDown(KeyCode.Space))
+                {
+                    Jump();
+                }
+            }
+            else
+            {
+                //works similarly to move, but controls lemon's movements in the air
+                Fall();
+            }
+            //the following lines apply the movement we calculated
+
+            //applies speed to our direction vector
+            moveDirection *= moveSpeed;
+
+            //applies the calculated move Direction vector to the vector 3
+            controller.Move(moveDirection * Time.deltaTime);
+
+            //calculates the gravity acting on Lemon
+            velocity.y += gravity * Time.deltaTime;
+
+            //actually applies the gravity to lemon
+            controller.Move(velocity * Time.deltaTime);
+
+            
         }
 
-        current_y = transform.position.y;
     }
 
+    //most of this function just calculates lemon's movement and applies this movement
+    //as a vector 3 in the last line.
+    //entire function assumes the player is grounded
     private void Move()
     {
-        if(Input.Input.GetKeyDown(KeyCode.Space))
+        //if player is moving and not pressing shift
+        if (moveDirection != Vector3.zero && !Input.GetKey(KeyCode.LeftShift)) 
         {
-            Jump();
+            //walk
+            Walk();
+            //rotate lemon appropriately for the current direction he is facing
+            Rotate();
         }
+        //if player is moving and pressing shift
+        else if(moveDirection != Vector3.zero && Input.GetKey(KeyCode.LeftShift))
+        {
+            //run
+            Run();
+            //rotate lemon appropriately for the current direction he is facing
+            Rotate();
+        }
+        //if the player is not moving
+        else if(moveDirection == Vector3.zero)
+        {
+            //Idle
+            Idle();
+        }
+
+        
     }
 
-    //set lemon's animation to his idle stance
+    //set the player's animation to the idle anim
     private void Idle()
     {
         anim.SetFloat("Forward", 0, 0.1f, Time.deltaTime);
     }
 
-    //move lemon at his full walkspeed and have the animator play his walk animation
+    //set player's speed to the walkspeed and have the walk animation play
     private void Walk()
     {
         moveSpeed = walkSpeed;
+        //Apparently the animator can affect lemon's movement speed
         anim.SetFloat("Forward", 0.5f, 0.1f, Time.deltaTime);
     }
 
-    //move lemon at his full runspeed and have the animator play his running animation
+    //set player's speed to the runspeed and have the run animation play
     private void Run()
     {
         moveSpeed = runSpeed;
+        //Apparently the animator can affect lemon's movement speed
         anim.SetFloat("Forward", 1, 0.1f, Time.deltaTime);
     }
 
-    //make lemon jump
     public void Jump()
     {
-        print("jump");
-        //gets lemon's y at the start of the jump and compares it to his current height
-        //if the difference between the currentheight and the start height is >= to the max height, then lemon needs to start falling
-        starting_y = transform.position.y; 
-        velocity.y = Mathf.Sqrt(jumpHeight * -2 * gravity) * 2;
+        velocity.y = Mathf.Sqrt(jumpHeight * -2 * gravity);
+    }
+
+    private void Rotate()
+    {
+        float step = rotationSpeed * Time.deltaTime;
+        Vector3 newDirection = Vector3.RotateTowards(transform.forward, moveDirection, step, 90.0f);
+        this.transform.rotation = Quaternion.LookRotation(newDirection);
+        
+    }
+
+    private void Fall()
+    {
+        anim.SetBool("OnGround", false);
     }
 
     private void checkGrounded()
     {
         //make sure to put any floors on the "ground" layer
-        //creates a box cast below lemon, not entirely sure how this works so please do not mess with it unless absolutely necessary
-        if (Physics.BoxCast(transform.position + new Vector3(0, 2, 0), transform.lossyScale / 2, -Vector3.up, out Hit, transform.rotation, groundCheckDistance))
+        if (Physics.BoxCast(transform.position + new Vector3(0, 2, 0), transform.lossyScale / 2, -Vector3.up, out Hit, transform.rotation, 1.89f))
         {
-            //if the boxcast hits a ground object, lemon should be considered on the ground
+
             if (Hit.transform.gameObject.layer == LayerMask.NameToLayer("Ground"))
             {
                 isGrounded = true;
@@ -113,24 +209,16 @@ public class NewPlayerMovement : MonoBehaviour
         else
         {
             print("racyast has not hit anything");
+            
             isGrounded = false;
 
         }
     }
 
-    private void Rotate()
+    /*
+    public void setCamera(CinemachineVirtualCamera Cam)
     {
-        float inputZ = Input.GetAxis("Vertical");
-        float inputX = Input.GetAxis("Horizontal");
-        Vector3 inputDirection = new Vector3(inputX, 0, inputZ).normalized;
-
-
-        if (inputDirection.magnitude >= 0.1f)
-        {
-            float targetAngle = Mathf.Atan2(inputDirection.x, inputDirection.z) * Mathf.Rad2Deg + mainCamera.eulerAngles.y;
-            float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
-            transform.rotation = Quaternion.Euler(0f, angle, 0f);
-            // anim.SetFloat("Turn", Input.GetAxis("Horizontal") , turnSmoothVelocity * 0.1f, Time.deltaTime);
-        }
+        mainCamera = Cam.transform;
     }
+    */
 }

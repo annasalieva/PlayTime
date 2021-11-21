@@ -155,9 +155,6 @@ public class PlayerMovement : MonoBehaviour
 
     public void Jump()
     {
-        print("jump");
-        jumpKeyHeld = true;
-        starting_y = transform.position.y;
         velocity.y = Mathf.Sqrt(jumpHeight * -2 * gravity)*2;
     }
 
@@ -233,7 +230,8 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    public void setCamera(CinemachineVirtualCamera Cam){
+    public void setCamera(CinemachineVirtualCamera Cam)
+    {
         mainCamera = Cam.transform;
     }
 }
