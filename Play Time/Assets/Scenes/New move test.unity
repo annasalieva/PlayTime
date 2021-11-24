@@ -6711,6 +6711,9 @@ MonoBehaviour:
   walkSpeed: 5
   runSpeed: 7
   jumpHeight: 5
+  FallMultiplier: 4
+  LowMultiplier: 2
+  acceleration: 1
   mainCamera: {fileID: 1480172369}
   allowLemonMovement: 1
   anim: {fileID: 1056738460}
