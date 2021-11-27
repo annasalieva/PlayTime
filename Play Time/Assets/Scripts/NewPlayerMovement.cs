@@ -13,6 +13,12 @@ public class NewPlayerMovement : MonoBehaviour
     [SerializeField] private float runSpeed;
     //controls the max height of Lemon's jump
     [SerializeField] private float jumpHeight;
+    //Multiplies gravity when Lemon is falling so he falls faster
+    [SerializeField] private float FallMultiplier;
+    //Used to control how high lemon goes on a tap as opposed to a hold
+    [SerializeField] private float LowMultiplier;
+    //the acceleration and decelleration of lemon's walk
+    [SerializeField] private float acceleration;
     //controls lemon's rotation
     private float turnSmoothTime = 0.1f;
     float turnSmoothVelocity;
@@ -102,12 +108,9 @@ public class NewPlayerMovement : MonoBehaviour
                 {
                     Jump();
                 }
-            }
-            else
-            {
-                //works similarly to move, but controls lemon's movements in the air
-                Fall();
-            }
+            } 
+            //adjusts lemon's fall speed so his jump feels better
+            FastFall();
             //the following lines apply the movement we calculated
             
             //applies speed to our direction vector
@@ -156,13 +159,28 @@ public class NewPlayerMovement : MonoBehaviour
     //set the player's animation to the idle anim
     private void Idle()
     {
+        if (moveSpeed > 0)
+        {
+            moveSpeed -= acceleration;
+        }
+        else
+        {
+            moveSpeed = 0;
+        }
         anim.SetFloat("Forward", 0, 0.1f, Time.deltaTime);
     }
 
     //set player's speed to the walkspeed and have the walk animation play
     private void Walk()
     {
-        moveSpeed = walkSpeed;
+        if(moveSpeed < walkSpeed)
+        {
+            moveSpeed += acceleration;
+        }
+        else
+        {
+            moveSpeed = walkSpeed;
+        }
         //Apparently the animator can affect lemon's movement speed
         anim.SetFloat("Forward", 0.5f, 0.1f, Time.deltaTime);
     }
@@ -170,14 +188,22 @@ public class NewPlayerMovement : MonoBehaviour
     //set player's speed to the runspeed and have the run animation play
     private void Run()
     {
-        moveSpeed = runSpeed;
+        if (moveSpeed < runSpeed)
+        {
+            moveSpeed += acceleration;
+        }
+        else
+        {
+            moveSpeed = runSpeed;
+        }
         //Apparently the animator can affect lemon's movement speed
         anim.SetFloat("Forward", 1, 0.1f, Time.deltaTime);
     }
 
     public void Jump()
     {
-        velocity.y = Mathf.Sqrt(jumpHeight * -2 * gravity);
+        //added a *4 because the fall function makes this equation too low
+        velocity.y = Mathf.Sqrt(jumpHeight * 4 * -2 * gravity);
     }
 
     //rotates lemon based on his movement
@@ -198,9 +224,18 @@ public class NewPlayerMovement : MonoBehaviour
         }
     }
 
-    private void Fall()
+    private void FastFall()
     {
-        anim.SetBool("OnGround", false);
+        //if lemon is falling
+        if(controller.velocity.y < 0)
+        {
+            //apply fall multiplier to gravity
+            velocity.y += gravity * (FallMultiplier - 1) * Time.deltaTime;
+        }
+        else if(controller.velocity.y > 0 && !Input.GetKey(KeyCode.Space))
+        {
+            velocity.y += gravity * (LowMultiplier - 1) * Time.deltaTime;
+        }
     }
 
     private void checkGrounded()
