@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.10249343, g: 0.11772389, b: 0.15372449, a: 1}
+  m_IndirectSpecularColor: {r: 0.1024934, g: 0.117723934, b: 0.15372446, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -3974,7 +3974,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 2afd1b734c7f36d4cae9c9f9d9c21845, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 10.34
+      value: 19.34
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 2afd1b734c7f36d4cae9c9f9d9c21845, type: 3}
       propertyPath: m_LocalRotation.w
@@ -4007,6 +4007,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 2afd1b734c7f36d4cae9c9f9d9c21845, type: 3}
       propertyPath: m_Name
       value: DollHand (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 2afd1b734c7f36d4cae9c9f9d9c21845, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2afd1b734c7f36d4cae9c9f9d9c21845, type: 3}
@@ -4054,6 +4058,20 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.08651188, y: 0.022038393, z: 0.13807586}
   m_Center: {x: 0.017785674, y: -0.0062158355, z: -0.0315333}
+--- !u!114 &625447272
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 625447268}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a69df6e2e71194b55b357bc2785ce22e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  steps: 3
+  buttonon: 1
 --- !u!1 &647456448
 GameObject:
   m_ObjectHideFlags: 0
@@ -4982,7 +5000,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 2afd1b734c7f36d4cae9c9f9d9c21845, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 10.34
+      value: 19.34
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 2afd1b734c7f36d4cae9c9f9d9c21845, type: 3}
       propertyPath: m_LocalRotation.w
@@ -5015,6 +5033,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 2afd1b734c7f36d4cae9c9f9d9c21845, type: 3}
       propertyPath: m_Name
       value: DollHand (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 2afd1b734c7f36d4cae9c9f9d9c21845, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2afd1b734c7f36d4cae9c9f9d9c21845, type: 3}
@@ -5062,6 +5084,20 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.08651188, y: 0.022038393, z: 0.13807586}
   m_Center: {x: 0.017785674, y: -0.0062158355, z: -0.0315333}
+--- !u!114 &802979767
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 802979763}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a69df6e2e71194b55b357bc2785ce22e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  steps: 3
+  buttonon: 1
 --- !u!1 &814465357
 GameObject:
   m_ObjectHideFlags: 0
@@ -14195,7 +14231,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 2afd1b734c7f36d4cae9c9f9d9c21845, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 10.34
+      value: 19.34
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 2afd1b734c7f36d4cae9c9f9d9c21845, type: 3}
       propertyPath: m_LocalRotation.w
@@ -14228,6 +14264,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 2afd1b734c7f36d4cae9c9f9d9c21845, type: 3}
       propertyPath: m_Name
       value: DollHand
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 2afd1b734c7f36d4cae9c9f9d9c21845, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2afd1b734c7f36d4cae9c9f9d9c21845, type: 3}
@@ -14288,7 +14328,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   steps: 3
-  time: 0
+  buttonon: 1
 --- !u!1 &2060945048
 GameObject:
   m_ObjectHideFlags: 0
