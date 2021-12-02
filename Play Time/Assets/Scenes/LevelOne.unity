@@ -234,7 +234,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 14214484}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9ca6211bb4058a94a89e646c50233b95, type: 3}
   m_Name: 
@@ -3266,9 +3266,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ca6211bb4058a94a89e646c50233b95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  blinkInterval: 5
+  blinkInterval: 3
   blinkDuration: 2
-  blinkFrequency: 0.01
+  blinkFrequency: 0.05
 --- !u!108 &231954236
 Light:
   m_ObjectHideFlags: 0
@@ -7580,7 +7580,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 530878984}
-  m_LocalRotation: {x: 0.01695151, y: -0.73021877, z: 0.018129745, w: 0.6827625}
+  m_LocalRotation: {x: 0.09532074, y: -0.7006516, z: 0.09532046, w: 0.70065355}
   m_LocalPosition: {x: 22.31047, y: 15.110001, z: -4.3300133}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -7654,7 +7654,7 @@ Camera:
     height: 1
   near clip plane: 0.1
   far clip plane: 4997.25
-  field of view: 74
+  field of view: 80
   orthographic: 0
   orthographic size: 5
   m_Depth: 0
@@ -23193,6 +23193,22 @@ PrefabInstance:
       propertyPath: m_RootOrder
       value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 1041649080, guid: 42cb94c0bb3544f5884b48f57ddf4c1e, type: 3}
+      propertyPath: m_Size.x
+      value: 1.043611
+      objectReference: {fileID: 0}
+    - target: {fileID: 1041649080, guid: 42cb94c0bb3544f5884b48f57ddf4c1e, type: 3}
+      propertyPath: m_Center.x
+      value: 0.021805463
+      objectReference: {fileID: 0}
+    - target: {fileID: 1041649080, guid: 42cb94c0bb3544f5884b48f57ddf4c1e, type: 3}
+      propertyPath: m_Center.y
+      value: -1.4047036e-16
+      objectReference: {fileID: 0}
+    - target: {fileID: 1041649080, guid: 42cb94c0bb3544f5884b48f57ddf4c1e, type: 3}
+      propertyPath: m_Center.z
+      value: -4.6823452e-17
+      objectReference: {fileID: 0}
     - target: {fileID: 50407026773464313, guid: 42cb94c0bb3544f5884b48f57ddf4c1e, type: 3}
       propertyPath: m_Layer
       value: 6
@@ -25938,7 +25954,7 @@ BoxCollider:
   m_GameObject: {fileID: 1465105236}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
@@ -26035,10 +26051,10 @@ MonoBehaviour:
   m_StreamingVersion: 20170927
   m_Priority: 1
   m_StandbyUpdate: 2
-  m_LookAt: {fileID: 0}
+  m_LookAt: {fileID: 1056738455}
   m_Follow: {fileID: 1056738455}
   m_Lens:
-    FieldOfView: 74
+    FieldOfView: 80
     OrthographicSize: 5
     NearClipPlane: 0.1
     FarClipPlane: 4997.25
@@ -26059,7 +26075,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1480172367}
-  m_LocalRotation: {x: -0.12769558, y: -0.7191666, z: 0.15270616, w: 0.66571325}
+  m_LocalRotation: {x: 0.09532074, y: -0.7006516, z: 0.09532046, w: 0.70065355}
   m_LocalPosition: {x: 18.52047, y: -19.739998, z: 20.005783}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -26487,8 +26503,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   blinkInterval: 5
-  blinkDuration: 2
-  blinkFrequency: 0.01
+  blinkDuration: 3
+  blinkFrequency: 0.65
 --- !u!108 &1503737202
 Light:
   m_ObjectHideFlags: 0
@@ -27491,8 +27507,8 @@ MonoBehaviour:
   m_VerticalDamping: 0.5
   m_ScreenX: 0.5
   m_ScreenY: 0.5
-  m_DeadZoneWidth: 0
-  m_DeadZoneHeight: 0
+  m_DeadZoneWidth: 0.65
+  m_DeadZoneHeight: 0.65
   m_SoftZoneWidth: 0.8
   m_SoftZoneHeight: 0.8
   m_BiasX: 0
@@ -27789,6 +27805,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 279513034}
     m_Modifications:
+    - target: {fileID: 1041649080, guid: 42cb94c0bb3544f5884b48f57ddf4c1e, type: 3}
+      propertyPath: m_Size.y
+      value: 1.0329932
+      objectReference: {fileID: 0}
+    - target: {fileID: 1041649080, guid: 42cb94c0bb3544f5884b48f57ddf4c1e, type: 3}
+      propertyPath: m_Center.y
+      value: 0.016496416
+      objectReference: {fileID: 0}
     - target: {fileID: 2494400285097834443, guid: 42cb94c0bb3544f5884b48f57ddf4c1e, type: 3}
       propertyPath: m_Name
       value: Cell Variant (30)
@@ -34298,7 +34322,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1980594730
 Transform:
   m_ObjectHideFlags: 0
@@ -37392,7 +37416,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2136074482}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9ca6211bb4058a94a89e646c50233b95, type: 3}
   m_Name: 
