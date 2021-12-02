@@ -6714,6 +6714,7 @@ MonoBehaviour:
   FallMultiplier: 4
   LowMultiplier: 2
   acceleration: 1
+  lemonAirSpeed: 0.1
   mainCamera: {fileID: 1480172369}
   allowLemonMovement: 1
   anim: {fileID: 1056738460}

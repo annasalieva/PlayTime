@@ -23,6 +23,8 @@ public class NewPlayerMovement : MonoBehaviour
     private float turnSmoothTime = 0.1f;
     float turnSmoothVelocity;
 
+    [Range(0, 1)]
+    [SerializeField] private float lemonAirSpeed = 0.9f; 
     //needs the main camera to make the movement camera based
     [SerializeField] private Transform mainCamera;
 
@@ -54,7 +56,6 @@ public class NewPlayerMovement : MonoBehaviour
     //the value of our gravity, MUST be negative for physics calculations to work
     public float gravity = -9.81f;
 
-
     private void Start()
     {
         controller = GetComponent<CharacterController>();
@@ -82,6 +83,7 @@ public class NewPlayerMovement : MonoBehaviour
             float moveX = Input.GetAxis("Horizontal");
 
             float targetAngle;
+            moveDirection = new Vector3(moveX,0.0f,moveZ);
             //if the player is providing any input, this will be true and we need to update
             //lemon's move direction
             if(moveX != 0 || moveZ != 0)
@@ -112,9 +114,17 @@ public class NewPlayerMovement : MonoBehaviour
             //adjusts lemon's fall speed so his jump feels better
             FastFall();
             //the following lines apply the movement we calculated
+            if(isGrounded)
+            {
+                //applies speed to our direction vector
+                moveDirection *= moveSpeed;
+            }
+            else
+            {
+                //applies speed to our direction vector
+                moveDirection *= lemonAirSpeed * moveSpeed;
+            }
             
-            //applies speed to our direction vector
-            moveDirection *= moveSpeed;
 
             //applies the calculated move Direction vector to the character controller
             controller.Move(moveDirection * Time.deltaTime);
@@ -265,10 +275,10 @@ public class NewPlayerMovement : MonoBehaviour
         }
     }
 
-    /*
+    
     public void setCamera(CinemachineVirtualCamera Cam)
     {
         mainCamera = Cam.transform;
     }
-    */
+    
 }
